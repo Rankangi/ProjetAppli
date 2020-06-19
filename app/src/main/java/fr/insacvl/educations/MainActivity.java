@@ -1,5 +1,6 @@
 package fr.insacvl.educations;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,6 +52,21 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+    private View.OnClickListener clickSolo = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, SoloActivity.class);
+            startActivity(intent);
+        }
+    };
+    private View.OnClickListener clickMulti = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, SoloActivity.class);
+            startActivity(intent);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +78,11 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // On crée un listener pour écouter sur les boutons
+        RelativeLayout solo = findViewById(R.id.solo);
+        RelativeLayout multi = findViewById(R.id.multi);
+        solo.setOnClickListener(clickSolo);
+        multi.setOnClickListener(clickMulti);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

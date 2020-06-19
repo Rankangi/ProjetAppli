@@ -1,4 +1,4 @@
-package fr.insacvl.homedesigns;
+package fr.insacvl.educations;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

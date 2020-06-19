@@ -1,4 +1,4 @@
-package fr.insacvl.homedesigns;
+package fr.insacvl.educations;
 
 /**
  * Created by kapil on 05/10/18.

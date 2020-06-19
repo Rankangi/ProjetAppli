@@ -1,4 +1,4 @@
-package fr.insacvl.homedesigns;
+package fr.insacvl.educations;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setDarkMode(getWindow());
-
 
 
         setContentView(R.layout.activity_main);

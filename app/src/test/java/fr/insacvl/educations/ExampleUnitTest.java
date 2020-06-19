@@ -1,4 +1,4 @@
-package fr.insacvl.homedesigns;
+package fr.insacvl.educations;
 
 import org.junit.Test;
 

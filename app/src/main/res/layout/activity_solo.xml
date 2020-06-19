@@ -6,4 +6,32 @@
     android:layout_height="match_parent"
     tools:context="fr.insacvl.educations.SoloActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-133dp">
+
+        <EditText
+            android:layout_centerVertical="true"
+            android:id="@+id/getTheWord"
+            android:layout_width="match_parent"
+            android:layout_height="152dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="11dp"
+            android:ems="10"
+            android:hint="(entrez le mot)"
+            android:inputType="textPersonName"
+            android:singleLine="false" />
+
+        <TextView
+            android:id="@+id/enteredText"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="369dp"
+            android:text="TextView" />
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

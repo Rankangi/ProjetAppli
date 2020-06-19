@@ -59,10 +59,19 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
     };
+
     private View.OnClickListener clickMulti = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this, SoloActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener clickAdmin = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, AdminActivity.class);
             startActivity(intent);
         }
     };
@@ -81,8 +90,10 @@ public class MainActivity extends AppCompatActivity
         // On crée un listener pour écouter sur les boutons
         RelativeLayout solo = findViewById(R.id.solo);
         RelativeLayout multi = findViewById(R.id.multi);
+        RelativeLayout admin = findViewById(R.id.admin);
         solo.setOnClickListener(clickSolo);
         multi.setOnClickListener(clickMulti);
+        admin.setOnClickListener(clickAdmin);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

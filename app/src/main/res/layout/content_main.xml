@@ -37,7 +37,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="100dp">
+                android:layout_marginTop="20dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -120,6 +120,39 @@
                 </LinearLayout>
             </LinearLayout>
 
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="true">
+
+                <net.colindodd.gradientlayout.GradientRelativeLayout
+                    android:id="@+id/admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="100dp"
+                    android:padding="10dp"
+                    gl:end_color="@color/gradientLightGreen"
+                    gl:orientation="LEFT_RIGHT"
+                    gl:start_color="@color/gradientViolet">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        style="@style/homeCardImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxHeight="90dp"
+                        android:src="@drawable/home_ic_biology" />
+
+                    <TextView
+                        android:id="@+id/textViewSub2Title2"
+                        style="@style/viewParent.headerText.HomeCardTitle"
+                        android:text="Espace Parent" />
+
+                </net.colindodd.gradientlayout.GradientRelativeLayout>
+            </android.support.v7.widget.CardView>
 
 
 

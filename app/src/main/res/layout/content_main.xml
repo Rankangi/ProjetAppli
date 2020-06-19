@@ -33,41 +33,42 @@
                     android:src="@drawable/hero"
                     android:adjustViewBounds="true" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_height="match_parent"
+                android:layout_marginTop="100dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         app:cardCornerRadius="15dp"
-                        app:cardPreventCornerOverlap="true"
-                        android:layout_marginTop="10dp">
+                        app:cardPreventCornerOverlap="true">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:minHeight="100dp"
                             android:background="@drawable/home_gradient_maths"
+                            android:minHeight="100dp"
                             android:padding="10dp">
 
                             <ImageView
+                                style="@style/homeCardImage"
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_maths"
-                                style="@style/homeCardImage"/>
+                                android:src="@drawable/home_ic_maths" />
 
                             <TextView
                                 android:id="@+id/textViewSub1Title"
-                                android:text="Maths"
-                                style="@style/viewParent.headerText.HomeCardTitle" />
+                                style="@style/viewParent.headerText.HomeCardTitle"
+                                android:text="Maths" />
 
                         </RelativeLayout>
                     </android.support.v7.widget.CardView>
@@ -77,26 +78,26 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         app:cardCornerRadius="15dp"
-                        app:cardPreventCornerOverlap="true"
-                        android:layout_marginTop="10dp">
+                        app:cardPreventCornerOverlap="true">
 
                         <net.colindodd.gradientlayout.GradientRelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:minHeight="100dp"
-                            gl:start_color="@color/gradientLightYellow"
+                            android:padding="10dp"
                             gl:end_color="@color/gradientOrange"
                             gl:orientation="LEFT_RIGHT"
-                            android:padding="10dp">
+                            gl:start_color="@color/gradientLightYellow">
 
                             <ImageView
                                 android:id="@+id/imageView3"

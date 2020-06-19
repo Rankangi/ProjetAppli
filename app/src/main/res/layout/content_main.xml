@@ -69,7 +69,7 @@
                             <TextView
                                 android:id="@+id/textViewSub1Title"
                                 style="@style/viewParent.headerText.HomeCardTitle"
-                                android:text="Maths" />
+                                android:text="Solo" />
 
                         </RelativeLayout>
                     </android.support.v7.widget.CardView>
@@ -112,7 +112,7 @@
                             <TextView
                                 android:id="@+id/textViewSub2Title"
                                 style="@style/viewParent.headerText.HomeCardTitle"
-                                android:text="Physics" />
+                                android:text="Multijoueur" />
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
                     </android.support.v7.widget.CardView>

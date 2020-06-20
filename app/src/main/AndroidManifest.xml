@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestBDDActivity"/>
+        <activity android:name=".SelectKidAdminActivity"></activity>
         <activity android:name=".AdminActivity" />
         <activity android:name=".SoloActivity" />
         <activity

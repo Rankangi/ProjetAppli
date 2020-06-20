@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigationMyProfile:
                     return true;
                 case R.id.testBDD:
-                    Intent intent = new Intent(MainActivity.this, TestBDDActivity.class);
-                    startActivity(intent);
+                    return true;
                 case R.id.navigationHome:
                     return true;
                 case  R.id.navigationSearch:
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity
     private View.OnClickListener clickAdmin = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+            Intent intent = new Intent(MainActivity.this, SelectKidAdminActivity.class);
             startActivity(intent);
         }
     };

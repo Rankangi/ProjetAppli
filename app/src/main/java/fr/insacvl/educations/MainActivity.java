@@ -1,5 +1,6 @@
 package fr.insacvl.educations;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import fr.insacvl.educations.helper.DatabaseHelper;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     private static final int MODE_DARK = 0;
     private static final int MODE_LIGHT = 1;
 
+    DatabaseHelper db;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -37,8 +41,9 @@ public class MainActivity extends AppCompatActivity
             switch (item.getItemId()) {
                 case R.id.navigationMyProfile:
                     return true;
-                case R.id.navigationMyCourses:
-                    return true;
+                case R.id.testBDD:
+                    Intent intent = new Intent(MainActivity.this, TestBDDActivity.class);
+                    startActivity(intent);
                 case R.id.navigationHome:
                     return true;
                 case  R.id.navigationSearch:
@@ -81,8 +86,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setDarkMode(getWindow());
-
-
+        db = new DatabaseHelper(getApplicationContext());
+        db.addNewEnfant("Jackie");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

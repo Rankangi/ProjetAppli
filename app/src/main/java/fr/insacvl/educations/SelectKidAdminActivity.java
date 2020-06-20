@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class SelectKidAdminActivity extends ListActivity {
     DatabaseHelper db;
     ArrayAdapter<String> adapter;
     private EditText textbox;
+    List<Enfant> list;
 
     private View.OnKeyListener keylistener = new View.OnKeyListener(){
         @Override
@@ -43,7 +45,7 @@ public class SelectKidAdminActivity extends ListActivity {
         db = new DatabaseHelper(getApplicationContext());
         textbox = findViewById(R.id.getMot);
         textbox.setOnKeyListener(keylistener);
-        List<Enfant> list = db.getAllEnfants();
+        list = db.getAllEnfants();
         List<String> str = new ArrayList<>();
         for (Enfant e: list) {
             str.add(e.getNom());
@@ -59,14 +61,15 @@ public class SelectKidAdminActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Intent intent = new Intent(this, AdminActivity.class);
-        String selectedFromList = (String) l.getItemAtPosition(position);
-        intent.putExtra("child",selectedFromList);
+        Enfant selectedFromList = list.get(position);
+        intent.putExtra("child", selectedFromList);
         startActivity(intent);
     }
 
     public void addChild(View view) {
         Editable text = textbox.getText();
         Enfant enfant = db.addNewEnfant(text.toString()); // TODO : mettre l'id de l'enfant
+        list.add(enfant);
         if (enfant != null){
             adapter.add(enfant.getNom());
             adapter.notifyDataSetChanged();

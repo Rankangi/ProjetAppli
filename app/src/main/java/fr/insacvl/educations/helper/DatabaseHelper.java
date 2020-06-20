@@ -259,5 +259,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
+    public List<Mot> getAllMotsByIDEnfant(long id_enfant) {
+
+        List<Mot> mots = new ArrayList<Mot>();
+        String selectQuery = "SELECT  * FROM " + TABLE_MOTS
+                + " WHERE " + KEY_MOTS_ENFANT + " = " + id_enfant;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Mot mot = new Mot();
+                mot.setId(c.getLong(c.getColumnIndex(KEY_MOTS_ID)));
+                mot.setScore(c.getInt(c.getColumnIndex(KEY_MOTS_SCORE)));
+                mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
+                mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
+                mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+
+                mots.add(mot);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return mots;
+    }
 }
 

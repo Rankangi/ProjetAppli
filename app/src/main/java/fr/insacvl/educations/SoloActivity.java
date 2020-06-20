@@ -11,8 +11,9 @@ import android.widget.TextView;
 import java.util.Locale;
 
 public class SoloActivity extends AppCompatActivity {
-
+    // initialize text input by user
     private EditText textbox;
+    // initialize object for text to speech
     private TextToSpeech ttobj;
 
     
@@ -25,6 +26,7 @@ public class SoloActivity extends AppCompatActivity {
                 TextView text;
                 text = findViewById(R.id.enteredText);
                 text.setText(textbox.getText());
+                // ttobj usage to speak
                 ttobj.speak(String.valueOf(textbox.getText()),TextToSpeech.QUEUE_FLUSH,null);
                 return true;
             }
@@ -38,9 +40,11 @@ public class SoloActivity extends AppCompatActivity {
         setContentView(R.layout.activity_solo);
         textbox = findViewById(R.id.getTheWord);
         textbox.setOnKeyListener(keylistener);
+        // Create Object Text to Speech
         ttobj = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
+                // Set the Text To Speech language
                 ttobj.setLanguage(Locale.FRENCH);
             }
         });

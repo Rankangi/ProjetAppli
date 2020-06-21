@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity
 
         setDarkMode(getWindow());
         db = new DatabaseHelper(getApplicationContext());
-        db.addNewEnfant("Jackie");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

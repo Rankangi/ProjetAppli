@@ -21,7 +21,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="11dp"
             android:ems="10"
-            android:hint="(entrez le mot)"
+            android:hint="Donne la bonne orthographe du mot"
             android:inputType="textPersonName" />
 
         <TextView
@@ -36,9 +36,9 @@
             android:id="@+id/speechButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="400px"
+            android:layout_marginLeft="290px"
             android:layout_marginTop="300px"
-            android:text="Parler" />
+            android:text="Ecoute et écris ce mot" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

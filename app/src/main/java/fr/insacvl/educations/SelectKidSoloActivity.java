@@ -48,4 +48,6 @@ public class SelectKidSoloActivity extends ListActivity {
         intent.putExtra("child", selectedFromList);
         startActivity(intent);
     }
+
+
 }

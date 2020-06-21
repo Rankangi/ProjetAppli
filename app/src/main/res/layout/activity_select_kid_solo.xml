@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Qui est-tu ? :)"
+            android:text="Qui es-tu ? :)"
             android:textAlignment="center"
             android:textSize="50dp"/>
     </LinearLayout>

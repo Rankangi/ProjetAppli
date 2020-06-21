@@ -1,6 +1,8 @@
 package fr.insacvl.educations;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,10 +62,33 @@ public class SelectKidAdminActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Intent intent = new Intent(this, AdminActivity.class);
-        Enfant selectedFromList = list.get(position);
+        final Intent intent = new Intent(this, AdminActivity.class);
+        final Enfant selectedFromList = list.get(position);
         intent.putExtra("child", selectedFromList);
-        startActivity(intent);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Que voulez-vous faire ?");
+        builder.setMessage("Vous pouvez soit ajouter une liste de mot ou soit supprimer ce nom.");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ajouter une liste de mot", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("Supprimez ce nom", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                db.deleteMot(selectedFromList.getId());
+                list.remove(selectedFromList);
+                adapter.remove(selectedFromList.getNom());
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        builder.show();
+
     }
 
     public void addChild(View view) {

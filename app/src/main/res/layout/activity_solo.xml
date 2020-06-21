@@ -40,5 +40,16 @@
             android:layout_marginTop="300px"
             android:text="Ecoute et écris ce mot" />
 
+        <ProgressBar
+            android:id="@+id/progressBarID"
+            android:layout_width="150px"
+            android:layout_height="150px"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="30px"
+            style="?android:progressBarStyleHorizontal"
+            android:progress="0"
+            android:text="TextView"
+            android:progressDrawable="@drawable/circle"/>
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

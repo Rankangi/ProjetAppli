@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +34,15 @@ public class SoloActivity extends AppCompatActivity {
     private Mot dbWord;
     // to check if the word was found
     boolean wordfoud = true;
+    // the Progress Bar
+    private ProgressBar progressBar;
+
 
     Enfant child;
+
+    // Int to becode child score
+    // TODO : remplacer par le score de l'enfant dans le constructeur
+    int childscore ;
 
 
     private View.OnKeyListener keylistener = new View.OnKeyListener(){
@@ -49,6 +57,8 @@ public class SoloActivity extends AppCompatActivity {
                 if( !wordfoud && dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                     wordfoud = true;
+                    // on ajoute 10 points
+                    scoreUpdate(10);
                     // on donne la récompense
                     ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
                 }
@@ -61,6 +71,16 @@ public class SoloActivity extends AppCompatActivity {
             }
             return false;
         }
+    };
+
+    // function to update the score
+    private void scoreUpdate(int addedScore){
+        childscore += addedScore;
+        if(childscore>100){
+            childscore = childscore -100;
+            //TODO ajouter un niveau à l'enfant ?
+        }
+        progressBar.setProgress(childscore);
     };
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -100,6 +120,12 @@ public class SoloActivity extends AppCompatActivity {
 
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());
+        // initialize score
+        // TODO add child score
+        childscore = 0;
+        // link progressbar
+        progressBar = findViewById(R.id.progressBarID);
+
         // link textboxuser to the textbox and the listener
         textboxUser = findViewById(R.id.getTheWord);
         textboxUser.setOnKeyListener(keylistener);

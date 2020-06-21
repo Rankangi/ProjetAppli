@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,27 +7,53 @@
     tools:context="fr.insacvl.educations.SelectKidSoloActivity"
     android:orientation="vertical">
 
+    <ImageView
+        style="@style/DarkModeHidden"
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_topbk" />
 
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            style="@style/viewParent.headerText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Profils"
+            android:textSize="40dp" />
+
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/header_image" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal">
-        <TextView
+
+        <ListView
+            android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Qui es-tu ? :)"
-            android:textAlignment="center"
-            android:textSize="50dp"/>
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
     </LinearLayout>
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp"/>
-
-
-
-</LinearLayout>
+</RelativeLayout>

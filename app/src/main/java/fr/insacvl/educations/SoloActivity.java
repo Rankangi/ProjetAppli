@@ -52,6 +52,12 @@ public class SoloActivity extends AppCompatActivity {
                     // on donne la récompense
                     ttobj.speak(String.valueOf("Bravo"),TextToSpeech.QUEUE_FLUSH,null);
                 }
+
+                else {
+                    wordfoud = false;
+                    ttobj.speak(String.valueOf("Ce n'est pas la bonne orthographe"),TextToSpeech.QUEUE_FLUSH,null);
+
+                }
                 // clean de la text box
                 textboxUser.setText("");
                 return true;

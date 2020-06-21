@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         RelativeLayout multi = findViewById(R.id.multi);
         RelativeLayout admin = findViewById(R.id.admin);
         solo.setOnClickListener(clickSolo);
-        multi.setOnClickListener(clickMulti);
+//        multi.setOnClickListener(clickMulti);
         admin.setOnClickListener(clickAdmin);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

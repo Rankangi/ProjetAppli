@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
     private View.OnClickListener clickSolo = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, SoloActivity.class);
+            Intent intent = new Intent(MainActivity.this, SelectKidSoloActivity.class);
             startActivity(intent);
         }
     };

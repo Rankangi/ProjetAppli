@@ -12,39 +12,23 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 
-public class SelectKidAdminActivity extends ListActivity {
-
+public class SelectKidSoloActivity extends ListActivity {
     DatabaseHelper db;
     ArrayAdapter<String> adapter;
-    private EditText textbox;
     List<Enfant> list;
-
-    private View.OnKeyListener keylistener = new View.OnKeyListener(){
-        @Override
-        public boolean onKey(View view, int i, KeyEvent keyEvent) {
-            if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-                addChild(view);
-                return true;
-            }
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_kid);
+        setContentView(R.layout.activity_select_kid_solo);
 
         db = new DatabaseHelper(getApplicationContext());
-        textbox = findViewById(R.id.getMot);
-        textbox.setOnKeyListener(keylistener);
         list = db.getAllEnfants();
         List<String> str = new ArrayList<>();
         for (Enfant e: list) {
@@ -54,25 +38,14 @@ public class SelectKidAdminActivity extends ListActivity {
         adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, str);
         setListAdapter(adapter);
-
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Intent intent = new Intent(this, AdminActivity.class);
+        Intent intent = new Intent(this, SoloActivity.class);
         Enfant selectedFromList = list.get(position);
         intent.putExtra("child", selectedFromList);
         startActivity(intent);
-    }
-
-    public void addChild(View view) {
-        Editable text = textbox.getText();
-        Enfant enfant = db.addNewEnfant(text.toString());
-        list.add(enfant);
-        if (enfant != null){
-            adapter.add(enfant.getNom());
-            adapter.notifyDataSetChanged();
-        }
     }
 }

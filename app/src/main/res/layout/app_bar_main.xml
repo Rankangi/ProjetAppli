@@ -30,8 +30,7 @@
         android:adjustViewBounds="true"
         android:src="@drawable/ic_topbk" />
 
-    <include
-        layout="@layout/content_main" />
+    <include layout="@layout/content_main" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

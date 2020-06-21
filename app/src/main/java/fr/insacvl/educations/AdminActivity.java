@@ -1,6 +1,8 @@
 package fr.insacvl.educations;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -25,18 +28,14 @@ public class AdminActivity extends ListActivity {
     ArrayAdapter<String> adapter;
     private EditText textbox;
     Enfant child;
+    List<Mot> list;
 
     private View.OnKeyListener keylistener = new View.OnKeyListener(){
 
         @Override
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-                Editable text = textbox.getText();
-                Mot mot = db.addNewMot(text.toString(), child.getId()); // TODO : mettre l'id de l'enfant
-                if (mot != null){
-                    adapter.add(mot.getContenu());
-                    adapter.notifyDataSetChanged();
-                }
+                addWord(view);
                 return true;
             }
             return false;
@@ -58,7 +57,7 @@ public class AdminActivity extends ListActivity {
         db = new DatabaseHelper(getApplicationContext());
         textbox = findViewById(R.id.getMot);
         textbox.setOnKeyListener(keylistener);
-        List<Mot> list = db.getAllMotsByIDEnfant(child.getId());
+        list = db.getAllMotsByIDEnfant(child.getId());
         List<String> str = new ArrayList<>();
         for (Mot m: list) {
             str.add(m.getContenu());
@@ -69,8 +68,43 @@ public class AdminActivity extends ListActivity {
         setListAdapter(adapter);
     }
 
+    public void addWord(View view){
+        Editable text = textbox.getText();
+        Mot mot = db.addNewMot(text.toString(), child.getId());
+        if (mot != null && !mot.getContenu().equals("")){
+            list.add(mot);
+            adapter.add(mot.getContenu());
+            adapter.notifyDataSetChanged();
+        }
+    }
 
-    public void clearBDD(View view) {
-        db.deleteEverything();
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        final Mot selectedFromList = list.get(position);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation");
+        builder.setMessage("Voulez-vous supprimer ce mot ?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                db.deleteMot(selectedFromList.getId());
+                list.remove(selectedFromList);
+                adapter.remove(selectedFromList.getContenu());
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        builder.show();
+
     }
 }

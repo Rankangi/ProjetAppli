@@ -22,8 +22,7 @@
             android:layout_marginStart="11dp"
             android:ems="10"
             android:hint="(entrez le mot)"
-            android:inputType="textPersonName"
-            android:singleLine="false" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/enteredText"

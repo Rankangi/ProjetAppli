@@ -46,7 +46,7 @@ public class SoloActivity extends AppCompatActivity {
                 text = findViewById(R.id.enteredText);
                 text.setText(textboxUser.getText());
                 // on check si le mot entré est le bon
-                if( !wordfoud && dbWord.getContenu().equals(String.valueOf(text.getText()))){
+                if( !wordfoud && dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                     wordfoud = true;
                     // on donne la récompense

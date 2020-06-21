@@ -235,7 +235,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteEnfant(long enfant_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_MOTS, KEY_ENFANTS_ID + " = ?",
+        db.delete(TABLE_ENFANTS, KEY_ENFANTS_ID + " = ?",
                 new String[] { String.valueOf(enfant_id) });
     }
 

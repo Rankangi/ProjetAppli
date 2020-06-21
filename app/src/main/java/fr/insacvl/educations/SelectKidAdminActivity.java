@@ -80,7 +80,7 @@ public class SelectKidAdminActivity extends ListActivity {
         builder.setNegativeButton("Supprimez ce nom", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                db.deleteMot(selectedFromList.getId());
+                db.deleteEnfant(selectedFromList.getId());
                 list.remove(selectedFromList);
                 adapter.remove(selectedFromList.getNom());
                 adapter.notifyDataSetChanged();

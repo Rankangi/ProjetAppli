@@ -50,13 +50,10 @@ public class SoloActivity extends AppCompatActivity {
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                     wordfoud = true;
                     // on donne la récompense
-                    ttobj.speak(String.valueOf("Bravo"),TextToSpeech.QUEUE_FLUSH,null);
+                    ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
                 }
-
                 else {
-                    wordfoud = false;
-                    ttobj.speak(String.valueOf("Ce n'est pas la bonne orthographe"),TextToSpeech.QUEUE_FLUSH,null);
-
+                    ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
                 }
                 // clean de la text box
                 textboxUser.setText("");
@@ -74,7 +71,7 @@ public class SoloActivity extends AppCompatActivity {
             int listsize = dbWordCount.size();
             // check si il y a au moins un mot dans la bd
             if(listsize == 0){
-                ttobj.speak(String.valueOf("Pas de mots"),TextToSpeech.QUEUE_FLUSH,null);
+                ttobj.speak("Pas de mots",TextToSpeech.QUEUE_FLUSH,null);
                 return;
             }
             // si oui :

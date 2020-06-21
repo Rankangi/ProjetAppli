@@ -68,8 +68,8 @@ public class SelectKidAdminActivity extends ListActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Que voulez-vous faire ?");
-        builder.setMessage("Vous pouvez soit ajouter une liste de mot ou soit supprimer ce nom.");
-        builder.setPositiveButton("Ajouter une liste de mot", new DialogInterface.OnClickListener() {
+        builder.setMessage("Vous pouvez soit ajouter des mots à la liste ou soit supprimer ce nom.");
+        builder.setPositiveButton("Ajouter des mots à la liste", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(intent);

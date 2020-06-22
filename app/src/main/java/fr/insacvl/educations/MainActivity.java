@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
     private View.OnClickListener clickMulti = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, SoloActivityEasy.class);
+            Intent intent = new Intent(MainActivity.this, AdminActivity.class);
             startActivity(intent);
         }
     };
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
     private View.OnClickListener clickAdmin = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, SelectKidAdminActivity.class);
+            Intent intent = new Intent(MainActivity.this, AdminActivity.class);
             startActivity(intent);
         }
     };
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity
         RelativeLayout multi = findViewById(R.id.multi);
         RelativeLayout admin = findViewById(R.id.admin);
         solo.setOnClickListener(clickSolo);
+        // TODO: Activité multi
 //        multi.setOnClickListener(clickMulti);
         admin.setOnClickListener(clickAdmin);
 

@@ -12,89 +12,98 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
+import fr.insacvl.educations.modele.Mot;
 
-public class SelectKidAdminActivity extends ListActivity {
+public class AddWordActivity extends ListActivity {
 
     DatabaseHelper db;
     ArrayAdapter<String> adapter;
     private EditText textbox;
-    List<Enfant> list;
+    Enfant child;
+    List<Mot> list;
 
     private View.OnKeyListener keylistener = new View.OnKeyListener(){
+
         @Override
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-                addChild(view);
+                addWord(view);
                 return true;
             }
             return false;
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_kid);
+        setContentView(R.layout.activity_add_word);
+
+        Intent myIntent = getIntent(); // gets the previously created intent
+        child = (Enfant) myIntent.getSerializableExtra("child");
+
+        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
+        toast.show();
 
         db = new DatabaseHelper(getApplicationContext());
         textbox = findViewById(R.id.getMot);
         textbox.setOnKeyListener(keylistener);
-        list = db.getAllEnfants();
+        list = db.getAllMotsByIDEnfant(child.getId());
         List<String> str = new ArrayList<>();
-        for (Enfant e: list) {
-            str.add(e.getNom());
-            Log.i("DIM", e.getNom());
+        for (Mot m: list) {
+            str.add(m.getContenu());
+            Log.i("DIM", m.getContenu());
         }
         adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, str);
         setListAdapter(adapter);
-
     }
+
+    public void addWord(View view){
+        Editable text = textbox.getText();
+        Mot mot = db.addNewMot(text.toString(), child.getId());
+        if (mot != null && !mot.getContenu().equals("")){
+            list.add(mot);
+            adapter.add(mot.getContenu());
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        final Intent intent = new Intent(this, AddWordActivity.class);
-        final Enfant selectedFromList = list.get(position);
-        intent.putExtra("child", selectedFromList);
+        final Mot selectedFromList = list.get(position);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Que voulez-vous faire ?");
-        builder.setMessage("Vous pouvez soit ajouter des mots à la liste ou soit supprimer ce nom.");
-        builder.setPositiveButton("Ajouter des mots à la liste", new DialogInterface.OnClickListener() {
+        builder.setTitle("Confirmation");
+        builder.setMessage("Voulez-vous supprimer ce mot ?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                startActivity(intent);
+                db.deleteMot(selectedFromList.getId());
+                list.remove(selectedFromList);
+                adapter.remove(selectedFromList.getContenu());
+                adapter.notifyDataSetChanged();
             }
         });
 
-        builder.setNegativeButton("Supprimez ce nom", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                db.deleteEnfant(selectedFromList.getId());
-                list.remove(selectedFromList);
-                adapter.remove(selectedFromList.getNom());
-                adapter.notifyDataSetChanged();
             }
         });
 
         builder.show();
 
-    }
-
-    public void addChild(View view) {
-        Editable text = textbox.getText();
-        Enfant enfant = db.addNewEnfant(text.toString());
-        list.add(enfant);
-        if (enfant != null){
-            adapter.add(enfant.getNom());
-            adapter.notifyDataSetChanged();
-        }
     }
 }

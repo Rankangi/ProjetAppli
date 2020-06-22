@@ -40,17 +40,29 @@
             android:src="@drawable/header_image" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/text"
+        style="@style/viewParent.headerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView2"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:layout_marginBottom="10dp"
+        android:text="Qui est-tu ?" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/text"
         android:layout_marginTop="0dp"
         android:orientation="horizontal">
 
         <ListView
-            android:id="@android:id/list"
+            android:id="@+id/listViewEnfant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fadingEdge="none"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp" />
 

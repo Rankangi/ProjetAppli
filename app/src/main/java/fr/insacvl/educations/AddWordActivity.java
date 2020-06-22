@@ -59,7 +59,7 @@ public class AddWordActivity extends ListActivity {
         list = db.getAllMotsByIDEnfant(child.getId());
         List<String> str = new ArrayList<>();
         for (Mot m: list) {
-            str.add(m.getContenu());
+            str.add(m.getContenu() + " (" + m.getLevelOfScore() + ")");
             Log.i("DIM", m.getContenu());
         }
         adapter = new ArrayAdapter<String>(
@@ -72,7 +72,7 @@ public class AddWordActivity extends ListActivity {
         Mot mot = db.addNewMot(text.toString(), child.getId());
         if (mot != null && !mot.getContenu().equals("")){
             list.add(mot);
-            adapter.add(mot.getContenu());
+            adapter.add(mot.getContenu() + " (" + mot.getLevelOfScore() + ")");
             adapter.notifyDataSetChanged();
         }
     }
@@ -86,13 +86,12 @@ public class AddWordActivity extends ListActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmation");
         builder.setMessage("Voulez-vous supprimer ce mot ?");
-        builder.setCancelable(false);
         builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 db.deleteMot(selectedFromList.getId());
                 list.remove(selectedFromList);
-                adapter.remove(selectedFromList.getContenu());
+                adapter.remove(selectedFromList.getContenu() + " (" + selectedFromList.getLevelOfScore() + ")");
                 adapter.notifyDataSetChanged();
             }
         });

@@ -24,6 +24,25 @@ public class Mot {
 
     public int getScore() { return this.score; }
 
+    public String getLevelOfScore () {
+        if (score == 0){
+            return "Débutant";
+        }
+        if (score == 1){
+            return "Initié";
+        }
+        if (score == 2){
+            return "Intermédiaire";
+        }
+        if (score == 3){
+            return "Avancé";
+        }
+        if (score == 4){
+            return "Maitrisé";
+        }
+        else return "Score invalide: " + score;
+    }
+
     public long getId() { return this.id; }
 
     public long getIdEnfant() { return this.id_enfant; }

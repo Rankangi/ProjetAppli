@@ -39,7 +39,7 @@ public class SelectKidSoloActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Intent intent = new Intent(this, SoloActivity.class);
+        Intent intent = new Intent(this, SoloActivityDifficultySelector.class);
         Enfant selectedFromList = list.get(position);
         intent.putExtra("child", selectedFromList);
         startActivity(intent);

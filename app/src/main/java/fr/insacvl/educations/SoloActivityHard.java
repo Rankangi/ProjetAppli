@@ -139,7 +139,7 @@ public class SoloActivityHard extends AppCompatActivity {
                 // Set the Text To Speech language
                 ttobj.setLanguage(Locale.FRENCH);
             }
-        });
+        },"com.google.android.tts");
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -36,7 +38,6 @@ public class SoloActivityMedium extends AppCompatActivity {
     boolean wordfoud = true;
     // the Progress Bar
     private ProgressBar progressBar;
-
 
     Enfant child;
 
@@ -134,12 +135,14 @@ public class SoloActivityMedium extends AppCompatActivity {
         speechButton.setOnClickListener(clickListener);
         // Create Object Text to Speech
         ttobj = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+
             @Override
             public void onInit(int status) {
                 // Set the Text To Speech language
                 ttobj.setLanguage(Locale.FRENCH);
             }
-        });
+        },"com.google.android.tts");
+
     }
 
 

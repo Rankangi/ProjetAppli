@@ -21,7 +21,7 @@ import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 
 
-public class SoloActivity extends AppCompatActivity {
+public class SoloActivityEasy extends AppCompatActivity {
     // Get the DB:
     DatabaseHelper db;
     // initialize variable text input by user
@@ -51,7 +51,7 @@ public class SoloActivity extends AppCompatActivity {
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
                 TextView text;
-                text = findViewById(R.id.enteredText);
+                text = findViewById(R.id.enteredTextEasy);
                 text.setText(textboxUser.getText());
                 // on check si le mot entré est le bon
                 if( !wordfoud && dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
@@ -110,7 +110,7 @@ public class SoloActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solo);
+        setContentView(R.layout.activity_solo_easy);
 
         Intent myIntent = getIntent(); // gets the previously created intent
         child = (Enfant) myIntent.getSerializableExtra("child");
@@ -124,13 +124,13 @@ public class SoloActivity extends AppCompatActivity {
         // TODO add child score
         childscore = 0;
         // link progressbar
-        progressBar = findViewById(R.id.progressBarID);
+        progressBar = findViewById(R.id.progressBarIDEasy);
 
         // link textboxuser to the textbox and the listener
-        textboxUser = findViewById(R.id.getTheWord);
+        textboxUser = findViewById(R.id.getTheWordEasy);
         textboxUser.setOnKeyListener(keylistener);
         // link speechButton to the textbox and the listener
-        speechButton = findViewById(R.id.speechButton);
+        speechButton = findViewById(R.id.speechButtonEasy);
         speechButton.setOnClickListener(clickListener);
         // Create Object Text to Speech
         ttobj = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {

@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
     private View.OnClickListener clickMulti = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, SoloActivity.class);
+            Intent intent = new Intent(MainActivity.this, SoloActivityEasy.class);
             startActivity(intent);
         }
     };

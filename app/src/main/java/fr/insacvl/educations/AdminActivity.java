@@ -1,109 +1,32 @@
 package fr.insacvl.educations;
 
-import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
-import java.util.List;
+public class AdminActivity extends AppCompatActivity {
 
-import fr.insacvl.educations.helper.DatabaseHelper;
-import fr.insacvl.educations.modele.Enfant;
-import fr.insacvl.educations.modele.Mot;
-
-public class AdminActivity extends ListActivity {
-
-    DatabaseHelper db;
-    ArrayAdapter<String> adapter;
-    private EditText textbox;
-    Enfant child;
-    List<Mot> list;
-
-    private View.OnKeyListener keylistener = new View.OnKeyListener(){
-
+    private View.OnClickListener modifKidClick = new View.OnClickListener() {
         @Override
-        public boolean onKey(View view, int i, KeyEvent keyEvent) {
-            if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-                addWord(view);
-                return true;
-            }
-            return false;
+        public void onClick(View view) {
+            Intent intent = new Intent(AdminActivity.this, SelectKidAdminActivity.class);
+            startActivity(intent);
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        Intent myIntent = getIntent(); // gets the previously created intent
-        child = (Enfant) myIntent.getSerializableExtra("child");
-
-        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
-        toast.show();
-
-        db = new DatabaseHelper(getApplicationContext());
-        textbox = findViewById(R.id.getMot);
-        textbox.setOnKeyListener(keylistener);
-        list = db.getAllMotsByIDEnfant(child.getId());
-        List<String> str = new ArrayList<>();
-        for (Mot m: list) {
-            str.add(m.getContenu());
-            Log.i("DIM", m.getContenu());
-        }
-        adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, str);
-        setListAdapter(adapter);
-    }
-
-    public void addWord(View view){
-        Editable text = textbox.getText();
-        Mot mot = db.addNewMot(text.toString(), child.getId());
-        if (mot != null && !mot.getContenu().equals("")){
-            list.add(mot);
-            adapter.add(mot.getContenu());
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        final Mot selectedFromList = list.get(position);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmation");
-        builder.setMessage("Voulez-vous supprimer ce mot ?");
-        builder.setCancelable(false);
-        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                db.deleteMot(selectedFromList.getId());
-                list.remove(selectedFromList);
-                adapter.remove(selectedFromList.getContenu());
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-
-        builder.show();
-
+        RelativeLayout modifKid = findViewById(R.id.modifKid);
+        modifKid.setOnClickListener(modifKidClick);
     }
 }

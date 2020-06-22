@@ -38,6 +38,11 @@ public class SoloActivityMedium extends AppCompatActivity {
     boolean wordfoud = true;
     // the Progress Bar
     private ProgressBar progressBar;
+    // size of the chosen word
+    private int wordsize;
+    // Hint textbox
+    private TextView hintBox;
+
 
     Enfant child;
 
@@ -62,6 +67,7 @@ public class SoloActivityMedium extends AppCompatActivity {
                     scoreUpdate(10);
                     // on donne la récompense
                     ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                    hintBox.setText(textboxUser.getText());
                 }
                 else {
                     ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
@@ -85,6 +91,7 @@ public class SoloActivityMedium extends AppCompatActivity {
     };
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
+        public String hintString;
         @Override
         public void onClick(View view) {
             // pour générer le mot random
@@ -103,7 +110,9 @@ public class SoloActivityMedium extends AppCompatActivity {
                 // le mot n'est pas trouvé
                 wordfoud = false;
             }
-
+            wordsize = dbWord.getContenu().length();
+            hintString = new String(new char[wordsize]).replace("\0","_ ");
+            hintBox.setText(hintString);
             ttobj.speak(dbWord.getContenu(),TextToSpeech.QUEUE_FLUSH,null);
         }
     };
@@ -126,6 +135,8 @@ public class SoloActivityMedium extends AppCompatActivity {
         childscore = 0;
         // link progressbar
         progressBar = findViewById(R.id.progressBarIDMedium);
+        // link hintBox
+        hintBox = findViewById(R.id.hintTextMedium);
 
         // link textboxuser to the textbox and the listener
         textboxUser = findViewById(R.id.getTheWordMedium);

@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="369dp"
-            android:text="TextView" />
+            android:text="" />
 
         <Button
             android:id="@+id/speechButtonMedium"
@@ -58,6 +58,15 @@
             android:layout_marginLeft="800px"
             android:layout_marginTop="50px"
             android:text="Moyen" />
+
+        <TextView
+            android:id="@+id/hintTextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginLeft="400px"
+            android:layout_marginTop="600px"
+            android:text="" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

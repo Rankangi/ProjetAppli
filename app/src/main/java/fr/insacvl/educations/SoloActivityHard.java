@@ -141,7 +141,4 @@ public class SoloActivityHard extends AppCompatActivity {
             }
         },"com.google.android.tts");
     }
-
-
-
 }

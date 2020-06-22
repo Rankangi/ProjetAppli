@@ -77,7 +77,7 @@
                         android:layout_marginTop="10dp"
                         android:id="@+id/textViewSub1Title"
                         style="@style/viewParent.headerText.HomeCardTitle"
-                        android:text="Modifier les enfants"
+                        android:text="Ajouter/Modifier un prénom"
                         android:textSize="25dp"/>
 
                 </RelativeLayout>

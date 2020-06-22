@@ -126,6 +126,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
     }
 
+    public void updateMot (Mot mot){
+        SQLiteDatabase db = getWritableDatabase();
+        String updateQuery = "UPDATE " + TABLE_MOTS + " SET " +
+                KEY_MOTS_MOT + " = '" + mot.getContenu() + "', " +
+                KEY_MOTS_SCORE + " = " + mot.getScore() + ", " +
+                KEY_MOTS_CREATED_AT + " = '" + mot.getCreated_at() +
+                "' WHERE " + KEY_MOTS_ID + " = " + mot.getId() + " AND " +
+                KEY_MOTS_ENFANT + " = " + mot.getIdEnfant();
+
+        db.execSQL(updateQuery);
+    }
+
     public Enfant getEnfant(long enfant_id){
         SQLiteDatabase db = getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_ENFANTS
@@ -275,7 +287,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
                 mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
                 mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
-
                 mots.add(mot);
             } while (c.moveToNext());
         }

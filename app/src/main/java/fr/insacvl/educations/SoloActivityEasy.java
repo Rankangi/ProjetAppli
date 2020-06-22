@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
@@ -54,6 +55,40 @@ public class SoloActivityEasy extends AppCompatActivity {
     // TODO : remplacer par le score de l'enfant dans le constructeur
     int childscore ;
 
+
+    private View.OnKeyListener keylistener = new View.OnKeyListener(){
+
+        @Override
+        public boolean onKey(View view, int i, KeyEvent keyEvent) {
+            if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
+                TextView text;
+                text = findViewById(R.id.enteredTextEasy);
+                text.setText(textboxUser.getText());
+                // on check si le mot entré est le bon
+                if( !wordfoud && dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
+                    // si oui il est trouvé (on aura un nouveau mot avec le speech button)
+                    wordfoud = true;
+                    // on ajoute 10 points
+                    scoreUpdate(10);
+                    DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
+                    if (dbWord.getScore() <= 3) {
+                        dbWord.setScore(dbWord.getScore() + 1);
+                    }
+                    databaseHelper.updateMot(dbWord);
+                    // on donne la récompense
+                    ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                }
+                else {
+                    ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
+                }
+                // clean de la text box
+                textboxUser.setText("");
+                return true;
+            }
+            return false;
+        }
+    };
+
     // function to update the score
     private void scoreUpdate(int addedScore){
         childscore += addedScore;
@@ -80,8 +115,53 @@ public class SoloActivityEasy extends AppCompatActivity {
             if(wordfoud) {
                 enteredText.setText("");
                 // choisi un mot random
-                int chosenid = new Random().nextInt(listsize); //((max - min) + 1) + min
-                dbWord = dbWordCount.get(chosenid);
+                // Tri des mots par difficulté
+                List<Mot> dbWordCount0 = new ArrayList<>();
+                List<Mot> dbWordCount1 = new ArrayList<>();
+                List<Mot> dbWordCount2 = new ArrayList<>();
+                List<Mot> dbWordCount3 = new ArrayList<>();
+                List<Mot> dbWordCount4 = new ArrayList<>();
+
+                // On ajoute les mots dans les tableaux de difficultés associées
+                for (Mot mot: dbWordCount){
+                    if (mot.getScore() == 0){
+                        dbWordCount0.add(mot);
+                    }
+                    if (mot.getScore() == 1){
+                        dbWordCount1.add(mot);
+                    }
+                    if (mot.getScore() == 2){
+                        dbWordCount2.add(mot);
+                    }
+                    if (mot.getScore() == 3){
+                        dbWordCount3.add(mot);
+                    }
+                    if (mot.getScore() == 4){
+                        dbWordCount4.add(mot);
+                    }
+                }
+
+                // Sélection d'un mot aléatoire dans le score le moins connu
+                if (dbWordCount0.size() != 0){
+                    int chosenid = new Random().nextInt(dbWordCount0.size()); //((max - min) + 1) + min
+                    dbWord = dbWordCount0.get(chosenid);
+                }
+                else if (dbWordCount1.size() != 0){
+                    int chosenid = new Random().nextInt(dbWordCount1.size()); //((max - min) + 1) + min
+                    dbWord = dbWordCount1.get(chosenid);
+                }
+                else if (dbWordCount2.size() != 0){
+                    int chosenid = new Random().nextInt(dbWordCount2.size()); //((max - min) + 1) + min
+                    dbWord = dbWordCount2.get(chosenid);
+                }
+                else if (dbWordCount3.size() != 0){
+                    int chosenid = new Random().nextInt(dbWordCount3.size()); //((max - min) + 1) + min
+                    dbWord = dbWordCount3.get(chosenid);
+                }
+                else if (dbWordCount4.size() != 0){
+                    int chosenid = new Random().nextInt(dbWordCount4.size()); //((max - min) + 1) + min
+                    dbWord = dbWordCount4.get(chosenid);
+                }
                 // le mot n'est pas trouvé
                 wordfoud = false;
 
@@ -150,7 +230,6 @@ public class SoloActivityEasy extends AppCompatActivity {
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());
         // initialize score
-        // TODO add child score
         childscore = 0;
         // link progressbar
         progressBar = findViewById(R.id.progressBarIDEasy);

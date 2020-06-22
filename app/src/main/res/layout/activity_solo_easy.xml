@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.insacvl.educations.SoloActivityEasy">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-133dp">
+
+        <EditText
+            android:layout_centerVertical="true"
+            android:id="@+id/getTheWordEasy"
+            android:layout_width="match_parent"
+            android:layout_height="152dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="11dp"
+            android:ems="10"
+            android:hint="Donne la bonne orthographe du mot"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/enteredTextEasy"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="369dp"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/speechButtonEasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="290px"
+            android:layout_marginTop="300px"
+            android:text="Ecoute et écris ce mot" />
+
+        <ProgressBar
+            android:id="@+id/progressBarIDEasy"
+            android:layout_width="150px"
+            android:layout_height="150px"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="30px"
+            style="?android:progressBarStyleHorizontal"
+            android:progress="0"
+            android:text="TextView"
+            android:progressDrawable="@drawable/circle"/>
+        <TextView
+            android:id="@+id/textView2Easy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="800px"
+            android:layout_marginTop="50px"
+            android:text="Facile" />
+
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

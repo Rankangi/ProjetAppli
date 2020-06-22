@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.insacvl.educations.SoloActivity">
+    tools:context="fr.insacvl.educations.SoloActivityEasy">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
         <EditText
             android:layout_centerVertical="true"
-            android:id="@+id/getTheWord"
+            android:id="@+id/getTheWordMedium"
             android:layout_width="match_parent"
             android:layout_height="152dp"
             android:layout_alignParentStart="true"
@@ -25,7 +25,7 @@
             android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/enteredText"
+            android:id="@+id/enteredTextMedium"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:text="TextView" />
 
         <Button
-            android:id="@+id/speechButton"
+            android:id="@+id/speechButtonMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="290px"
@@ -41,7 +41,7 @@
             android:text="Ecoute et écris ce mot" />
 
         <ProgressBar
-            android:id="@+id/progressBarID"
+            android:id="@+id/progressBarIDMedium"
             android:layout_width="150px"
             android:layout_height="150px"
             android:layout_marginLeft="30px"
@@ -50,6 +50,14 @@
             android:progress="0"
             android:text="TextView"
             android:progressDrawable="@drawable/circle"/>
+
+        <TextView
+            android:id="@+id/textView2Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="800px"
+            android:layout_marginTop="50px"
+            android:text="Moyen" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

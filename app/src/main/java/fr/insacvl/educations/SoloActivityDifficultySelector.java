@@ -23,7 +23,7 @@ public class SoloActivityDifficultySelector extends AppCompatActivity {
     private View.OnClickListener easyclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivity.class);
+            Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityEasy.class);
             intent.putExtra("child", child);
             startActivity(intent);
         }
@@ -33,7 +33,7 @@ public class SoloActivityDifficultySelector extends AppCompatActivity {
     private View.OnClickListener mediumclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivity.class);
+            Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityMedium.class);
             intent.putExtra("child", child);
             startActivity(intent);
         }
@@ -43,7 +43,7 @@ public class SoloActivityDifficultySelector extends AppCompatActivity {
     private View.OnClickListener hardclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivity.class);
+            Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityHard.class);
             intent.putExtra("child", child);
             startActivity(intent);
         }

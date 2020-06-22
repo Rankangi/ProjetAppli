@@ -55,40 +55,6 @@ public class SoloActivityEasy extends AppCompatActivity {
     // TODO : remplacer par le score de l'enfant dans le constructeur
     int childscore ;
 
-
-    private View.OnKeyListener keylistener = new View.OnKeyListener(){
-
-        @Override
-        public boolean onKey(View view, int i, KeyEvent keyEvent) {
-            if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-                TextView text;
-                text = findViewById(R.id.enteredTextEasy);
-                text.setText(textboxUser.getText());
-                // on check si le mot entré est le bon
-                if( !wordfoud && dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
-                    // si oui il est trouvé (on aura un nouveau mot avec le speech button)
-                    wordfoud = true;
-                    // on ajoute 10 points
-                    scoreUpdate(10);
-                    DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
-                    if (dbWord.getScore() <= 3) {
-                        dbWord.setScore(dbWord.getScore() + 1);
-                    }
-                    databaseHelper.updateMot(dbWord);
-                    // on donne la récompense
-                    ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
-                }
-                else {
-                    ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
-                }
-                // clean de la text box
-                textboxUser.setText("");
-                return true;
-            }
-            return false;
-        }
-    };
-
     // function to update the score
     private void scoreUpdate(int addedScore){
         childscore += addedScore;
@@ -191,14 +157,20 @@ public class SoloActivityEasy extends AppCompatActivity {
                         if(tempTxt.length()==wordlenght){
                             // on check si le mot est bon
                             if(!wordfoud && String.valueOf(enteredText.getText()).equals(dbWord.getContenu())){
-                                // si oui il est trouvé (on aura un nouveau mot avec le speech button)
-                                wordfoud = true;
                                 // on ajoute 10 points
                                 scoreUpdate(10);
+                                DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
+                                if (dbWord.getScore() <= 3) {
+                                    dbWord.setScore(dbWord.getScore() + 1);
+                                }
+                                databaseHelper.updateMot(dbWord);
                                 // on donne la récompense
                                 ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
                                 str.clear();
                                 listChar.setAdapter(null);
+                                // si oui il est trouvé (on aura un nouveau mot avec le speech button)
+                                wordfoud = true;
+
                             }
                             // sinon c'est con
                             else{

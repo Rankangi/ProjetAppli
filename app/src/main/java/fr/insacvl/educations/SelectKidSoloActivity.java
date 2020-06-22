@@ -48,7 +48,7 @@ public class SelectKidSoloActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //HashMap<String, String> map = (HashMap<String, String>) listEnfant.getItemAtPosition(position);  // pour récup les données liées au bouton
-                Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivity.class);
+                Intent intent = new Intent(SelectKidSoloActivity.this, SoloActivityDifficultySelector.class);
                 Enfant selectedFromList = list.get(position);
                 intent.putExtra("child", selectedFromList);
                 startActivity(intent);

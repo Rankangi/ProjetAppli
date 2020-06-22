@@ -13,23 +13,12 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-133dp">
 
-        <EditText
-            android:layout_centerVertical="true"
-            android:id="@+id/getTheWordEasy"
-            android:layout_width="match_parent"
-            android:layout_height="152dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="11dp"
-            android:ems="10"
-            android:hint="Donne la bonne orthographe du mot"
-            android:inputType="textPersonName" />
-
         <TextView
             android:id="@+id/enteredTextEasy"
-            android:gravity="center"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="369dp"
+            android:layout_marginLeft="400px"
+            android:layout_marginTop="500px"
             android:text="" />
 
         <Button
@@ -58,6 +47,22 @@
             android:layout_marginTop="50px"
             android:text="Facile" />
 
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text"
+            android:layout_marginTop="260dp"
+            android:orientation="horizontal">
+
+            <ListView
+                android:id="@+id/listViewCaractère"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fadingEdge="none"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+        </GridLayout>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

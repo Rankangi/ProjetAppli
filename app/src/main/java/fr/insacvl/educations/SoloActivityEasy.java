@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -67,6 +70,8 @@ public class SoloActivityEasy extends AppCompatActivity {
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         public int wordlenght;
+        public int rand_char_nb;
+        public String shuffled_dbword;
         @Override
         public void onClick(View view) {
             // pour générer le mot random
@@ -131,15 +136,50 @@ public class SoloActivityEasy extends AppCompatActivity {
                 // le mot n'est pas trouvé
                 wordfoud = false;
 
+
+
                 wordlenght = dbWord.getContenu().length();
-                // On va itérer sur les char du mot et leurs ajouter un id
+
+                // On va ajouter des mots random :
+                // TODO : mieux gérer le random
+                //nb de char random :
+                rand_char_nb = (int) Math.round(0.5*wordlenght);
+                String[] alphabet_random = new String[] {"a","b","c","d","e","f","g","h","i","j","k","l",
+                "m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+                List<String> strList = Arrays.asList(alphabet_random);
+                Collections.shuffle(strList);
+                alphabet_random = strList.toArray(new String[rand_char_nb]);
                 int iter = 0;
+                List<String> temp = new ArrayList<String>();
+
                 while(iter<wordlenght) {
-                    map = new HashMap<String, String>();
-                    map.put("char", String.valueOf(dbWord.getContenu().charAt(iter)));
-                    map.put("id", "" + iter);
+                    temp.add(String.valueOf(dbWord.getContenu().toLowerCase().charAt(iter)));
                     iter++;
-                    str.add(map);
+                }
+                Collections.shuffle(temp);
+                shuffled_dbword = "";
+                for(String s:temp){
+                    shuffled_dbword += s;
+                }
+
+                // On va itérer sur les char du mot et leurs ajouter un id
+                iter = 0;
+                Random rd = new Random();
+                while(iter<wordlenght) {
+                    if(rand_char_nb!=0 && rd.nextBoolean()){
+                        map = new HashMap<String, String>();
+                        map.put("char", alphabet_random[rand_char_nb]);
+                        map.put("id", "" + (iter+rand_char_nb));
+                        rand_char_nb = rand_char_nb-1;
+                        str.add(map);
+                    }
+                    else {
+                        map = new HashMap<String, String>();
+                        map.put("char", String.valueOf(shuffled_dbword.toLowerCase().charAt(iter)));
+                        map.put("id", "" + iter);
+                        iter++;
+                        str.add(map);
+                    }
                 }
                 final SimpleAdapter adapter = new SimpleAdapter(view.getContext(), str, R.layout.letter_selector,
                         new String[] {"char"}, new int[] {R.id.caractere});
@@ -156,14 +196,13 @@ public class SoloActivityEasy extends AppCompatActivity {
                         // si c'est la bonne taille
                         if(tempTxt.length()==wordlenght){
                             // on check si le mot est bon
-                            if(!wordfoud && String.valueOf(enteredText.getText()).equals(dbWord.getContenu())){
+                            if(!wordfoud && String.valueOf(enteredText.getText()).toLowerCase().equals(dbWord.getContenu().toLowerCase())){
                                 // on ajoute 10 points
                                 scoreUpdate(10);
-                                DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
                                 if (dbWord.getScore() <= 3) {
                                     dbWord.setScore(dbWord.getScore() + 1);
                                 }
-                                databaseHelper.updateMot(dbWord);
+                                db.updateMot(dbWord);
                                 // on donne la récompense
                                 ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
                                 str.clear();

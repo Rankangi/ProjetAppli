@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -46,7 +47,7 @@ public class SoloActivityEasy extends AppCompatActivity {
     boolean wordfoud = true;
     // the Progress Bar
     private ProgressBar progressBar;
-    ListView listChar;
+    GridView listChar;
 
     private TextView enteredText;
     private HashMap<String, String> map;
@@ -84,6 +85,7 @@ public class SoloActivityEasy extends AppCompatActivity {
             }
             // si oui :
             if(wordfoud) {
+                enteredText.setText("");
                 // On récupère un mot en fonction de son score.
                 dbWord = RandomScoreWord.getWord(dbWordCount);
                 // le mot n'est pas trouvé
@@ -195,7 +197,7 @@ public class SoloActivityEasy extends AppCompatActivity {
         // link progressbar
         progressBar = findViewById(R.id.progressBarIDEasy);
 
-        listChar = findViewById(R.id.listViewCaractère);
+        listChar = findViewById(R.id.gridViewCaractère);
 
         enteredText = findViewById(R.id.enteredTextEasy);
 

@@ -2,8 +2,10 @@ package fr.insacvl.educations;
 
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -72,6 +75,7 @@ public class SoloActivityEasy extends AppCompatActivity {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         public int wordlenght;
         public int rand_char_nb;
+        public int iterID;
         public String shuffled_dbword;
         @Override
         public void onClick(View view) {
@@ -90,6 +94,7 @@ public class SoloActivityEasy extends AppCompatActivity {
                 dbWord = RandomScoreWord.getWord(dbWordCount);
                 // le mot n'est pas trouvé
                 wordfoud = false;
+                enteredText.setText("");
 
                 wordlenght = dbWord.getContenu().length();
 
@@ -117,19 +122,22 @@ public class SoloActivityEasy extends AppCompatActivity {
 
                 // On va itérer sur les char du mot et leurs ajouter un id
                 iter = 0;
+                iterID = 0;
                 Random rd = new Random();
                 while(iter<wordlenght) {
                     if(rand_char_nb!=0 && rd.nextBoolean()){
                         map = new HashMap<String, String>();
                         map.put("char", alphabet_random[rand_char_nb]);
-                        map.put("id", "" + (iter+rand_char_nb));
+                        map.put("id", "" + iterID);
                         rand_char_nb = rand_char_nb-1;
+                        iterID++;
                         str.add(map);
                     }
                     else {
                         map = new HashMap<String, String>();
                         map.put("char", String.valueOf(shuffled_dbword.toLowerCase().charAt(iter)));
-                        map.put("id", "" + iter);
+                        map.put("id", "" + iterID);
+                        iterID++;
                         iter++;
                         str.add(map);
                     }
@@ -145,6 +153,9 @@ public class SoloActivityEasy extends AppCompatActivity {
                         String tempTxt = String.valueOf(enteredText.getText());
                         // on ajoute le char cliqué au txt
                         tempTxt += map.get("char");
+                        LinearLayout test = (LinearLayout) view; //setenable = false
+                        test.setOnClickListener(null);
+                        test.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
                         enteredText.setText(tempTxt);
                         // si c'est la bonne taille
                         if(tempTxt.length()==wordlenght){
@@ -166,8 +177,10 @@ public class SoloActivityEasy extends AppCompatActivity {
                             }
                             // sinon c'est con
                             else{
-                                ttobj.speak("Grosse merde",TextToSpeech.QUEUE_FLUSH,null);
-                                enteredText.setText("");
+                                ttobj.speak("Faux",TextToSpeech.QUEUE_FLUSH,null);
+                                str.clear();
+                                listChar.setAdapter(null);
+                                wordfoud = true;
                             }
 
                         }

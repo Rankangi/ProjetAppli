@@ -31,8 +31,8 @@
     </LinearLayout>
 
 
-    <ListView
-        android:id="@android:id/list"
+    <GridView
+        android:id="@+id/listViewEnfant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="0dp"

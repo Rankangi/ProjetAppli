@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -19,13 +20,13 @@ import fr.insacvl.educations.modele.Enfant;
 public class SelectKidSoloActivity extends Activity {
     DatabaseHelper db;
     List<Enfant> list;
-    ListView listEnfant;
+    GridView listEnfant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_kid_solo);
-        listEnfant = (ListView) findViewById(R.id.listViewEnfant);
+        listEnfant = (GridView) findViewById(R.id.listViewEnfant);
 
         db = new DatabaseHelper(getApplicationContext());
         list = db.getAllEnfants();

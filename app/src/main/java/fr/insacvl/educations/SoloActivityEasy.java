@@ -14,8 +14,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +51,7 @@ public class SoloActivityEasy extends AppCompatActivity {
     boolean wordfoud = true;
     // the Progress Bar
     private ProgressBar progressBar;
-    ListView listChar;
+    GridView listChar;
     // Hint textbox
     private TextView hintBox;
 
@@ -91,6 +93,7 @@ public class SoloActivityEasy extends AppCompatActivity {
             }
             // si oui :
             if(wordfoud) {
+                enteredText.setText("");
                 // On récupère un mot en fonction de son score.
                 dbWord = RandomScoreWord.getWord(dbWordCount);
 
@@ -158,7 +161,9 @@ public class SoloActivityEasy extends AppCompatActivity {
                         tempTxt += map.get("char");
                         LinearLayout test = (LinearLayout) view; //setenable = false
                         test.setOnClickListener(null);
-                        test.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
+                        CardView cd = (CardView) test.getChildAt(0);
+                        RelativeLayout rl = (RelativeLayout) cd.getChildAt(0);
+                        rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
                         enteredText.setText(tempTxt);
                         // si c'est la bonne taille
                         if(tempTxt.length()==wordlenght){
@@ -213,7 +218,7 @@ public class SoloActivityEasy extends AppCompatActivity {
         // link progressbar
         progressBar = findViewById(R.id.progressBarIDEasy);
 
-        listChar = findViewById(R.id.listViewCaractère);
+        listChar = findViewById(R.id.gridViewCaractère);
 
         enteredText = findViewById(R.id.enteredTextEasy);
 

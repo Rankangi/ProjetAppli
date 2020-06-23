@@ -2,24 +2,17 @@ package fr.insacvl.educations;
 
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -262,7 +255,4 @@ public class SoloActivityEasy extends AppCompatActivity {
             }
         },"com.google.android.tts");
     }
-
-
-
 }

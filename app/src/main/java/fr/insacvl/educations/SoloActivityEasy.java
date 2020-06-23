@@ -88,8 +88,91 @@ public class SoloActivityEasy extends AppCompatActivity {
                 dbWord = RandomScoreWord.getWord(dbWordCount);
                 // le mot n'est pas trouvé
                 wordfoud = false;
-            }
 
+                wordlenght = dbWord.getContenu().length();
+
+                // On va ajouter des mots random :
+                // TODO : mieux gérer le random
+                //nb de char random :
+                rand_char_nb = (int) Math.round(0.5*wordlenght);
+                String[] alphabet_random = new String[] {"a","b","c","d","e","f","g","h","i","j","k","l",
+                        "m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+                List<String> strList = Arrays.asList(alphabet_random);
+                Collections.shuffle(strList);
+                alphabet_random = strList.toArray(new String[rand_char_nb]);
+                int iter = 0;
+                List<String> temp = new ArrayList<String>();
+
+                while(iter<wordlenght) {
+                    temp.add(String.valueOf(dbWord.getContenu().toLowerCase().charAt(iter)));
+                    iter++;
+                }
+                Collections.shuffle(temp);
+                shuffled_dbword = "";
+                for(String s:temp){
+                    shuffled_dbword += s;
+                }
+
+                // On va itérer sur les char du mot et leurs ajouter un id
+                iter = 0;
+                Random rd = new Random();
+                while(iter<wordlenght) {
+                    if(rand_char_nb!=0 && rd.nextBoolean()){
+                        map = new HashMap<String, String>();
+                        map.put("char", alphabet_random[rand_char_nb]);
+                        map.put("id", "" + (iter+rand_char_nb));
+                        rand_char_nb = rand_char_nb-1;
+                        str.add(map);
+                    }
+                    else {
+                        map = new HashMap<String, String>();
+                        map.put("char", String.valueOf(shuffled_dbword.toLowerCase().charAt(iter)));
+                        map.put("id", "" + iter);
+                        iter++;
+                        str.add(map);
+                    }
+                }
+                final SimpleAdapter adapter = new SimpleAdapter(view.getContext(), str, R.layout.letter_selector,
+                        new String[] {"char"}, new int[] {R.id.caractere});
+                // on va set l'adapter
+                listChar.setAdapter(adapter);
+                listChar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        HashMap<String, String> map = (HashMap<String, String>) listChar.getItemAtPosition(position);  // pour récup les données liées au bouton
+                        String tempTxt = String.valueOf(enteredText.getText());
+                        // on ajoute le char cliqué au txt
+                        tempTxt += map.get("char");
+                        enteredText.setText(tempTxt);
+                        // si c'est la bonne taille
+                        if(tempTxt.length()==wordlenght){
+                            // on check si le mot est bon
+                            if(!wordfoud && String.valueOf(enteredText.getText()).toLowerCase().equals(dbWord.getContenu().toLowerCase())){
+                                // on ajoute 10 points
+                                scoreUpdate(10);
+                                if (dbWord.getScore() <= 3) {
+                                    dbWord.setScore(dbWord.getScore() + 1);
+                                }
+                                db.updateMot(dbWord);
+                                // on donne la récompense
+                                ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                                str.clear();
+                                listChar.setAdapter(null);
+                                // si oui il est trouvé (on aura un nouveau mot avec le speech button)
+                                wordfoud = true;
+
+                            }
+                            // sinon c'est con
+                            else{
+                                ttobj.speak("Grosse merde",TextToSpeech.QUEUE_FLUSH,null);
+                                enteredText.setText("");
+                            }
+
+                        }
+
+                    }
+                });
+            }
             ttobj.speak(dbWord.getContenu(),TextToSpeech.QUEUE_FLUSH,null);
         }
     };

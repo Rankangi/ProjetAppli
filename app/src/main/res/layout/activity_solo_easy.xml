@@ -40,6 +40,14 @@
             android:text="TextView"
             android:progressDrawable="@drawable/circle"/>
         <TextView
+            android:id="@+id/hintTextEasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginLeft="400px"
+            android:layout_marginTop="600px"
+            android:text="" />
+        <TextView
             android:id="@+id/textView2Easy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

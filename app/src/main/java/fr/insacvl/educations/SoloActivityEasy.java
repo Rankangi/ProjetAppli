@@ -50,6 +50,8 @@ public class SoloActivityEasy extends AppCompatActivity {
     // the Progress Bar
     private ProgressBar progressBar;
     ListView listChar;
+    // Hint textbox
+    private TextView hintBox;
 
     private TextView enteredText;
     private HashMap<String, String> map;
@@ -76,6 +78,7 @@ public class SoloActivityEasy extends AppCompatActivity {
         public int rand_char_nb;
         public int iterID;
         public String shuffled_dbword;
+        public String hintString;
         @Override
         public void onClick(View view) {
             // pour générer le mot random
@@ -90,12 +93,14 @@ public class SoloActivityEasy extends AppCompatActivity {
             if(wordfoud) {
                 // On récupère un mot en fonction de son score.
                 dbWord = RandomScoreWord.getWord(dbWordCount);
+
                 // le mot n'est pas trouvé
                 wordfoud = false;
                 enteredText.setText("");
 
                 wordlenght = dbWord.getContenu().length();
-
+                hintString= new String(new char[wordlenght]).replace("\0","_ ");
+                hintBox.setText(hintString);
                 // On va ajouter des mots random :
                 // TODO : mieux gérer le random
                 //nb de char random :
@@ -211,6 +216,8 @@ public class SoloActivityEasy extends AppCompatActivity {
         listChar = findViewById(R.id.listViewCaractère);
 
         enteredText = findViewById(R.id.enteredTextEasy);
+
+        hintBox = findViewById(R.id.hintTextEasy);
 
         // link textboxuser to the textbox and the listener
         // link speechButton to the textbox and the listener

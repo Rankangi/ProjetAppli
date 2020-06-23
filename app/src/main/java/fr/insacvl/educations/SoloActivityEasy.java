@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -155,7 +156,9 @@ public class SoloActivityEasy extends AppCompatActivity {
                         tempTxt += map.get("char");
                         LinearLayout test = (LinearLayout) view; //setenable = false
                         test.setOnClickListener(null);
-                        test.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
+                        CardView cd = (CardView) test.getChildAt(0);
+                        RelativeLayout rl = (RelativeLayout) cd.getChildAt(0);
+                        rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
                         enteredText.setText(tempTxt);
                         // si c'est la bonne taille
                         if(tempTxt.length()==wordlenght){

@@ -55,6 +55,7 @@ public class SoloActivityEasy extends AppCompatActivity {
     // Hint textbox
     private TextView hintBox;
 
+    public int wordlenght;
     private TextView enteredText;
     private HashMap<String, String> map;
     private ArrayList<HashMap<String, String>> str = new ArrayList<HashMap<String, String>>();
@@ -76,10 +77,8 @@ public class SoloActivityEasy extends AppCompatActivity {
     };
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
-        public int wordlenght;
-        public int rand_char_nb;
-        public int iterID;
-        public String shuffled_dbword;
+
+
         public String hintString;
         @Override
         public void onClick(View view) {
@@ -102,103 +101,115 @@ public class SoloActivityEasy extends AppCompatActivity {
                 enteredText.setText("");
 
                 wordlenght = dbWord.getContenu().length();
+                createLetter(view);
                 hintString= new String(new char[wordlenght]).replace("\0","_ ");
                 hintBox.setText(hintString);
-                // On va ajouter des mots random :
-                // TODO : mieux gérer le random
-                //nb de char random :
-                rand_char_nb = (int) Math.round(0.5*wordlenght);
-                String[] alphabet_random = new String[] {"a","b","c","d","e","f","g","h","i","j","k","l",
-                        "m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
-                List<String> strList = Arrays.asList(alphabet_random);
-                Collections.shuffle(strList);
-                alphabet_random = strList.toArray(new String[rand_char_nb]);
-                int iter = 0;
-                List<String> temp = new ArrayList<String>();
 
-                while(iter<wordlenght) {
-                    temp.add(String.valueOf(dbWord.getContenu().toLowerCase().charAt(iter)));
-                    iter++;
-                }
-                Collections.shuffle(temp);
-                shuffled_dbword = "";
-                for(String s:temp){
-                    shuffled_dbword += s;
-                }
-
-                // On va itérer sur les char du mot et leurs ajouter un id
-                iter = 0;
-                iterID = 0;
-                Random rd = new Random();
-                while(iter<wordlenght) {
-                    if(rand_char_nb!=0 && rd.nextBoolean()){
-                        map = new HashMap<String, String>();
-                        map.put("char", alphabet_random[rand_char_nb]);
-                        map.put("id", "" + iterID);
-                        rand_char_nb = rand_char_nb-1;
-                        iterID++;
-                        str.add(map);
-                    }
-                    else {
-                        map = new HashMap<String, String>();
-                        map.put("char", String.valueOf(shuffled_dbword.toLowerCase().charAt(iter)));
-                        map.put("id", "" + iterID);
-                        iterID++;
-                        iter++;
-                        str.add(map);
-                    }
-                }
-                final SimpleAdapter adapter = new SimpleAdapter(view.getContext(), str, R.layout.letter_selector,
-                        new String[] {"char"}, new int[] {R.id.caractere});
-                // on va set l'adapter
-                listChar.setAdapter(adapter);
-                listChar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        HashMap<String, String> map = (HashMap<String, String>) listChar.getItemAtPosition(position);  // pour récup les données liées au bouton
-                        String tempTxt = String.valueOf(enteredText.getText());
-                        // on ajoute le char cliqué au txt
-                        tempTxt += map.get("char");
-                        LinearLayout test = (LinearLayout) view; //setenable = false
-                        test.setOnClickListener(null);
-                        CardView cd = (CardView) test.getChildAt(0);
-                        RelativeLayout rl = (RelativeLayout) cd.getChildAt(0);
-                        rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
-                        enteredText.setText(tempTxt);
-                        // si c'est la bonne taille
-                        if(tempTxt.length()==wordlenght){
-                            // on check si le mot est bon
-                            if(!wordfoud && String.valueOf(enteredText.getText()).toLowerCase().equals(dbWord.getContenu().toLowerCase())){
-                                // on ajoute 10 points
-                                scoreUpdate(10);
-                                if (dbWord.getScore() <= 3) {
-                                    dbWord.setScore(dbWord.getScore() + 1);
-                                }
-                                db.updateMot(dbWord);
-                                // on donne la récompense
-                                ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
-                                str.clear();
-                                listChar.setAdapter(null);
-                                // si oui il est trouvé (on aura un nouveau mot avec le speech button)
-                                wordfoud = true;
-
-                            }
-                            // sinon c'est con
-                            else{
-                                ttobj.speak("Faux",TextToSpeech.QUEUE_FLUSH,null);
-                                str.clear();
-                                listChar.setAdapter(null);
-                                wordfoud = true;
-                            }
-
-                        }
-
-                    }
-                });
             }
             ttobj.speak(dbWord.getContenu(),TextToSpeech.QUEUE_FLUSH,null);
         }
     };
+
+    private void createLetter(View view){
+         int rand_char_nb;
+         int iterID;
+         String shuffled_dbword;
+        // On va ajouter des mots random :
+        //nb de char random :
+        rand_char_nb = (int) Math.round(0.5*wordlenght);
+        String[] alphabet_random = new String[] {"a","b","c","d","e","f","g","h","i","j","k","l",
+                "m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+        List<String> strList = Arrays.asList(alphabet_random);
+        Collections.shuffle(strList);
+        alphabet_random = strList.toArray(new String[rand_char_nb]);
+        int iter = 0;
+        List<String> temp = new ArrayList<String>();
+
+        while(iter<wordlenght) {
+            temp.add(String.valueOf(dbWord.getContenu().toLowerCase().charAt(iter)));
+            iter++;
+        }
+        Collections.shuffle(temp);
+        shuffled_dbword = "";
+        for(String s:temp){
+            shuffled_dbword += s;
+        }
+
+        // On va itérer sur les char du mot et leurs ajouter un id
+        iter = 0;
+        iterID = 0;
+        Random rd = new Random();
+        while(iter<wordlenght) {
+            if(rand_char_nb!=0 && rd.nextBoolean()){
+                map = new HashMap<String, String>();
+                map.put("char", alphabet_random[rand_char_nb]);
+                map.put("id", "" + iterID);
+                rand_char_nb = rand_char_nb-1;
+                iterID++;
+                str.add(map);
+            }
+            else {
+                map = new HashMap<String, String>();
+                map.put("char", String.valueOf(shuffled_dbword.toLowerCase().charAt(iter)));
+                map.put("id", "" + iterID);
+                iterID++;
+                iter++;
+                str.add(map);
+            }
+        }
+        final SimpleAdapter adapter = new SimpleAdapter(view.getContext(), str, R.layout.letter_selector,
+                new String[] {"char"}, new int[] {R.id.caractere});
+        // on va set l'adapter
+        listChar.setAdapter(adapter);
+        listChar.setOnItemClickListener(clickListenerActivated);
+    };
+
+
+    private AdapterView.OnItemClickListener clickListenerActivated =new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            HashMap<String, String> map = (HashMap<String, String>) listChar.getItemAtPosition(position);  // pour récup les données liées au bouton
+            String tempTxt = String.valueOf(enteredText.getText());
+            // on ajoute le char cliqué au txt
+            tempTxt += map.get("char");
+            // To deactivate button when clicked
+            LinearLayout thisLayout = (LinearLayout) view; //setenable = false
+            thisLayout.setOnClickListener(null);
+            CardView cd = (CardView) thisLayout.getChildAt(0);
+            RelativeLayout rl = (RelativeLayout) cd.getChildAt(0);
+            rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
+            enteredText.setText(tempTxt);
+            // si c'est la bonne taille
+            if(tempTxt.length()==wordlenght){
+                // on check si le mot est bon
+                if(!wordfoud && String.valueOf(enteredText.getText()).toLowerCase().equals(dbWord.getContenu().toLowerCase())){
+                    // on ajoute 10 points
+                    scoreUpdate(10);
+                    if (dbWord.getScore() <= 3) {
+                        dbWord.setScore(dbWord.getScore() + 1);
+                    }
+                    db.updateMot(dbWord);
+                    // on donne la récompense
+                    ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                    str.clear();
+                    listChar.setAdapter(null);
+                    // si oui il est trouvé (on aura un nouveau mot avec le speech button)
+                    wordfoud = true;
+                }
+                // sinon c'est con
+                else{
+                    ttobj.speak("Faux",TextToSpeech.QUEUE_FLUSH,null);
+                    str.clear();
+                    listChar.setAdapter(null);
+                    enteredText.setText("");
+                    createLetter(view);
+                }
+
+            }
+
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

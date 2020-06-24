@@ -2,6 +2,7 @@ package fr.insacvl.educations;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +55,12 @@ public class SoloActivityEasy extends AppCompatActivity {
     GridView listChar;
     // Hint textbox
     private TextView hintBox;
+    // gestion du countdown
+    private TextView countdowntext;
+    private long timeLeftMilisec = 30000; //30 sec
+
+    private CountDownTimer countDownTimer;
+
 
     public int wordlenght;
     private TextView enteredText;
@@ -117,20 +124,47 @@ public class SoloActivityEasy extends AppCompatActivity {
                 enteredText.setText("");
                 // On récupère un mot en fonction de son score.
                 dbWord = RandomScoreWord.getWord(dbWordCount);
-
                 // le mot n'est pas trouvé
                 wordfoud = false;
                 enteredText.setText("");
-
                 wordlenght = dbWord.getContenu().length();
+                // the func that creates the letter button
                 createLetter(view);
                 hintString= new String(new char[wordlenght]).replace("\0","_ ");
                 hintBox.setText(hintString);
-
+                // + 1 sec car la première passe direct au lancement
+                timeLeftMilisec = 31000;
+                startTimer();
             }
             ttobj.speak(dbWord.getContenu(),TextToSpeech.QUEUE_FLUSH,null);
         }
     };
+
+    // timer function
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeftMilisec,1000) {
+            @Override
+            public void onTick(long l) {
+                timeLeftMilisec = l;
+                updateTimer();
+            }
+            @Override
+            public void onFinish() {
+                ttobj.speak("Trop tard",TextToSpeech.QUEUE_FLUSH,null);
+                wordfoud = true;
+                enteredText.setText("");
+                str.clear();
+                listChar.setAdapter(null);
+                countDownTimer.cancel();
+            }
+        }.start();
+    }
+
+    public void updateTimer(){
+        int seconds = (int) timeLeftMilisec/1000;
+        String timeLeftString = ""+seconds;
+        countdowntext.setText(timeLeftString);
+    }
 
     private void createLetter(View view){
          int rand_char_nb;
@@ -217,6 +251,9 @@ public class SoloActivityEasy extends AppCompatActivity {
                     listChar.setAdapter(null);
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                     wordfoud = true;
+                    // reset du timer
+                    countDownTimer.cancel();
+
                 }
                 // sinon c'est con
                 else{
@@ -232,7 +269,13 @@ public class SoloActivityEasy extends AppCompatActivity {
         }
     };
 
-
+    // to make it so the countown does not run in the background
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+        finish();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -256,6 +299,8 @@ public class SoloActivityEasy extends AppCompatActivity {
         enteredText = findViewById(R.id.enteredTextEasy);
 
         hintBox = findViewById(R.id.hintTextEasy);
+
+        countdowntext = findViewById(R.id.countown_easy);
 
         // link textboxuser to the textbox and the listener
         // link speechButton to the textbox and the listener

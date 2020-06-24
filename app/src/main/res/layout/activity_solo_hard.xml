@@ -12,6 +12,15 @@
       android:orientation="vertical"
       tools:layout_editor_absoluteX="0dp"
       tools:layout_editor_absoluteY="-133dp">
+    <TextView
+        android:id="@+id/countown_hard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="30"
+        android:textSize="30dp"/>
+
 
     <EditText
         android:layout_centerVertical="true"
@@ -38,7 +47,7 @@
         android:id="@+id/speechButtonHard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="290px"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="300px"
         android:background="@drawable/home_gradient_button"
         android:text="Ecoute et écris ce mot" />

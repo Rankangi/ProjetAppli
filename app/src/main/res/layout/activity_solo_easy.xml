@@ -14,10 +14,19 @@
         tools:layout_editor_absoluteY="-133dp">
 
         <TextView
+            android:id="@+id/countown_easy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:text="30"
+            android:textSize="30dp"/>
+
+        <TextView
             android:id="@+id/enteredTextEasy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="400px"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="500px"
             android:text="" />
 
@@ -25,7 +34,7 @@
             android:id="@+id/speechButtonEasy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="290px"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="300px"
             android:background="@drawable/home_gradient_button"
             android:text="Ecoute et écris ce mot" />
@@ -46,7 +55,7 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:gravity="center"
-            android:layout_marginLeft="420px"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="600px"
             android:text="" />
         <TextView

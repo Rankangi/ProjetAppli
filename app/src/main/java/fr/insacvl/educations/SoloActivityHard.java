@@ -2,6 +2,7 @@ package fr.insacvl.educations;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,9 +38,14 @@ public class SoloActivityHard extends AppCompatActivity {
     // initialize word chosen in BD :
     private Mot dbWord;
     // to check if the word was found
-    boolean wordfoud = true;
+    private boolean wordfoud = true;
     // the Progress Bar
     private ProgressBar progressBar;
+    // gestion du countdown
+    private TextView countdowntext;
+    private long timeLeftMilisec = 30000; //30 sec
+    private boolean countdown_finished;
+    private CountDownTimer countDownTimer;
 
 
     Enfant child;
@@ -58,7 +64,7 @@ public class SoloActivityHard extends AppCompatActivity {
                 text = findViewById(R.id.enteredTextHard);
                 text.setText(textboxUser.getText());
                 // on check si le mot entré est le bon
-                if( !wordfoud && dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
+                if( !wordfoud && !countdown_finished &&dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                     wordfoud = true;
                     // on ajoute 10 points
@@ -70,6 +76,13 @@ public class SoloActivityHard extends AppCompatActivity {
                     databaseHelper.updateMot(dbWord);
                     // on donne la récompense
                     ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                    countDownTimer.cancel();
+                }
+                else if(countdown_finished){
+                    ttobj.speak("Le temps est écoulé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
+                }
+                else if(wordfoud){
+                    ttobj.speak("Le mot est déjà trouvé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
                 }
                 else {
                     ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
@@ -102,6 +115,29 @@ public class SoloActivityHard extends AppCompatActivity {
             }
         });
     }
+    // timer function
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeftMilisec,1000) {
+            @Override
+            public void onTick(long l) {
+                timeLeftMilisec = l;
+                updateTimer();
+            }
+            @Override
+            public void onFinish() {
+                ttobj.speak("Trop tard",TextToSpeech.QUEUE_FLUSH,null);
+                wordfoud = true;
+                countDownTimer.cancel();
+                countdown_finished = true;
+            }
+        }.start();
+    }
+
+    public void updateTimer(){
+        int seconds = (int) timeLeftMilisec/1000;
+        String timeLeftString = ""+seconds;
+        countdowntext.setText(timeLeftString);
+    }
 
     // function to update the score
     private void scoreUpdate(int addedScore){
@@ -131,11 +167,20 @@ public class SoloActivityHard extends AppCompatActivity {
                 dbWord = RandomScoreWord.getWord(dbWordCount);
                 // le mot n'est pas trouvé
                 wordfoud = false;
+                countdown_finished = false;
+                timeLeftMilisec = 31000;
+                startTimer();
             }
             ttobj.speak(dbWord.getContenu(),TextToSpeech.QUEUE_FLUSH,null);
         }
     };
-
+    // to make it so the countown does not run in the background
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+        finish();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,6 +206,8 @@ public class SoloActivityHard extends AppCompatActivity {
         // link speechButton to the textbox and the listener
         speechButton = findViewById(R.id.speechButtonHard);
         speechButton.setOnClickListener(clickListener);
+
+        countdowntext = findViewById(R.id.countown_hard);
         // Create Object Text to Speech
         ttobj = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override

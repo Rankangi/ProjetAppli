@@ -1,11 +1,13 @@
 package fr.insacvl.educations;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,6 +81,27 @@ public class SoloActivityHard extends AppCompatActivity {
             return false;
         }
     };
+    public static void buttonEffect(View button){
+        button.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        // gérer la couleur pour que ça soit un peu plus joli
+                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+    }
 
     // function to update the score
     private void scoreUpdate(int addedScore){
@@ -94,6 +117,7 @@ public class SoloActivityHard extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             // pour générer le mot random
+            buttonEffect(view);
             List<Mot> dbWordCount = db.getAllMotsByIDEnfant(child.getId());
             int listsize = dbWordCount.size();
             // check si il y a au moins un mot dans la bd

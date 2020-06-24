@@ -17,10 +17,12 @@
             android:layout_centerVertical="true"
             android:id="@+id/getTheWordMedium"
             android:layout_width="match_parent"
-            android:layout_height="152dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="11dp"
             android:ems="10"
+            android:background="@drawable/round_edittext_purple"
+            android:gravity="center"
             android:hint="Donne la bonne orthographe du mot"
             android:inputType="textPersonName" />
 
@@ -38,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="290px"
             android:layout_marginTop="300px"
+            android:background="@drawable/home_gradient_button"
             android:text="Ecoute et écris ce mot" />
 
         <ProgressBar
@@ -64,8 +67,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:layout_marginLeft="400px"
+            android:layout_marginLeft="420px"
             android:layout_marginTop="600px"
+            android:gravity="center"
             android:text="" />
 
     </RelativeLayout>

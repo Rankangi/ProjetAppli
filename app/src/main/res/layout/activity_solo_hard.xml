@@ -17,17 +17,19 @@
         android:layout_centerVertical="true"
         android:id="@+id/getTheWordHard"
         android:layout_width="match_parent"
-        android:layout_height="152dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="11dp"
         android:ems="10"
+        android:gravity="center"
+        android:background="@drawable/round_edittext_purple"
         android:hint="Donne la bonne orthographe du mot"
         android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/enteredTextHard"
         android:gravity="center"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="369dp"
         android:text="" />
@@ -38,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="290px"
         android:layout_marginTop="300px"
+        android:background="@drawable/home_gradient_button"
         android:text="Ecoute et écris ce mot" />
 
     <ProgressBar

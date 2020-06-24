@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="290px"
             android:layout_marginTop="300px"
+            android:background="@drawable/home_gradient_button"
             android:text="Ecoute et écris ce mot" />
 
         <ProgressBar
@@ -44,7 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:layout_marginLeft="400px"
+            android:gravity="center"
+            android:layout_marginLeft="420px"
             android:layout_marginTop="600px"
             android:text="" />
         <TextView

@@ -148,7 +148,7 @@
                         style="@style/homeCardImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="100dp"
+                        android:layout_marginEnd="65dp"
                         android:maxHeight="90dp"
                         android:src="@drawable/header_papa" />
 

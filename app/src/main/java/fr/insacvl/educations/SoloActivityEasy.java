@@ -3,6 +3,7 @@ package fr.insacvl.educations;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
@@ -26,7 +27,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
+import java.util.Stack;
 
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
@@ -64,6 +67,9 @@ public class SoloActivityEasy extends Activity {
     private TextView enteredText;
     private HashMap<String, String> map;
     private ArrayList<HashMap<String, String>> str = new ArrayList<HashMap<String, String>>();
+
+    private Stack stackButton;
+    private HashMap<RelativeLayout, Boolean> letterMap = new HashMap<>();
 
     Enfant child;
 
@@ -120,6 +126,7 @@ public class SoloActivityEasy extends Activity {
             }
             // si oui :
             if(wordfoud) {
+                stackButton = new Stack();
                 enteredText.setText("");
                 // On récupère un mot en fonction de son score.
                 dbWord = RandomScoreWord.getWord(dbWordCount);
@@ -229,10 +236,14 @@ public class SoloActivityEasy extends Activity {
             tempTxt += map.get("char");
             // To deactivate button when clicked
             LinearLayout thisLayout = (LinearLayout) view; //setenable = false
-            thisLayout.setOnClickListener(null);
             CardView cd = (CardView) thisLayout.getChildAt(0);
             RelativeLayout rl = (RelativeLayout) cd.getChildAt(0);
-            rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
+
+            if (!letterMap.containsKey(rl) ||letterMap.get(rl) ){
+                thisLayout.setOnClickListener(null);
+                letterMap.put(rl,false);
+                rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
+            }
             enteredText.setText(tempTxt);
             // si c'est la bonne taille
             if(tempTxt.length()==wordlenght){

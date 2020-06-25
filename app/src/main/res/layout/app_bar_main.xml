@@ -32,29 +32,4 @@
 
     <include layout="@layout/content_main" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        android:foreground="?attr/selectableItemBackground"
-        app:menu="@menu/master_bottom_navigation"
-        app:elevation="10dp"
-        app:labelVisibilityMode="labeled"
-        app:itemIconTint="@color/bottom_navigation_color"
-        app:itemTextColor="@color/bottom_navigation_color"
-        app:itemBackground="@color/bottomNavigationBackground"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:clickable="true"
-        app:layout_anchor="@+id/imageView2"
-        app:layout_anchorGravity="start|top"
-        app:srcCompat="@drawable/menu"
-        android:scaleType="center"/>
-
 </android.support.design.widget.CoordinatorLayout>

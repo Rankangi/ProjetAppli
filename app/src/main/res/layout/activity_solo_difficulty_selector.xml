@@ -101,7 +101,7 @@
                     android:id="@+id/mediumDifficultyID"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/home_gradient_maths"
+                    android:background="@drawable/home_gradient_button_yellow"
                     android:minHeight="100dp"
                     android:padding="10dp">
 
@@ -139,7 +139,7 @@
                     android:id="@+id/hardDifficultyID"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/home_gradient_maths"
+                    android:background="@drawable/home_gradient_button_green"
                     android:minHeight="100dp"
                     android:padding="10dp">
 

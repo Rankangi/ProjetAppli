@@ -1,12 +1,12 @@
 package fr.insacvl.educations;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +33,7 @@ import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 
 
-public class SoloActivityEasy extends AppCompatActivity {
+public class SoloActivityEasy extends Activity {
     // Get the DB:
     DatabaseHelper db;
     // initialize variable buton speech

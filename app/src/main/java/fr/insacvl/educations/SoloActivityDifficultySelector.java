@@ -1,24 +1,22 @@
 package fr.insacvl.educations;
 
+import android.app.Activity;
 import android.content.Intent;
-
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 
-public class SoloActivityDifficultySelector extends AppCompatActivity {
+public class SoloActivityDifficultySelector extends Activity {
     // Get the DB:
     DatabaseHelper db;
     private Enfant child;
-    private Button easyButton;
-    private Button mediumButton;
-    private Button hardButton;
+    private RelativeLayout easyButton;
+    private RelativeLayout mediumButton;
+    private RelativeLayout hardButton;
 
     private View.OnClickListener easyclickListener = new View.OnClickListener() {
         @Override

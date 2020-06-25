@@ -2,11 +2,10 @@ package fr.insacvl.educations;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,11 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;

@@ -267,7 +267,9 @@ public class SoloActivityEasy extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        countDownTimer.cancel();
+        if(countDownTimer != null) {
+            countDownTimer.cancel();
+        }
         finish();
     }
     @Override

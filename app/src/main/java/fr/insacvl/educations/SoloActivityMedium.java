@@ -38,6 +38,10 @@ public class SoloActivityMedium extends Activity {
     boolean wordfoud = true;
     // the Progress Bar
     private ProgressBar progressBar;
+    // text in progressBar
+    private TextView progressBarText;
+    // gestion du countdown
+    private int circle_fill;
     // size of the chosen word
     private int wordsize;
     // Hint textbox
@@ -97,14 +101,14 @@ public class SoloActivityMedium extends Activity {
         }
     };
 
-    // function to update the score
     private void scoreUpdate(int addedScore){
+        circle_fill += addedScore;
         childscore += addedScore;
-        if(childscore>100){
-            childscore = childscore -100;
-            //TODO ajouter un niveau à l'enfant ?
+        if(circle_fill>=100){
+            circle_fill = circle_fill -100;
         }
-        progressBar.setProgress(childscore);
+        progressBarText.setText(""+(int)childscore/100);
+        progressBar.setProgress(circle_fill);
     };
     public static void buttonEffect(View button){
         button.setOnTouchListener(new View.OnTouchListener() {
@@ -207,9 +211,22 @@ public class SoloActivityMedium extends Activity {
         db = new DatabaseHelper(getApplicationContext());
         // initialize score
         // TODO add child score
-        childscore = 0;
+        childscore = 440;
+        if(childscore==0) {
+            circle_fill = 0;
+        }
+        else{
+            circle_fill = (int) ((childscore / Math.pow(10, 0)) % 10) +
+                    (int) ((childscore / Math.pow(10, 1)) % 10)*10;
+        }
         // link progressbar
         progressBar = findViewById(R.id.progressBarIDMedium);
+        progressBar.setProgress(circle_fill);
+        progressBarText = findViewById(R.id.txtProgressIDMedium);
+        progressBarText.setText(""+(int)childscore/100);
+
+
+
         // link hintBox
         hintBox = findViewById(R.id.hintTextMedium);
 

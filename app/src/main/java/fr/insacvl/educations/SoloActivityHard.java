@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,7 +39,13 @@ public class SoloActivityHard extends Activity {
     private boolean wordfoud = true;
     // the Progress Bar
     private ProgressBar progressBar;
+    // text in progressBar
+    private TextView progressBarText;
     // gestion du countdown
+    private int circle_fill;
+
+
+
     private TextView countdowntext;
     private long timeLeftMilisec = 30000; //30 sec
     private boolean countdown_finished;
@@ -48,6 +55,7 @@ public class SoloActivityHard extends Activity {
     Enfant child;
 
     // Int to becode child score
+    // for now 100score = 1 lvl (can be modified
     // TODO : remplacer par le score de l'enfant dans le constructeur
     int childscore ;
 
@@ -65,7 +73,7 @@ public class SoloActivityHard extends Activity {
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                     wordfoud = true;
                     // on ajoute 10 points
-                    scoreUpdate(10);
+                    scoreUpdate(40);
                     DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
                     if (dbWord.getScore() <= 3) {
                         dbWord.setScore(dbWord.getScore() + 1);
@@ -138,12 +146,13 @@ public class SoloActivityHard extends Activity {
 
     // function to update the score
     private void scoreUpdate(int addedScore){
+        circle_fill += addedScore;
         childscore += addedScore;
-        if(childscore>100){
-            childscore = childscore -100;
-            //TODO ajouter un niveau à l'enfant ?
+        if(circle_fill>=100){
+            circle_fill = circle_fill -100;
         }
-        progressBar.setProgress(childscore);
+        progressBarText.setText(""+(int)childscore/100);
+        progressBar.setProgress(circle_fill);
     };
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -195,9 +204,19 @@ public class SoloActivityHard extends Activity {
         db = new DatabaseHelper(getApplicationContext());
         // initialize score
         // TODO add child score
-        childscore = 0;
-        // link progressbar
+        childscore = 440;
+        if(childscore==0) {
+            circle_fill = 0;
+        }
+        else{
+            circle_fill = (int) ((childscore / Math.pow(10, 0)) % 10) +
+                    (int) ((childscore / Math.pow(10, 1)) % 10)*10;
+        }
+        // link progressbar and init
         progressBar = findViewById(R.id.progressBarIDHard);
+        progressBar.setProgress(circle_fill);
+        progressBarText = findViewById(R.id.txtProgressIDHard);
+        progressBarText.setText(""+(int)childscore/100);
 
         // link textboxuser to the textbox and the listener
         textboxUser = findViewById(R.id.getTheWordHard);
@@ -205,6 +224,8 @@ public class SoloActivityHard extends Activity {
         // link speechButton to the textbox and the listener
         speechButton = findViewById(R.id.speechButtonHard);
         speechButton.setOnClickListener(clickListener);
+
+
 
         countdowntext = findViewById(R.id.countown_hard);
         // Create Object Text to Speech

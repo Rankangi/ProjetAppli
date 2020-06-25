@@ -47,16 +47,27 @@
             android:background="@drawable/home_gradient_button"
             android:text="Ecoute et écris ce mot" />
 
-        <ProgressBar
-            android:id="@+id/progressBarIDEasy"
-            android:layout_width="150px"
-            android:layout_height="150px"
-            android:layout_marginLeft="30px"
-            android:layout_marginTop="30px"
-            style="?android:progressBarStyleHorizontal"
-            android:progress="0"
-            android:text="TextView"
-            android:progressDrawable="@drawable/circle"/>
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+            <ProgressBar
+                android:id="@+id/progressBarIDEasy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/progress_bar_v2"
+                android:background="@drawable/progress_bar_v2_background"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:max="100"
+                android:progress="0" />
+            <TextView
+                android:id="@+id/txtProgressIDEasy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:text="0"/>
+        </RelativeLayout>
         <TextView
             android:id="@+id/hintTextEasy"
             android:layout_width="wrap_content"

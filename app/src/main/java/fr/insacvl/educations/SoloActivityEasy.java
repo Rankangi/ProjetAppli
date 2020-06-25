@@ -46,6 +46,10 @@ public class SoloActivityEasy extends Activity {
     boolean wordfoud = true;
     // the Progress Bar
     private ProgressBar progressBar;
+    // text in progressBar
+    private TextView progressBarText;
+    // gestion du countdown
+    private int circle_fill;
     GridView listChar;
     // Hint textbox
     private TextView hintBox;
@@ -69,12 +73,13 @@ public class SoloActivityEasy extends Activity {
 
     // function to update the score
     private void scoreUpdate(int addedScore){
+        circle_fill += addedScore;
         childscore += addedScore;
-        if(childscore>100){
-            childscore = childscore -100;
-            //TODO ajouter un niveau à l'enfant ?
+        if(circle_fill>=100){
+            circle_fill = circle_fill -100;
         }
-        progressBar.setProgress(childscore);
+        progressBarText.setText(""+(int)childscore/100);
+        progressBar.setProgress(circle_fill);
     };
     public static void buttonEffect(View button){
         button.setOnTouchListener(new View.OnTouchListener() {
@@ -286,9 +291,20 @@ public class SoloActivityEasy extends Activity {
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());
         // initialize score
-        childscore = 0;
+        // TODO add child score
+        childscore = 440;
+        if(childscore==0) {
+            circle_fill = 0;
+        }
+        else{
+            circle_fill = (int) ((childscore / Math.pow(10, 0)) % 10) +
+                    (int) ((childscore / Math.pow(10, 1)) % 10)*10;
+        }
         // link progressbar
         progressBar = findViewById(R.id.progressBarIDEasy);
+        progressBar.setProgress(circle_fill);
+        progressBarText = findViewById(R.id.txtProgressIDEasy);
+        progressBarText.setText(""+(int)childscore/100);
 
         listChar = findViewById(R.id.gridViewCaractère);
 

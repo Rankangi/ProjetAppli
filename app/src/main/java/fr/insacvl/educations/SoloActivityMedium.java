@@ -1,6 +1,7 @@
 package fr.insacvl.educations;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -51,6 +53,7 @@ public class SoloActivityMedium extends Activity {
     private long timeLeftMilisec = 30000; //30 sec
     private boolean countdown_finished;
     private CountDownTimer countDownTimer;
+    private int nbLettreSaisie = 0;
 
 
     Enfant child;
@@ -196,6 +199,35 @@ public class SoloActivityMedium extends Activity {
         }
         finish();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+        }
+        else if(keyCode == KeyEvent.KEYCODE_DEL){
+            if (nbLettreSaisie >= 2) {
+                String text = (String) hintBox.getText();
+                int lenght = text.length();
+                text = text.substring(0, nbLettreSaisie-2);
+                while (text.length() != lenght) {
+                    text = text.concat("_ ");
+                }
+                nbLettreSaisie -= 2;
+                hintBox.setText(text);
+            }
+        }
+        else if (wordsize > nbLettreSaisie/2){
+            String caractereRecupere = (char) event.getUnicodeChar() + "";
+            String text = (String) hintBox.getText();
+            text = text.substring(0, nbLettreSaisie) + caractereRecupere + text.substring(nbLettreSaisie + 1);
+            hintBox.setText(text);
+            nbLettreSaisie++;
+            nbLettreSaisie++;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,6 +238,9 @@ public class SoloActivityMedium extends Activity {
 
         Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
         toast.show();
+
+        InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());

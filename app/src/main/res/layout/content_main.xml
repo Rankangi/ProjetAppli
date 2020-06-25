@@ -30,7 +30,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/hero"
+                    android:src="@drawable/header_famille"
                     android:adjustViewBounds="true" />
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                             <ImageView
                                 style="@style/homeCardImage"
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_maths" />
+                                android:src="@drawable/header_fille" />
 
                             <TextView
                                 android:id="@+id/textViewSub1Title"
@@ -79,7 +79,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -100,14 +100,6 @@
                             gl:end_color="@color/gradientOrange"
                             gl:orientation="LEFT_RIGHT"
                             gl:start_color="@color/gradientLightYellow">
-
-                            <ImageView
-                                android:id="@+id/imageView3"
-                                style="@style/homeCardImage"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_geography" />
 
                             <TextView
                                 android:id="@+id/textViewSub2Title"
@@ -144,12 +136,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxHeight="90dp"
-                        android:src="@drawable/home_ic_biology" />
+                        android:src="@drawable/header_maman" />
 
                     <TextView
                         android:id="@+id/textViewSub2Title2"
                         style="@style/viewParent.headerText.HomeCardTitle"
                         android:text="Espace Parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        style="@style/homeCardImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="100dp"
+                        android:maxHeight="90dp"
+                        android:src="@drawable/header_papa" />
 
                 </net.colindodd.gradientlayout.GradientRelativeLayout>
             </android.support.v7.widget.CardView>

@@ -30,7 +30,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/hero"
+                    android:src="@drawable/header_fille"
                     android:adjustViewBounds="true" />
             </LinearLayout>
             <LinearLayout
@@ -61,7 +61,7 @@
 
                             <ImageView
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_maths"
+                                android:src="@drawable/header_fille"
                                 style="@style/homeCardImage"/>
 
                             <TextView
@@ -87,7 +87,7 @@
 
                             <ImageView
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_chemistry"
+                                android:src="@drawable/header_fille"
                                 style="@style/homeCardImage"/>
 
                             <TextView
@@ -114,7 +114,7 @@
 
                             <ImageView
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_geography"
+                                android:src="@drawable/header_fille"
                                 style="@style/homeCardImage"/>
 
                             <TextView
@@ -140,7 +140,7 @@
 
                             <ImageView
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_chemistry"
+                                android:src="@drawable/header_fille"
                                 style="@style/homeCardImage"/>
 
                             <TextView
@@ -157,7 +157,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
 
@@ -177,7 +177,7 @@
 
                             <ImageView
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_physics"
+                                android:src="@drawable/header_fille"
                                 style="@style/homeCardImage"/>
 
                             <TextView
@@ -203,7 +203,7 @@
 
                             <ImageView
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_biology"
+                                android:src="@drawable/header_fille"
                                 style="@style/homeCardImage" />
 
                             <TextView
@@ -230,7 +230,7 @@
 
                             <ImageView
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_chemistry"
+                                android:src="@drawable/header_fille"
                                 style="@style/homeCardImage" />
 
                             <TextView
@@ -256,7 +256,7 @@
 
                             <ImageView
                                 android:maxHeight="90dp"
-                                android:src="@drawable/home_ic_biology"
+                                android:src="@drawable/header_fille"
                                 style="@style/homeCardImage" />
 
                             <TextView

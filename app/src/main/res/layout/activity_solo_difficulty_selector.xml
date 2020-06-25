@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Choix du mode"
-            android:textSize="40dp" />
+            android:textSize="40sp" />
 
         <ImageView
             android:layout_weight="1"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/header_image" />
+            android:src="@drawable/header_fille" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginHorizontal="10dp"
@@ -67,18 +67,14 @@
                     android:minHeight="100dp"
                     android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/imageView6"
-                        style="@style/homeCardImage"
-                        android:maxHeight="90dp"
-                        android:src="@drawable/home_ic_maths" />
+
 
                     <TextView
                         style="@style/viewParent.headerText.HomeCardTitle"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="Facile"
-                        android:textSize="40dp" />
+                        android:textSize="40sp" />
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -105,18 +101,14 @@
                     android:minHeight="100dp"
                     android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        style="@style/homeCardImage"
-                        android:maxHeight="90dp"
-                        android:src="@drawable/home_ic_maths" />
+
 
                     <TextView
                         style="@style/viewParent.headerText.HomeCardTitle"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="Moyen"
-                        android:textSize="40dp" />
+                        android:textSize="40sp" />
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -143,18 +135,13 @@
                     android:minHeight="100dp"
                     android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        style="@style/homeCardImage"
-                        android:maxHeight="90dp"
-                        android:src="@drawable/home_ic_maths" />
 
                     <TextView
                         style="@style/viewParent.headerText.HomeCardTitle"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="Difficile"
-                        android:textSize="40dp" />
+                        android:textSize="40sp" />
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>

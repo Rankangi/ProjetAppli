@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/header_image" />
+            android:src="@drawable/header_papa" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="(entrez le mot)"
+            android:hint="(entrez un mot)"
             android:inputType="textPersonName"
             android:singleLine="false" />
 

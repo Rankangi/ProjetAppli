@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Espace\nParent"
-            android:textSize="40dp" />
+            android:textSize="40sp" />
 
         <ImageView
             android:layout_weight="1"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/header_image" />
+            android:src="@drawable/header_papa" />
     </LinearLayout>
 
     <LinearLayout
@@ -72,17 +72,17 @@
                         android:id="@+id/imageView5"
                         style="@style/homeCardImage"
                         android:maxHeight="90dp"
-                        android:src="@drawable/home_ic_maths" />
+                        android:src="@drawable/header_fille" />
 
                     <TextView
                         android:id="@+id/textViewSub1Title"
-                        android:gravity="center"
                         style="@style/viewParent.headerText.HomeCardTitle"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="0dp"
-                        android:layout_toLeftOf="@id/imageView5"
+                        android:layout_marginEnd="23dp"
+                        android:layout_toStartOf="@id/imageView5"
+                        android:gravity="center"
                         android:text="Ajouter/Modifier un prénom"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>

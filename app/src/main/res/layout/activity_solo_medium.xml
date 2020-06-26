@@ -29,19 +29,6 @@
             android:text="30"
             android:textSize="30sp"/>
 
-<!--        <EditText
-            android:layout_centerVertical="true"
-            android:id="@+id/getTheWordMedium"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="11dp"
-            android:ems="10"
-            android:background="@drawable/round_edittext_purple"
-            android:gravity="center"
-            android:hint="Donne la bonne orthographe du mot"
-            android:inputType="textPersonName" />
--->
         <TextView
             android:layout_centerVertical="true"
             android:id="@+id/hintTextMedium"
@@ -49,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="11dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center"
             android:background="@drawable/round_edittext_purple"
             android:text="" />
@@ -93,17 +81,6 @@
             android:layout_marginStart="320dp"
             android:layout_marginTop="50dp"
             android:text="Moyen" />
-
-        <TextView
-            android:id="@+id/hintTextMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/speechButtonMedium"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:text="" />
 
         <ImageView
             android:layout_width="match_parent"

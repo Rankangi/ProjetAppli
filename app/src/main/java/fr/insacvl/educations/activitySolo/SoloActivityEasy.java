@@ -115,7 +115,7 @@ public class SoloActivityEasy extends Activity {
     }
 
     public void buttonAnnuler(View v){
-        if (stackButton.isEmpty()){ return;}
+        if (stackButton == null || stackButton.isEmpty()){ return;}
 
         RelativeLayout rl = (RelativeLayout) stackButton.pop();
         letterMap.put(rl,true);

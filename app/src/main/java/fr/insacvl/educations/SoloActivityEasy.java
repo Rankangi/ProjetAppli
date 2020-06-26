@@ -64,6 +64,8 @@ public class SoloActivityEasy extends Activity {
 
     private CountDownTimer countDownTimer;
 
+    private Button buttonAnnuler;
+
 
     public int wordlenght;
     private HashMap<String, String> map;
@@ -87,7 +89,7 @@ public class SoloActivityEasy extends Activity {
         }
         progressBarText.setText(""+(int)childscore/100);
         progressBar.setProgress(circle_fill);
-    };
+    }
     public static void buttonEffect(View button){
         button.setOnTouchListener(new View.OnTouchListener() {
 
@@ -108,6 +110,20 @@ public class SoloActivityEasy extends Activity {
                 return false;
             }
         });
+    }
+
+    public void buttonAnnuler(View v){
+        if (stackButton.isEmpty()){ return;}
+
+        RelativeLayout rl = (RelativeLayout) stackButton.pop();
+        letterMap.put(rl,true);
+        rl.setBackground(ContextCompat.getDrawable(v.getContext(),R.drawable.home_gradient_maths));
+
+        String tempTxt2 = String.valueOf(hintBox.getText());
+        // on ajoute le char cliqué au txt
+        tempTxt2 = tempTxt2.substring(0,indexHintBox-1) +  "_ " + tempTxt2.substring(indexHintBox);
+        hintBox.setText(tempTxt2);
+        indexHintBox--;
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -239,9 +255,11 @@ public class SoloActivityEasy extends Activity {
             RelativeLayout rl = (RelativeLayout) cd.getChildAt(0);
 
             if (!letterMap.containsKey(rl) ||letterMap.get(rl) ){
-                thisLayout.setOnClickListener(null);
                 letterMap.put(rl,false);
                 rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
+                stackButton.push(rl);
+            }else{
+                return;
             }
             hintBox.setText(tempTxt2);
             // si c'est la bonne taille
@@ -324,6 +342,8 @@ public class SoloActivityEasy extends Activity {
         indexHintBox = 0;
 
         countdowntext = findViewById(R.id.countown_easy);
+
+        buttonAnnuler = findViewById(R.id.buttonAnnuler);
 
         // link textboxuser to the textbox and the listener
         // link speechButton to the textbox and the listener

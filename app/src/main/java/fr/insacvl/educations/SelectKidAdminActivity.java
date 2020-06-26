@@ -104,16 +104,7 @@ public class SelectKidAdminActivity extends Activity {
         public CharSequence filter(CharSequence source, int start, int end,
                                    Spanned dest, int dstart, int dend) {
             for (int i = start; i < end; i++) {
-                if (Character.isLetter(source.charAt(i))) {
-                    return ""+source.charAt(i);
-                }
-                else if(Character.isSpaceChar(source.charAt(i))){
-                    return " ";
-                }
-                else if(source.charAt(i) == '-'){
-                    return "-";
-                }
-                else{
+                if (!Character.isSpaceChar(source.charAt(i))&&!Character.isLetter(source.charAt(i))&&!(source.charAt(i) == '-')) {
                     return "";
                 }
             }

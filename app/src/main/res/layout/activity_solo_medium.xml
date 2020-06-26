@@ -43,14 +43,6 @@
             android:hint="Donne la bonne orthographe du mot"
             android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/enteredTextMedium"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="369dp"
-            android:text="" />
-
         <Button
             android:id="@+id/speechButtonMedium"
             android:layout_width="wrap_content"

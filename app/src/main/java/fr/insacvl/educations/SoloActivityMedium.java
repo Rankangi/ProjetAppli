@@ -48,7 +48,6 @@ public class SoloActivityMedium extends Activity {
     private int wordsize;
     // Hint textbox
     private TextView hintBox;
-    private TextView enteredText;
     // gestion du countdown
     private TextView countdowntext;
     private long timeLeftMilisec = 30000; //30 sec
@@ -69,10 +68,8 @@ public class SoloActivityMedium extends Activity {
         @Override
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-
-                enteredText.setText(textboxUser.getText());
                 // on check si le mot entré est le bon
-                if( !wordfoud && !countdown_finished && dbWord.getContenu().toLowerCase().equals(String.valueOf(enteredText.getText()).toLowerCase())){
+                if( !wordfoud && !countdown_finished && dbWord.getContenu().toLowerCase().equals(String.valueOf(textboxUser.getText()).toLowerCase())){
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                     wordfoud = true;
                     // on ajoute 10 points
@@ -260,10 +257,6 @@ public class SoloActivityMedium extends Activity {
         progressBarText = findViewById(R.id.txtProgressIDMedium);
         progressBarText.setText(""+(int)childscore/100);
 
-
-
-
-        enteredText = findViewById(R.id.enteredTextMedium);
         // link hintBox
         hintBox = findViewById(R.id.hintTextMedium);
 

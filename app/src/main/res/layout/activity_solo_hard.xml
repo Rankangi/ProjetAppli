@@ -46,10 +46,12 @@
 
     <TextView
         android:id="@+id/enteredTextHard"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="369dp"
+        android:textSize="20dp"
+        android:layout_marginLeft="420px"
+        android:layout_marginTop="600px"
+        android:gravity="center"
         android:text="" />
 
     <Button

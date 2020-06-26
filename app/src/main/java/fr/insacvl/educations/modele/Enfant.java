@@ -6,12 +6,14 @@ public class Enfant implements Serializable {
 
     long id;
     String nom;
+    int xp;
 
     public Enfant() {};
 
-    public Enfant(long id, String nom){
+    public Enfant(long id, String nom, int xp){
         this.id = id;
         this.nom = nom;
+        this.xp = xp;
     }
 
     public long getId() { return this.id; }
@@ -24,5 +26,13 @@ public class Enfant implements Serializable {
 
     public void setNom(String nom){
         this.nom = nom;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
     }
 }

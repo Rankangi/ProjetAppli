@@ -21,12 +21,13 @@ import fr.insacvl.educations.modele.Mot;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String LOG = "DIM";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 7;
     public final static String DATABASE_PATH ="/data/data/fr.insacvl.educations/databases/";
     private static final String DATABASE_NAME = "MotsDeLaSemaine";
 
     private static final String TABLE_MOTS = "mots";
     private static final String TABLE_ENFANTS = "enfants";
+    private static final String TABLE_PACKAGE = "package";
 
     // NOTES Mots - column names
     private static final String KEY_MOTS_ID = "mot_id";
@@ -34,10 +35,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_MOTS_SCORE = "score";
     private static final String KEY_MOTS_CREATED_AT = "mot_created";
     private static final String KEY_MOTS_ENFANT = "mot_enfant_id";
+    private static final String KEY_MOTS_PACKAGE = "mot_package_id";
 
-    // NOTES Enfants - column nmaes
+    // NOTES Enfants - column names
     private static final String KEY_ENFANTS_ID = "enfant_id";
     private static final String KEY_ENFANTS_NOM = "enfant_nom";
+    private static final String KEY_ENFANTS_XP = "enfant_xp";
+
+    // NOTES Packages - column names
+    private static final String KEY_PACKAGE_ID = "package_id";
+    private static final String KEY_PACKAGE_NOM = "package_nom";
 
     private static final String CREATE_TABLE_MOTS = "CREATE TABLE "
             + TABLE_MOTS + "("
@@ -46,13 +53,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_MOTS_SCORE + " INTEGER,"
             + KEY_MOTS_CREATED_AT + " DATETIME,"
             + KEY_MOTS_ENFANT + " INTEGER,"
-            + " FOREIGN KEY(" + KEY_MOTS_ENFANT + ") REFERENCES " + TABLE_ENFANTS + "(" + KEY_ENFANTS_ID + ")"
+            + KEY_MOTS_PACKAGE + " INTEGER,"
+            + " FOREIGN KEY(" + KEY_MOTS_ENFANT + ") REFERENCES " + TABLE_ENFANTS + "(" + KEY_ENFANTS_ID + "),"
+            + " FOREIGN KEY(" + KEY_MOTS_PACKAGE + ") REFERENCES " + TABLE_PACKAGE + "(" + KEY_PACKAGE_ID + ")"
             + ")";
 
     private static final String CREATE_TABLE_ENFANTS = "CREATE TABLE "
             + TABLE_ENFANTS + "("
             + KEY_ENFANTS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + KEY_ENFANTS_NOM + " TEXT UNIQUE"
+            + KEY_ENFANTS_NOM + " TEXT UNIQUE,"
+            + KEY_ENFANTS_XP + " INTEGER"
+            + ")";
+
+    private static final String CREATE_TABLE_PACKAGE = "CREATE TABLE "
+            + TABLE_PACKAGE + "("
+            + KEY_PACKAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_PACKAGE_NOM + " TEXT UNIQUE"
             + ")";
 
     public DatabaseHelper(Context context) {
@@ -69,6 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else{
             Log.w("DIM", "LA BD N'EXISTE PAS");
             db.execSQL(CREATE_TABLE_ENFANTS);
+            db.execSQL(CREATE_TABLE_PACKAGE);
             Log.w(LOG, "CREATE_TABLE_MOTS     : ");
             db.execSQL(CREATE_TABLE_MOTS);
             Log.w(LOG, "CREATE_TABLE_ENFANTS      : ");
@@ -79,6 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENFANTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PACKAGE);
     }
 
     //Check database already exist or not
@@ -108,20 +126,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         enfantBDD.put(KEY_ENFANTS_NOM, nom);
 
         long id = db.insert(TABLE_ENFANTS, null, enfantBDD);
-        return new Enfant(id, nom);
+        return new Enfant(id, nom, 0);
     }
 
     public Mot addNewMot (String mot, long id_enfant){
+        return addNewMot(mot,id_enfant,0);
+    }
+
+    public Mot addNewMot (String mot, long id_enfant, int id_package){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues motBDD = new ContentValues();
         motBDD.put(KEY_MOTS_MOT, mot);
         motBDD.put(KEY_MOTS_CREATED_AT, getDateTime());
         motBDD.put(KEY_MOTS_ENFANT, id_enfant);
         motBDD.put(KEY_MOTS_SCORE, 0);
+        motBDD.put(KEY_MOTS_PACKAGE,id_package);
 
         long id = db.insert(TABLE_MOTS, null, motBDD);
         if (id != -1)
-            return new Mot(mot,  0, id, id_enfant, getDateTime());
+            return new Mot(mot,  0, id, id_enfant, getDateTime(), id_package);
         else
             return null;
     }
@@ -295,6 +318,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         c.close();
         return mots;
+    }
+
+    public void addPackage(String test) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues motBDD = new ContentValues();
+        motBDD.put(KEY_PACKAGE_NOM,test);
+        db.insert(TABLE_PACKAGE, null, motBDD);
     }
 }
 

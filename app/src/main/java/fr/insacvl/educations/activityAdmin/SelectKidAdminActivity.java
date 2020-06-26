@@ -52,7 +52,6 @@ public class SelectKidAdminActivity extends Activity {
         textbox.setOnKeyListener(keylistener);
         listEnfant = (GridView) findViewById(R.id.listViewEnfant);
         db = new DatabaseHelper(getApplicationContext());
-        db .addPackage("Test");
         list = db.getAllEnfants();
         str = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> map;

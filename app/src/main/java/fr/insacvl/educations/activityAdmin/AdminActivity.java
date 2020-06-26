@@ -18,6 +18,13 @@ public class AdminActivity extends AppCompatActivity {
             startActivity(intent);
         }
     };
+    private View.OnClickListener modifWordPackageClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(AdminActivity.this, AddWordPackageActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,5 +35,8 @@ public class AdminActivity extends AppCompatActivity {
 
         RelativeLayout modifKid = findViewById(R.id.modifKid);
         modifKid.setOnClickListener(modifKidClick);
+
+        RelativeLayout modifWordPackage = findViewById(R.id.modifWordPackage);
+        modifWordPackage.setOnClickListener(modifWordPackageClick);
     }
 }

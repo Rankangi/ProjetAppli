@@ -17,6 +17,7 @@ import java.util.Locale;
 
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
+import fr.insacvl.educations.modele.Package;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -320,11 +321,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return mots;
     }
 
-    public void addPackage(String test) {
+    public Package addNewPackage(String test) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues motBDD = new ContentValues();
         motBDD.put(KEY_PACKAGE_NOM,test);
-        db.insert(TABLE_PACKAGE, null, motBDD);
+        long id = db.insert(TABLE_PACKAGE, null, motBDD);
+        if (id != -1)
+            return new Package(id, test);
+        else
+            return null;
+    }
+
+    public List<Package> getAllPackage() {
+        List<Package> packages = new ArrayList<Package>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PACKAGE;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Package newPackage = new Package();
+                newPackage.setId(c.getLong(c.getColumnIndex(KEY_PACKAGE_ID)));
+                newPackage.setNom(c.getString(c.getColumnIndex(KEY_PACKAGE_NOM)));
+                packages.add(newPackage);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return packages;
     }
 }
 

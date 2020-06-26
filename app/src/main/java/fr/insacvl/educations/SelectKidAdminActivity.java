@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,9 +47,9 @@ public class SelectKidAdminActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_kid);
         textbox = findViewById(R.id.getMot);
+        textbox.setFilters(new InputFilter[]{filter});
         textbox.setOnKeyListener(keylistener);
         listEnfant = (GridView) findViewById(R.id.listViewEnfant);
-
         db = new DatabaseHelper(getApplicationContext());
         list = db.getAllEnfants();
         str = new ArrayList<HashMap<String, String>>();
@@ -97,8 +99,34 @@ public class SelectKidAdminActivity extends Activity {
             }
         });
     }
+    // filter for textbox
+    InputFilter filter = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end,
+                                   Spanned dest, int dstart, int dend) {
+            for (int i = start; i < end; i++) {
+                if (Character.isLetter(source.charAt(i))) {
+                    return ""+source.charAt(i);
+                }
+                else if(Character.isSpaceChar(source.charAt(i))){
+                    return " ";
+                }
+                else if(source.charAt(i) == '-'){
+                    return "-";
+                }
+                else{
+                    return "";
+                }
+            }
+            return null;
+        }
+    };
+
     public void addChild(View view) {
         Editable text = textbox.getText();
+        if(String.valueOf(text).equals("")){
+            //check si rien
+            return;
+        }
         Enfant enfant = db.addNewEnfant(text.toString());
         if (enfant != null){
             list.add(enfant);

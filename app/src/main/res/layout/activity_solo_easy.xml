@@ -27,15 +27,16 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:text="30"
-            android:textSize="30dp"/>
+            android:textSize="30sp"/>
 
         <TextView
             android:id="@+id/hintTextEasy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textSize="30dp"
-            android:layout_marginTop="500px"
+            android:textSize="30sp"
+            android:layout_below="@+id/speechButtonEasy"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:background="@drawable/round_edittext_purple"
             android:text="" />
@@ -45,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="300px"
+            android:layout_below="@+id/countown_easy"
+            android:layout_marginTop="40dp"
             android:background="@drawable/home_gradient_button"
             android:text="Ecoute et écris ce mot" />
 
@@ -79,24 +81,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="0"/>
         </RelativeLayout>
         <TextView
             android:id="@+id/textView2Easy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="800px"
-            android:layout_marginTop="50px"
+            android:layout_marginStart="320dp"
+            android:layout_marginTop="20dp"
             android:text="Facile" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text"
+            android:layout_below="@+id/hintTextEasy"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_marginTop="260dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <GridView
@@ -112,6 +114,16 @@
                 android:numColumns="auto_fit"/>
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/arc_en_ciel"
+            android:id="@+id/arcEnCiel"
+            android:paddingBottom="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"/>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

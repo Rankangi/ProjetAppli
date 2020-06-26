@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.insacvl.educations.activitySolo.SoloActivityEasy">
+    tools:context="fr.insacvl.educations.activitySolo.SoloActivityHard">
 
   <RelativeLayout
       android:layout_width="match_parent"
@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_topbk" />
+        android:src="@drawable/ic_topbk"
+        android:contentDescription="Background" />
 
     <TextView
         android:id="@+id/countown_hard"
@@ -27,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:text="30"
-        android:textSize="30dp"/>
+        android:textSize="30sp"/>
 
 
     <EditText
@@ -47,9 +48,10 @@
         android:id="@+id/enteredTextHard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_marginLeft="420px"
-        android:layout_marginTop="600px"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/speechButtonHard"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="" />
 
@@ -58,12 +60,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300px"
+        android:layout_below="@+id/countown_hard"
+        android:layout_marginTop="40dp"
         android:background="@drawable/home_gradient_button_green"
         android:text="Ecoute et écris ce mot" />
 
-
-  <RelativeLayout
+    <RelativeLayout
       android:layout_width="100dp"
       android:layout_height="100dp">
         <ProgressBar
@@ -76,23 +78,32 @@
             style="?android:attr/progressBarStyleHorizontal"
            android:max="100"
            android:progress="0" />
-       <TextView
+        <TextView
             android:id="@+id/txtProgressIDHard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
            android:textSize="20dp"
            android:text="0"/>
-  </RelativeLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textView2Hard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="800px"
-        android:layout_marginTop="50px"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="50dp"
         android:text="Difficile" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/arc_en_ciel"
+        android:id="@+id/arcEnCiel"
+        android:paddingBottom="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"/>
 
 
   </RelativeLayout>

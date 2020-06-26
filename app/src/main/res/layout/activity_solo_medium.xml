@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.insacvl.educations.activitySolo.SoloActivityEasy">
+    tools:context="fr.insacvl.educations.activitySolo.SoloActivityMedium">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:text="30"
-            android:textSize="30dp"/>
+            android:textSize="30sp"/>
 
 <!--        <EditText
             android:layout_centerVertical="true"
@@ -45,7 +45,7 @@
         <TextView
             android:layout_centerVertical="true"
             android:id="@+id/hintTextMedium"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentStart="true"
@@ -59,7 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="300px"
+            android:layout_below="@+id/countown_medium"
+            android:layout_marginTop="40dp"
             android:background="@drawable/home_gradient_button_yellow"
             android:text="Ecoute et écris ce mot" />
 
@@ -81,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="0"/>
         </RelativeLayout>
 
@@ -89,11 +90,30 @@
             android:id="@+id/textView2Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="800px"
-            android:layout_marginTop="50px"
+            android:layout_marginStart="320dp"
+            android:layout_marginTop="50dp"
             android:text="Moyen" />
 
+        <TextView
+            android:id="@+id/hintTextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/speechButtonMedium"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/arc_en_ciel"
+            android:id="@+id/arcEnCiel"
+            android:paddingBottom="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"/>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

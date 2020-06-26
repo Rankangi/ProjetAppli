@@ -36,6 +36,7 @@ public class AddWordActivity extends ListActivity {
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
                 addWord(view);
+                textbox.setText("");
                 return true;
             }
             return false;

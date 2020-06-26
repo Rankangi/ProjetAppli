@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,8 +52,6 @@ public class SoloActivityHard extends Activity {
     private TextView progressBarText;
     // gestion du countdown
     private int circle_fill;
-
-
 
     private TextView countdowntext;
     private ImageView arcEnCiel;

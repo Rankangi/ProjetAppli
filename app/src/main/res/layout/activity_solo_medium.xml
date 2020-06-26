@@ -52,6 +52,16 @@
             android:background="@drawable/home_gradient_button_yellow"
             android:text="Ecoute et écris ce mot" />
 
+        <Button
+            android:id="@+id/keyboardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/hintTextMedium"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/home_gradient_button_yellow"
+            android:text="Affiche le clavier" />
+
         <RelativeLayout
             android:layout_width="100dp"
             android:layout_height="100dp">

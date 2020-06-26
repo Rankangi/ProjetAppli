@@ -60,6 +60,8 @@ public class SoloActivityMedium extends Activity {
     private int nbLettreSaisie = 0;
     private boolean wordwritten = false;
     private String writtenString = "";
+    private Button keyboardButton;
+    private String hintString;
     private ImageView arcEnCiel;
 
     Enfant child;
@@ -100,7 +102,6 @@ public class SoloActivityMedium extends Activity {
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
-        public String hintString;
         @Override
         public void onClick(View view) {
             // pour générer le mot random
@@ -173,15 +174,14 @@ public class SoloActivityMedium extends Activity {
 
         }
         else if(keyCode==KeyEvent.KEYCODE_ENTER){
+            boolean bonneOrthographe = true;
             // on check si le mot entré est le bon
-            Toast toast = Toast.makeText(getApplicationContext(), writtenString, Toast. LENGTH_SHORT);
-            toast.show();
+            Toast toasteza = Toast.makeText(getApplicationContext(), writtenString, Toast. LENGTH_LONG);
+            toasteza.show();
 
             if( !wordfoud && !countdown_finished && dbWord.getContenu().toLowerCase().equals(String.valueOf(writtenString).toLowerCase())){
                 // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                 wordfoud = true;
-
-
                 // on ajoute 10 points
                 scoreUpdate(10);
                 DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
@@ -216,15 +216,19 @@ public class SoloActivityMedium extends Activity {
                 ttobj.speak("Le mot est déjà trouvé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
             }
             else{
+                hintBox.setText(hintString);
+                bonneOrthographe = false;
                 ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
             }
             // clean de la text box
             wordwritten = false;
             nbLettreSaisie = 0;
             writtenString = "";
-            hintBox.setText("");
+            if(bonneOrthographe) {
+                hintBox.setText("");
+            }
         }
-        else if(keyCode == KeyEvent.KEYCODE_DEL){
+        else if(!wordfoud &&keyCode == KeyEvent.KEYCODE_DEL){
             if (nbLettreSaisie >= 2) {
                 String text = hintBox.getText().toString();
                 writtenString = writtenString.substring(0, writtenString.length()-1);
@@ -237,7 +241,7 @@ public class SoloActivityMedium extends Activity {
                 hintBox.setText(text);
             }
         }
-        else if (wordsize > nbLettreSaisie/2){
+        else if (!wordfoud &&wordsize > nbLettreSaisie/2){
             String caractereRecupere = (char) event.getUnicodeChar() + "";
             String text = hintBox.getText().toString();
             writtenString = writtenString.concat(caractereRecupere);
@@ -248,6 +252,14 @@ public class SoloActivityMedium extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    private View.OnClickListener keyboardClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,6 +296,9 @@ public class SoloActivityMedium extends Activity {
         progressBarText = findViewById(R.id.txtProgressIDMedium);
         progressBarText.setText(""+(int)childscore/100);
 
+
+        keyboardButton = findViewById(R.id.keyboardButton);
+        keyboardButton.setOnClickListener(keyboardClickListener);
         // link hintBox
         hintBox = findViewById(R.id.hintTextMedium);
 

@@ -152,7 +152,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return addNewMot(mot,id_enfant,0);
     }
 
-    public Mot addNewMot (String mot, long id_enfant, int id_package){
+    public Mot addNewMot (String mot, long id_enfant, long id_package){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues motBDD = new ContentValues();
         motBDD.put(KEY_MOTS_MOT, mot);
@@ -386,7 +386,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ENFANTSPACKAGES, null, motBDD);
     }
 
-    public List<Package> getPackageForEnfant(long enfant_id){
+    public List<Package> getPackageByEnfant(long enfant_id){
         List<Package> packages = new ArrayList<Package>();
         SQLiteDatabase db = this.getWritableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_PACKAGE
@@ -398,15 +398,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Package newPackage = new Package();
                 newPackage.setId(c.getLong(c.getColumnIndex(KEY_PACKAGE_ID)));
-                Log.w(LOG, String.valueOf(newPackage.getId()));
                 newPackage.setNom(c.getString(c.getColumnIndex(KEY_PACKAGE_NOM)));
-                Log.w(LOG, newPackage.getNom());
                 packages.add(newPackage);
             } while (c.moveToNext());
         }
 
         c.close();
         return packages;
+    }
+
+    public List<Enfant> getEnfantByPackage(long package_id){
+        List<Enfant> enfants = new ArrayList<Enfant>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_ENFANTS
+                + " JOIN " + TABLE_ENFANTSPACKAGES
+                + " WHERE " + KEY_ENFANTSPACKAGES_PACKAGE + " = " + package_id
+                + " AND " + KEY_ENFANTSPACKAGES_ENFANT + " = " + KEY_ENFANTS_ID;
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()){
+            do {
+                Enfant enfant = new Enfant();
+                enfant.setId(c.getLong(c.getColumnIndex(KEY_ENFANTS_ID)));
+                enfant.setNom(c.getString(c.getColumnIndex(KEY_ENFANTS_NOM)));
+                enfant.setXp(c.getInt(c.getColumnIndex(KEY_ENFANTS_XP)));
+                enfants.add(enfant);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return enfants;
+    }
+
+    public List<Mot> getAllMotsByPackage(long package_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<Mot> mots = new ArrayList<Mot>();
+        String selectQuery = "SELECT DISTINCT * FROM " + TABLE_MOTS
+                + " WHERE " + KEY_MOTS_PACKAGE + " = " + package_id
+                + " AND " + KEY_MOTS_ENFANT + " = " + 0;
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()){
+            do {
+                Mot mot = new Mot();
+                mot.setId(c.getLong(c.getColumnIndex(KEY_MOTS_ID)));
+                mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
+                mot.setScore(c.getInt(c.getColumnIndex(KEY_MOTS_SCORE)));
+                mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
+                mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+                mot.setId_package(package_id);
+                mots.add(mot);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return mots;
     }
 }
 

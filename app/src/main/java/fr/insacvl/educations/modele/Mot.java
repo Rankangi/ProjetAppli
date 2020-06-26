@@ -7,11 +7,11 @@ public class Mot {
     long id_enfant;
     String created_at;
     int score;
-    int id_package;
+    long id_package;
 
     public Mot() {}
 
-    public Mot(String contenu, int score, long id, long id_enfant, String created_at, int id_package){
+    public Mot(String contenu, int score, long id, long id_enfant, String created_at, long id_package){
         this.contenu = contenu;
         this.score = score;
         this.id = id;
@@ -73,11 +73,11 @@ public class Mot {
         return id_enfant;
     }
 
-    public int getId_package() {
+    public long getId_package() {
         return id_package;
     }
 
-    public void setId_package(int id_package) {
+    public void setId_package(long id_package) {
         this.id_package = id_package;
     }
 }

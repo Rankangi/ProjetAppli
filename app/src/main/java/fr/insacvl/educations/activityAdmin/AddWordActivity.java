@@ -109,6 +109,5 @@ public class AddWordActivity extends ListActivity {
         });
 
         builder.show();
-
     }
 }

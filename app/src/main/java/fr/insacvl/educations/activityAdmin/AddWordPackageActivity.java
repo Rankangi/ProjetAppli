@@ -1,12 +1,16 @@
 package fr.insacvl.educations.activityAdmin;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +76,36 @@ public class AddWordPackageActivity extends ListActivity {
             adapter.notifyDataSetChanged();
         }
         namePackage.setText("");
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        final Package selectedFromList = list.get(position);
+        final Intent intent = new Intent(AddWordPackageActivity.this, PackageActivity.class);
+        intent.putExtra("package", selectedFromList);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddWordPackageActivity.this);
+        builder.setTitle("Que voulez-vous faire ?");
+        builder.setMessage("Vous pouvez soit ajouter des mots à la liste ou soit supprimer cette liste.");
+        builder.setPositiveButton("Ajouter des mots à la liste", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("Supprimez cette liste", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                db.deletePackage(selectedFromList.getId());
+                list.remove(selectedFromList);
+                adapter.remove(selectedFromList.getNom());
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        builder.show();
+
     }
 }

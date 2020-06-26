@@ -1,6 +1,8 @@
 package fr.insacvl.educations.modele;
 
-public class Package {
+import java.io.Serializable;
+
+public class Package implements Serializable {
 
     long id;
     String nom;

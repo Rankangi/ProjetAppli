@@ -1,14 +1,12 @@
-package fr.insacvl.educations;
+package fr.insacvl.educations.modele;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import fr.insacvl.educations.modele.Mot;
-
 public class RandomScoreWord {
 
-    static Mot getWord(List<Mot> dbWordCount) {
+    public static Mot getWord(List<Mot> dbWordCount) {
         Mot dbWord = null;
         // Tri des mots par difficulté
         List<Mot> dbWordCount0 = new ArrayList<>();

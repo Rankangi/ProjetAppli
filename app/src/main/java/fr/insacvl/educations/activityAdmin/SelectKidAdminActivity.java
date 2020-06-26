@@ -1,4 +1,4 @@
-package fr.insacvl.educations;
+package fr.insacvl.educations.activityAdmin;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 

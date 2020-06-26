@@ -1,4 +1,4 @@
-package fr.insacvl.educations;
+package fr.insacvl.educations.activitySolo;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,9 +18,11 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Locale;
 
+import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
+import fr.insacvl.educations.modele.RandomScoreWord;
 
 
 public class SoloActivityHard extends Activity {

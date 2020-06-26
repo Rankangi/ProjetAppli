@@ -32,10 +32,13 @@
 
         <TextView
             android:id="@+id/hintTextEasy"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:textSize="30dp"
             android:layout_marginTop="500px"
+            android:gravity="center"
+            android:background="@drawable/round_edittext_purple"
             android:text="" />
 
         <Button

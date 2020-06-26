@@ -6,13 +6,19 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
+import android.support.constraint.ConstraintLayout;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +55,7 @@ public class SoloActivityHard extends Activity {
 
 
     private TextView countdowntext;
+    private ImageView arcEnCiel;
     private long timeLeftMilisec = 30000; //30 sec
     private boolean countdown_finished;
     private CountDownTimer countDownTimer;
@@ -82,7 +89,23 @@ public class SoloActivityHard extends Activity {
                     }
                     databaseHelper.updateMot(dbWord);
                     // on donne la récompense
-                    ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                    Animation animation = AnimationUtils.loadAnimation(SoloActivityHard.this, R.anim.zoomin);
+                    animation.setAnimationListener(new Animation.AnimationListener(){
+
+                        @Override
+                        public void onAnimationStart(Animation animation){
+                            ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation){}
+
+                        @Override
+                        public void onAnimationEnd(Animation animation){
+                            arcEnCiel.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    arcEnCiel.startAnimation(animation);
                     countDownTimer.cancel();
                 }
                 else if(countdown_finished){
@@ -195,6 +218,9 @@ public class SoloActivityHard extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_hard);
+
+        arcEnCiel = (ImageView) findViewById(R.id.arcEnCiel);
+        arcEnCiel.setVisibility(View.INVISIBLE);
 
         Intent myIntent = getIntent(); // gets the previously created intent
         child = (Enfant) myIntent.getSerializableExtra("child");

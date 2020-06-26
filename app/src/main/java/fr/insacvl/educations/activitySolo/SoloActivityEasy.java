@@ -10,9 +10,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -73,6 +76,7 @@ public class SoloActivityEasy extends Activity {
     private HashMap<String, String> map;
     private ArrayList<HashMap<String, String>> str = new ArrayList<HashMap<String, String>>();
 
+    private ImageView arcEnCiel;
     private Stack stackButton;
     private HashMap<RelativeLayout, Boolean> letterMap = new HashMap<>();
 
@@ -273,7 +277,23 @@ public class SoloActivityEasy extends Activity {
                     }
                     db.updateMot(dbWord);
                     // on donne la récompense
-                    ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                    Animation animation = AnimationUtils.loadAnimation(SoloActivityEasy.this, R.anim.zoomin);
+                    animation.setAnimationListener(new Animation.AnimationListener(){
+
+                        @Override
+                        public void onAnimationStart(Animation animation){
+                            ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation){}
+
+                        @Override
+                        public void onAnimationEnd(Animation animation){
+                            arcEnCiel.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    arcEnCiel.startAnimation(animation);
                     indexHintBox = 0;
                     stackButton = new Stack();
                     str.clear();
@@ -313,6 +333,9 @@ public class SoloActivityEasy extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_easy);
+
+        arcEnCiel = (ImageView) findViewById(R.id.arcEnCiel);
+        arcEnCiel.setVisibility(View.INVISIBLE);
 
         Intent myIntent = getIntent(); // gets the previously created intent
         child = (Enfant) myIntent.getSerializableExtra("child");

@@ -22,13 +22,14 @@ import fr.insacvl.educations.modele.Package;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String LOG = "DIM";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     public final static String DATABASE_PATH ="/data/data/fr.insacvl.educations/databases/";
     private static final String DATABASE_NAME = "MotsDeLaSemaine";
 
     private static final String TABLE_MOTS = "mots";
     private static final String TABLE_ENFANTS = "enfants";
     private static final String TABLE_PACKAGE = "package";
+    private static final String TABLE_ENFANTSPACKAGES = "enfantspackages";
 
     // NOTES Mots - column names
     private static final String KEY_MOTS_ID = "mot_id";
@@ -46,6 +47,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // NOTES Packages - column names
     private static final String KEY_PACKAGE_ID = "package_id";
     private static final String KEY_PACKAGE_NOM = "package_nom";
+
+    // NOTES EnfantsPackages - column names
+    private static final String KEY_ENFANTSPACKAGES_ENFANT = "enfantspackages_enfant_id";
+    private static final String KEY_ENFANTSPACKAGES_PACKAGE = "enfantspackages_package_id";
 
     private static final String CREATE_TABLE_MOTS = "CREATE TABLE "
             + TABLE_MOTS + "("
@@ -72,6 +77,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_PACKAGE_NOM + " TEXT UNIQUE"
             + ")";
 
+    private static final String CREATE_TABLE_ENFANTSPACKAGES = "CREATE TABLE "
+            + TABLE_ENFANTSPACKAGES + "("
+            + KEY_ENFANTSPACKAGES_ENFANT + " INTEGER,"
+            + KEY_ENFANTSPACKAGES_PACKAGE + " INTEGER,"
+            + " PRIMARY KEY(" + KEY_ENFANTSPACKAGES_ENFANT + "," + KEY_ENFANTSPACKAGES_PACKAGE + "),"
+            + " FOREIGN KEY(" + KEY_ENFANTSPACKAGES_ENFANT + ") REFERENCES " + TABLE_ENFANTS + "(" + KEY_ENFANTS_ID + "),"
+            + " FOREIGN KEY(" + KEY_ENFANTSPACKAGES_PACKAGE + ") REFERENCES " + TABLE_PACKAGE + "(" + KEY_PACKAGE_ID + ")"
+            + ")";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -85,11 +99,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         else{
             Log.w("DIM", "LA BD N'EXISTE PAS");
+            Log.w(LOG, "CREATE_TABLE_ENFANTSPACKAGES     : ");
+            db.execSQL(CREATE_TABLE_ENFANTSPACKAGES);
+            Log.w(LOG, "CREATE_TABLE_ENFANTS     : ");
             db.execSQL(CREATE_TABLE_ENFANTS);
+            Log.w(LOG, "CREATE_TABLE_PACKAGE     : ");
             db.execSQL(CREATE_TABLE_PACKAGE);
             Log.w(LOG, "CREATE_TABLE_MOTS     : ");
             db.execSQL(CREATE_TABLE_MOTS);
-            Log.w(LOG, "CREATE_TABLE_ENFANTS      : ");
         }
     }
 
@@ -98,6 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENFANTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PACKAGE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENFANTSPACKAGES);
     }
 
     //Check database already exist or not
@@ -344,6 +362,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Package newPackage = new Package();
                 newPackage.setId(c.getLong(c.getColumnIndex(KEY_PACKAGE_ID)));
                 newPackage.setNom(c.getString(c.getColumnIndex(KEY_PACKAGE_NOM)));
+                packages.add(newPackage);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return packages;
+    }
+
+    public void deletePackage(long package_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PACKAGE, KEY_PACKAGE_ID + " = ?",
+                new String[] { String.valueOf(package_id) });
+        db.delete(TABLE_MOTS , KEY_MOTS_PACKAGE + " = ?",
+                new String[] { String.valueOf(package_id) });
+    }
+
+    public void addPackageForEnfant(long enfant_id, long package_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues motBDD = new ContentValues();
+        motBDD.put(KEY_ENFANTSPACKAGES_ENFANT, enfant_id);
+        motBDD.put(KEY_ENFANTSPACKAGES_PACKAGE, package_id);
+        db.insert(TABLE_ENFANTSPACKAGES, null, motBDD);
+    }
+
+    public List<Package> getPackageForEnfant(long enfant_id){
+        List<Package> packages = new ArrayList<Package>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_PACKAGE
+                + " JOIN " + TABLE_ENFANTSPACKAGES
+                + " WHERE " + KEY_ENFANTSPACKAGES_ENFANT + " = " + enfant_id
+                + " AND " + KEY_ENFANTSPACKAGES_PACKAGE + " = " + KEY_PACKAGE_ID;
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()){
+            do {
+                Package newPackage = new Package();
+                newPackage.setId(c.getLong(c.getColumnIndex(KEY_PACKAGE_ID)));
+                Log.w(LOG, String.valueOf(newPackage.getId()));
+                newPackage.setNom(c.getString(c.getColumnIndex(KEY_PACKAGE_NOM)));
+                Log.w(LOG, newPackage.getNom());
                 packages.add(newPackage);
             } while (c.moveToNext());
         }

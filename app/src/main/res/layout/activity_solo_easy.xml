@@ -14,8 +14,8 @@
         tools:layout_editor_absoluteY="-133dp">
 
         <ImageView
-            style="@style/DarkModeHidden"
             android:id="@+id/imageView2"
+            style="@style/DarkModeHidden"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -31,7 +31,7 @@
             android:textSize="30dp"/>
 
         <TextView
-            android:id="@+id/enteredTextEasy"
+            android:id="@+id/hintTextEasy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -46,6 +46,18 @@
             android:layout_marginTop="300px"
             android:background="@drawable/home_gradient_button"
             android:text="Ecoute et écris ce mot" />
+
+        <Button
+            android:id="@+id/buttonAnnuler"
+            android:layout_width="97dp"
+            android:layout_height="34dp"
+            android:layout_below="@+id/textView2Easy"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/home_gradient_button_green"
+            android:text="Annuler"
+            android:onClick="buttonAnnuler"/>
 
         <RelativeLayout
             android:layout_width="100dp"
@@ -68,15 +80,6 @@
                 android:textSize="20dp"
                 android:text="0"/>
         </RelativeLayout>
-        <TextView
-            android:id="@+id/hintTextEasy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="600px"
-            android:text="" />
         <TextView
             android:id="@+id/textView2Easy"
             android:layout_width="wrap_content"

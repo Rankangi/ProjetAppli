@@ -3,6 +3,7 @@ package fr.insacvl.educations;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
@@ -26,7 +27,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
+import java.util.Stack;
 
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
@@ -53,17 +56,23 @@ public class SoloActivityEasy extends Activity {
     GridView listChar;
     // Hint textbox
     private TextView hintBox;
+    // Dernier indice modifier dans la hintBox
+    private int indexHintBox;
     // gestion du countdown
     private TextView countdowntext;
     private long timeLeftMilisec = 30000; //30 sec
 
     private CountDownTimer countDownTimer;
 
+    private Button buttonAnnuler;
+
 
     public int wordlenght;
-    private TextView enteredText;
     private HashMap<String, String> map;
     private ArrayList<HashMap<String, String>> str = new ArrayList<HashMap<String, String>>();
+
+    private Stack stackButton;
+    private HashMap<RelativeLayout, Boolean> letterMap = new HashMap<>();
 
     Enfant child;
 
@@ -80,7 +89,7 @@ public class SoloActivityEasy extends Activity {
         }
         progressBarText.setText(""+(int)childscore/100);
         progressBar.setProgress(circle_fill);
-    };
+    }
     public static void buttonEffect(View button){
         button.setOnTouchListener(new View.OnTouchListener() {
 
@@ -103,6 +112,20 @@ public class SoloActivityEasy extends Activity {
         });
     }
 
+    public void buttonAnnuler(View v){
+        if (stackButton.isEmpty()){ return;}
+
+        RelativeLayout rl = (RelativeLayout) stackButton.pop();
+        letterMap.put(rl,true);
+        rl.setBackground(ContextCompat.getDrawable(v.getContext(),R.drawable.home_gradient_maths));
+
+        String tempTxt2 = String.valueOf(hintBox.getText());
+        // on ajoute le char cliqué au txt
+        tempTxt2 = tempTxt2.substring(0,indexHintBox-1) +  "_ " + tempTxt2.substring(indexHintBox);
+        hintBox.setText(tempTxt2);
+        indexHintBox--;
+    }
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
 
 
@@ -120,12 +143,11 @@ public class SoloActivityEasy extends Activity {
             }
             // si oui :
             if(wordfoud) {
-                enteredText.setText("");
+                stackButton = new Stack();
                 // On récupère un mot en fonction de son score.
                 dbWord = RandomScoreWord.getWord(dbWordCount);
                 // le mot n'est pas trouvé
                 wordfoud = false;
-                enteredText.setText("");
                 wordlenght = dbWord.getContenu().length();
                 // the func that creates the letter button
                 createLetter(view);
@@ -151,7 +173,6 @@ public class SoloActivityEasy extends Activity {
             public void onFinish() {
                 ttobj.speak("Trop tard",TextToSpeech.QUEUE_FLUSH,null);
                 wordfoud = true;
-                enteredText.setText("");
                 str.clear();
                 listChar.setAdapter(null);
                 countDownTimer.cancel();
@@ -224,20 +245,27 @@ public class SoloActivityEasy extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             HashMap<String, String> map = (HashMap<String, String>) listChar.getItemAtPosition(position);  // pour récup les données liées au bouton
-            String tempTxt = String.valueOf(enteredText.getText());
+            String tempTxt2 = String.valueOf(hintBox.getText());
             // on ajoute le char cliqué au txt
-            tempTxt += map.get("char");
+            tempTxt2 = tempTxt2.substring(0,indexHintBox) +  map.get("char") + tempTxt2.substring(indexHintBox+2);
+            indexHintBox++;
             // To deactivate button when clicked
             LinearLayout thisLayout = (LinearLayout) view; //setenable = false
-            thisLayout.setOnClickListener(null);
             CardView cd = (CardView) thisLayout.getChildAt(0);
             RelativeLayout rl = (RelativeLayout) cd.getChildAt(0);
-            rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
-            enteredText.setText(tempTxt);
+
+            if (!letterMap.containsKey(rl) ||letterMap.get(rl) ){
+                letterMap.put(rl,false);
+                rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
+                stackButton.push(rl);
+            }else{
+                return;
+            }
+            hintBox.setText(tempTxt2);
             // si c'est la bonne taille
-            if(tempTxt.length()==wordlenght){
+            if(tempTxt2.length()==wordlenght){
                 // on check si le mot est bon
-                if(!wordfoud && String.valueOf(enteredText.getText()).toLowerCase().equals(dbWord.getContenu().toLowerCase())){
+                if(!wordfoud && String.valueOf(hintBox.getText()).toLowerCase().equals(dbWord.getContenu().toLowerCase())){
                     // on ajoute 10 points
                     scoreUpdate(10);
                     if (dbWord.getScore() <= 3) {
@@ -246,6 +274,7 @@ public class SoloActivityEasy extends Activity {
                     db.updateMot(dbWord);
                     // on donne la récompense
                     ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                    indexHintBox = 0;
                     str.clear();
                     listChar.setAdapter(null);
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
@@ -259,7 +288,8 @@ public class SoloActivityEasy extends Activity {
                     ttobj.speak("Faux",TextToSpeech.QUEUE_FLUSH,null);
                     str.clear();
                     listChar.setAdapter(null);
-                    enteredText.setText("");
+                    hintBox.setText("");
+                    indexHintBox = 0;
                     createLetter(view);
                 }
 
@@ -308,11 +338,12 @@ public class SoloActivityEasy extends Activity {
 
         listChar = findViewById(R.id.gridViewCaractère);
 
-        enteredText = findViewById(R.id.enteredTextEasy);
-
         hintBox = findViewById(R.id.hintTextEasy);
+        indexHintBox = 0;
 
         countdowntext = findViewById(R.id.countown_easy);
+
+        buttonAnnuler = findViewById(R.id.buttonAnnuler);
 
         // link textboxuser to the textbox and the listener
         // link speechButton to the textbox and the listener

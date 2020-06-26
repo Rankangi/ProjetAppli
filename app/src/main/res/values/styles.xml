@@ -66,9 +66,5 @@
         <item name="android:layout_alignParentTop">true</item>
     </style>
 
-    <style name="DarkModeHidden">
-        <item name="android:visibility">visible</item>
-    </style>
-
 
 </resources>

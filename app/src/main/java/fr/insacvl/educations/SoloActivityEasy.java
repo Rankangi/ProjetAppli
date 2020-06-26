@@ -56,6 +56,8 @@ public class SoloActivityEasy extends Activity {
     GridView listChar;
     // Hint textbox
     private TextView hintBox;
+    // Hint string
+    private String hintString;
     // Dernier indice modifier dans la hintBox
     private int indexHintBox;
     // gestion du countdown
@@ -128,8 +130,6 @@ public class SoloActivityEasy extends Activity {
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
 
-
-        public String hintString;
         @Override
         public void onClick(View view) {
             // pour générer le mot random
@@ -275,6 +275,7 @@ public class SoloActivityEasy extends Activity {
                     // on donne la récompense
                     ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
                     indexHintBox = 0;
+                    stackButton = new Stack();
                     str.clear();
                     listChar.setAdapter(null);
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
@@ -288,9 +289,10 @@ public class SoloActivityEasy extends Activity {
                     ttobj.speak("Faux",TextToSpeech.QUEUE_FLUSH,null);
                     str.clear();
                     listChar.setAdapter(null);
-                    hintBox.setText("");
                     indexHintBox = 0;
+                    hintBox.setText(hintString);
                     createLetter(view);
+                    stackButton = new Stack();
                 }
 
             }

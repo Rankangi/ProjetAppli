@@ -1,9 +1,8 @@
-package fr.insacvl.educations;
+package fr.insacvl.educations.activitySolo;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
@@ -27,13 +26,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
+import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
+import fr.insacvl.educations.modele.RandomScoreWord;
 
 
 public class SoloActivityEasy extends Activity {
@@ -119,7 +119,7 @@ public class SoloActivityEasy extends Activity {
 
         RelativeLayout rl = (RelativeLayout) stackButton.pop();
         letterMap.put(rl,true);
-        rl.setBackground(ContextCompat.getDrawable(v.getContext(),R.drawable.home_gradient_maths));
+        rl.setBackground(ContextCompat.getDrawable(v.getContext(), R.drawable.home_gradient_maths));
 
         String tempTxt2 = String.valueOf(hintBox.getText());
         // on ajoute le char cliqué au txt

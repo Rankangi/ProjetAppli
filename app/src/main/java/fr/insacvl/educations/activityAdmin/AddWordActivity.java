@@ -1,4 +1,4 @@
-package fr.insacvl.educations;
+package fr.insacvl.educations.activityAdmin;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;

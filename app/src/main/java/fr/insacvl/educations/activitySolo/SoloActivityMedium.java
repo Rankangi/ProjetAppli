@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -265,6 +266,7 @@ public class SoloActivityMedium extends Activity {
         // link textboxuser to the textbox and the listener
         textboxUser = findViewById(R.id.getTheWordMedium);
         textboxUser.setOnKeyListener(keylistener);
+        textboxUser.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         // link speechButton to the textbox and the listener
         speechButton = findViewById(R.id.speechButtonMedium);
         speechButton.setOnClickListener(clickListener);

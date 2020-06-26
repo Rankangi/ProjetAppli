@@ -1,111 +1,65 @@
 package fr.insacvl.educations.activityAdmin;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
+import fr.insacvl.educations.modele.Enfant;
+import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.Package;
 
 public class AddWordPackageActivity extends ListActivity {
 
-    EditText namePackage;
-    ArrayAdapter<String> adapter;
+    Package selectPackage;
     DatabaseHelper db;
-    List<Package> list;
-
-    private View.OnKeyListener keylistener = new View.OnKeyListener(){
-
-        @Override
-        public boolean onKey(View view, int i, KeyEvent keyEvent) {
-            if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-                addPackage(view);
-                namePackage.setText("");
-                return true;
-            }
-            return false;
-        }
-    };
+    EditText getMot;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_word_package);
 
-        //On récupère la BDD
+        Intent lastIntent = getIntent();
+        selectPackage = (Package) lastIntent.getSerializableExtra("package");
+
+        getMot = findViewById(R.id.getMot);
+
         db = new DatabaseHelper(getApplicationContext());
-
-        // On récupère le champ de texte et on set un listener pour la touche entré
-        namePackage = findViewById(R.id.getPackage);
-        namePackage.setOnKeyListener(keylistener);
-
-        // On récupère la liste des Packages de la BDD
-        list = db.getAllPackage();
-
-        List<String> str = new ArrayList<>();
-        for (Package p:list){
-            str.add(p.getNom());
+        List<Mot> listeMot = db.getAllMotsByPackage(selectPackage.getId());
+        List<String> str = new ArrayList<String>();
+        for (Mot m:listeMot){
+            str.add(m.getContenu());
         }
         adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, str);
         setListAdapter(adapter);
     }
 
-    public void addPackage(View view) {
-        Editable text = namePackage.getText();
-        if(String.valueOf(text).equals("")){
-            //check si rien
-            return;
-        }
-        Package newPackage = db.addNewPackage(text.toString());
-        if (newPackage != null && !newPackage.getNom().equals("")){
-            list.add(newPackage);
-            adapter.add(newPackage.getNom());
-            adapter.notifyDataSetChanged();
-        }
-        namePackage.setText("");
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        final Package selectedFromList = list.get(position);
-        final Intent intent = new Intent(AddWordPackageActivity.this, PackageActivity.class);
-        intent.putExtra("package", selectedFromList);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddWordPackageActivity.this);
-        builder.setTitle("Que voulez-vous faire ?");
-        builder.setMessage("Vous pouvez soit ajouter des mots à la liste ou soit supprimer cette liste.");
-        builder.setPositiveButton("Ajouter des mots à la liste", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(intent);
+    public void addWord(View view) {
+        List<Enfant> listEnfants = db.getEnfantByPackage(selectPackage.getId());
+        String text = getMot.getText().toString();
+        if (!text.equals("")) {
+            if(text.charAt(text.length()-1)==' '){
+                text = text.substring(0,text.length()-1);
             }
-        });
-
-        builder.setNegativeButton("Supprimez cette liste", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                db.deletePackage(selectedFromList.getId());
-                list.remove(selectedFromList);
-                adapter.remove(selectedFromList.getNom());
+            Mot mot = null;
+            for (Enfant e:listEnfants){
+                mot = db.addNewMot(text,e.getId(),selectPackage.getId());
+            }
+            mot = db.addNewMot(text, 0, selectPackage.getId());
+            if (mot != null && !mot.getContenu().equals("")) {
+                adapter.add(mot.getContenu());
                 adapter.notifyDataSetChanged();
             }
-        });
-
-        builder.show();
-
+        }
     }
 }

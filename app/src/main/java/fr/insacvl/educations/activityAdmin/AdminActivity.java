@@ -21,7 +21,7 @@ public class AdminActivity extends AppCompatActivity {
     private View.OnClickListener modifWordPackageClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(AdminActivity.this, AddWordPackageActivity.class);
+            Intent intent = new Intent(AdminActivity.this, AddPackageActivity.class);
             startActivity(intent);
         }
     };

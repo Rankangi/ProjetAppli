@@ -12,8 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activityAdmin.PackageActivity"></activity>
+        <activity android:name=".activityAdmin.AddKidPackageActivity"></activity>
+        <activity android:name=".activityAdmin.ManagePackageActivity" />
         <activity android:name=".activityAdmin.AddWordPackageActivity" />
+        <activity android:name=".activityAdmin.AddPackageActivity" />
         <activity
             android:name=".activityAdmin.AdminActivity"
             android:label="@string/title_activity_admin"

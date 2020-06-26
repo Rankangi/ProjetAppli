@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="fr.insacvl.educations.activityAdmin.AddWordPackageActivity">
+    tools:context="fr.insacvl.educations.activityAdmin.AddPackageActivity">
 
     <ImageView
         style="@style/DarkModeHidden"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight="99"
             android:gravity="center"
-            android:text="Liste des mots"
+            android:text="Liste des packages"
             android:textSize="40dp" />
 
         <ImageView
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/header_maman" />
+            android:src="@drawable/header_papa" />
     </LinearLayout>
 
     <LinearLayout
@@ -48,20 +48,20 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/getMot"
+            android:id="@+id/getPackage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="(entrez un mot)"
+            android:hint="(entrez un nom de liste)"
             android:inputType="textPersonName"
             android:singleLine="false" />
 
         <Button
-            android:id="@+id/clear"
+            android:id="@+id/addPackage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ajouter le mot"
-            android:onClick="addWord"/>
+            android:text="Ajouter la liste"
+            android:onClick="addPackage"/>
     </LinearLayout>
 
 

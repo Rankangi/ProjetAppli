@@ -252,7 +252,7 @@ public class SoloActivityEasy extends Activity {
             String tempTxt2 = String.valueOf(hintBox.getText());
             // on ajoute le char cliqué au txt
             tempTxt2 = tempTxt2.substring(0,indexHintBox) +  map.get("char") + tempTxt2.substring(indexHintBox+2);
-            indexHintBox++;
+
             // To deactivate button when clicked
             LinearLayout thisLayout = (LinearLayout) view; //setenable = false
             CardView cd = (CardView) thisLayout.getChildAt(0);
@@ -262,6 +262,7 @@ public class SoloActivityEasy extends Activity {
                 letterMap.put(rl,false);
                 rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray)); //to kkchose du gris
                 stackButton.push(rl);
+                indexHintBox++;
             }else{
                 return;
             }

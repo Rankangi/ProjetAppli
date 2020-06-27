@@ -47,7 +47,7 @@
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" dataset="main.mots" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" dataset="main.enfants" active-filter-id="EMPTY_FILTER">
+    <filter-actions connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" dataset="main.enfants" active-filter-id="">
       <filter id="53a433b7-733a-4072-81ef-f5bcbbddad3b" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="enfant_id" operator="=" value="" active="true" />
       </filter>

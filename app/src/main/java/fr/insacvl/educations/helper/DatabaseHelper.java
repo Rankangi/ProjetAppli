@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
+import fr.insacvl.educations.modele.Package;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 

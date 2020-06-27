@@ -15,12 +15,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
+import fr.insacvl.educations.modele.Syllabes;
 
 public class AddWordActivity extends ListActivity {
 
@@ -62,7 +64,6 @@ public class AddWordActivity extends ListActivity {
         List<String> str = new ArrayList<>();
         for (Mot m: list) {
             str.add(m.getContenu() + " (" + m.getLevelOfScore() + ")");
-            Log.i("DIM", m.getContenu());
         }
         adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, str);
@@ -71,6 +72,8 @@ public class AddWordActivity extends ListActivity {
 
     public void addWord(View view){
         String text = textbox.getText().toString();
+        List<String> test = Syllabes.getSyllabes(text);
+        Log.i("DIM",test.toString());
         if (!text.equals("")) {
             if(text.charAt(text.length()-1)==' '){
                 text = text.substring(0,text.length()-1);

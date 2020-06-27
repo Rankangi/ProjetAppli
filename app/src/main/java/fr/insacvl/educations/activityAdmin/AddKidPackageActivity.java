@@ -16,7 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
@@ -28,6 +30,7 @@ public class AddKidPackageActivity extends Activity {
     private GridView gridView;
     private HashMap<RelativeLayout, Boolean> mapChild = new HashMap<>();
     private Package selectPackage;
+    private RelativeLayout save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,10 @@ public class AddKidPackageActivity extends Activity {
 
         Intent lastIntent = getIntent();
         selectPackage = (Package) lastIntent.getSerializableExtra("package");
+
+        save = findViewById(R.id.save);
+        save.setOnClickListener(saveClick);
+
 
         db = new DatabaseHelper(getApplicationContext());
         final List<Enfant> list = db.getAllEnfants();
@@ -72,15 +79,14 @@ public class AddKidPackageActivity extends Activity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.w("DIM", String.valueOf(view));
                 LinearLayout thisLayout = (LinearLayout) view;
                 CardView cd = (CardView) thisLayout.getChildAt(0);
                 RelativeLayout rl = (RelativeLayout) cd.getChildAt(0);
-                if (!mapChild.containsKey(rl) || mapChild.get(rl) ){
-                    mapChild.put(rl,false);
-                    rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_maths));
-                }else if (!mapChild.get(rl) ){
+                if (!mapChild.containsKey(rl) || !mapChild.get(rl) ){
                     mapChild.put(rl,true);
+                    rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_maths));
+                }else if (mapChild.get(rl) ){
+                    mapChild.put(rl,false);
                     rl.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.home_gradient_gray));
                 }
                 
@@ -88,4 +94,26 @@ public class AddKidPackageActivity extends Activity {
         });
 
     }
+
+    private View.OnClickListener saveClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Iterator iter = mapChild.entrySet().iterator();
+
+            while (iter.hasNext()){
+                Map.Entry value = (Map.Entry) iter.next();
+                RelativeLayout rl = (RelativeLayout) value.getKey();
+                TextView tv = (TextView) rl.getChildAt(0);
+                Log.w("DIM",value.getValue().toString());
+                if (!(boolean) value.getValue()){
+                    db.removeChildrenFromPackage(selectPackage.getId(),"'" + tv.getText().toString() + "'");
+                }
+                else {
+                    db.newPackageForEnfant(selectPackage.getId(), "'" + tv.getText().toString() + "'");
+                }
+            }
+        }
+    };
+
+
 }

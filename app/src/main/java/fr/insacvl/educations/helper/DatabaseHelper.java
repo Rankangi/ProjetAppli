@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_MOTS = "CREATE TABLE "
             + TABLE_MOTS + "("
             + KEY_MOTS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + KEY_MOTS_MOT + " TEXT UNIQUE,"
+            + KEY_MOTS_MOT + " TEXT,"
             + KEY_MOTS_SCORE + " INTEGER,"
             + KEY_MOTS_CREATED_AT + " DATETIME,"
             + KEY_MOTS_ENFANT + " INTEGER,"
@@ -450,5 +450,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return mots;
     }
+
+    public Enfant getChildrenByName(String chlidren_name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_ENFANTS
+                + " WHERE " + KEY_ENFANTS_NOM + " = " + chlidren_name;
+        Cursor c = db.rawQuery(selectQuery, null);
+        Enfant enfant = new Enfant();
+        if (c.moveToFirst()){
+            enfant.setId(c.getLong(c.getColumnIndex(KEY_ENFANTS_ID)));
+            enfant.setNom(c.getString(c.getColumnIndex(KEY_ENFANTS_NOM)));
+            enfant.setXp(c.getInt(c.getColumnIndex(KEY_ENFANTS_XP)));
+        }
+        c.close();
+        return enfant;
+    }
+
+    public void removeChildrenFromPackage(long id_package, String children_name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Enfant enfant = getChildrenByName(children_name);
+        db.delete(TABLE_MOTS,KEY_MOTS_PACKAGE + " = ? AND " + KEY_MOTS_ENFANT + " = ?", new String[] { String.valueOf(id_package), String.valueOf(enfant.getId())});
+        db.delete(TABLE_ENFANTSPACKAGES, KEY_ENFANTSPACKAGES_PACKAGE + " =? AND " + KEY_ENFANTSPACKAGES_ENFANT + " = ?", new String[] { String.valueOf(id_package), String.valueOf(enfant.getId())});
+    }
+
+    public void newPackageForEnfant(long id_package, String children_name){
+        Enfant enfant = getChildrenByName(children_name);
+        addPackageForEnfant(enfant.getId(), id_package);
+        List<Mot> listeMot = getAllMotsByPackage(id_package);
+        for (Mot m:listeMot){
+            addNewMot(m.getContenu(), enfant.getId(), id_package);
+        }
+    }
+
 }
 

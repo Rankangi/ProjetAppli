@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359">
-        <schema name="main" object-types="column, table, dataset trigger, constraint, index, view" />
+        <schema name="main" object-types="dataset trigger, view, constraint, table, column, index" />
       </connection>
     </loaded-nodes>
   </component>
@@ -35,7 +35,12 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" object-ref="schemas/main/tables/enfants" />
+      <object connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" object-ref="schemas/main/tables/mots" />
+      <object connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" object-ref="schemas/main/tables/enfantspackages" />
+      <object connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" object-ref="schemas/main/tables/package" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" />
@@ -47,6 +52,7 @@
         <condition column="enfant_id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
+    <filter-actions connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" dataset="main.enfantspackages" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" dataset="main.package" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="ca23328f-1da2-4a4f-a5d6-a4cbf0b48359" dataset="main.android_metadata" active-filter-id="" />
   </component>

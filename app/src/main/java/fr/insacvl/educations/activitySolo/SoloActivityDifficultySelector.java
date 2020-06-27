@@ -18,6 +18,7 @@ public class SoloActivityDifficultySelector extends Activity {
     private RelativeLayout easyButton;
     private RelativeLayout mediumButton;
     private RelativeLayout hardButton;
+    private RelativeLayout motSemaineButton;
 
     private View.OnClickListener easyclickListener = new View.OnClickListener() {
         @Override
@@ -48,6 +49,15 @@ public class SoloActivityDifficultySelector extends Activity {
         }
     };
 
+    private View.OnClickListener motSemaineclickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityMotSemaine.class);
+            intent.putExtra("child", child);
+            startActivity(intent);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +70,12 @@ public class SoloActivityDifficultySelector extends Activity {
         easyButton = findViewById(R.id.easyDifficultyID);
         mediumButton = findViewById(R.id.mediumDifficultyID);
         hardButton = findViewById(R.id.hardDifficultyID);
+        motSemaineButton = findViewById(R.id.motSemaineDifficultyID);
 
         easyButton.setOnClickListener(easyclickListener);
         mediumButton.setOnClickListener(mediumclickListener);
         hardButton.setOnClickListener(hardclickListener);
-
+        motSemaineButton.setOnClickListener(motSemaineclickListener);
 
         Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
         toast.show();

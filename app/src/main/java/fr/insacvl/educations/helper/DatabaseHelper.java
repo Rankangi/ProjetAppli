@@ -9,8 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -296,5 +299,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return mots;
     }
+
+    public List<Mot> getAllMotsFromWeek(long id_enfant) {
+
+        List<Mot> mots = new ArrayList<Mot>();
+        String selectQuery = "SELECT  * FROM " + TABLE_MOTS
+                + " WHERE " + KEY_MOTS_ENFANT + " = " + id_enfant;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        String dateS;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateAJD = new Date();
+        Calendar calendarBDD = Calendar.getInstance();
+        Calendar calendarOfDay = Calendar.getInstance();
+        calendarOfDay.setTime(dateAJD);
+        if (c.moveToFirst()) {
+            do {
+                dateS = c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT));
+                try {
+                    calendarBDD.setTime(format.parse(dateS));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //On regarde si on est bien dans la même semaine
+                if (daysBetween(calendarBDD, calendarOfDay) < 7){
+                    Mot mot = new Mot();
+                    mot.setId(c.getLong(c.getColumnIndex(KEY_MOTS_ID)));
+                    mot.setScore(c.getInt(c.getColumnIndex(KEY_MOTS_SCORE)));
+                    mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
+                    mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
+                    mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+                    mots.add(mot);
+                }
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return mots;
+    }
+
+    private long daysBetween(Calendar startDate, Calendar endDate) {
+        startDate.set(Calendar.HOUR_OF_DAY, 0);
+        endDate.set(Calendar.HOUR_OF_DAY, 24);
+        startDate.set(Calendar.MINUTE, 0);
+        endDate.set(Calendar.MINUTE, 0);
+        startDate.set(Calendar.SECOND, 0);
+        endDate.set(Calendar.SECOND, 0);
+        long millis = endDate.getTimeInMillis() - startDate.getTimeInMillis();
+        return (int)Math.round((double)millis / 86400000);
+    }
+
 }
 

@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
-import android.support.constraint.ConstraintLayout;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,11 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,7 +31,7 @@ import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.RandomScoreWord;
 
 
-public class SoloActivityHard extends Activity {
+public class SoloActivityMotSemaine extends Activity {
     // Get the DB:
     DatabaseHelper db;
     // initialize variable text input by user
@@ -58,6 +56,8 @@ public class SoloActivityHard extends Activity {
     private long timeLeftMilisec = 30000; //30 sec
     private boolean countdown_finished;
     private CountDownTimer countDownTimer;
+    private List<Mot> dbWordCount;
+    private ArrayList<String> tentativesMot, listMotFinal;
 
 
     Enfant child;
@@ -73,7 +73,7 @@ public class SoloActivityHard extends Activity {
         @Override
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-                TextView text;
+                final TextView text;
                 text = findViewById(R.id.enteredTextHard);
                 text.setText(textboxUser.getText());
                 // on check si le mot entré est le bon
@@ -88,12 +88,15 @@ public class SoloActivityHard extends Activity {
                     }
                     databaseHelper.updateMot(dbWord);
                     // on donne la récompense
-                    Animation animation = AnimationUtils.loadAnimation(SoloActivityHard.this, R.anim.zoomin);
+                    Animation animation = AnimationUtils.loadAnimation(SoloActivityMotSemaine.this, R.anim.zoomin);
                     animation.setAnimationListener(new Animation.AnimationListener(){
 
                         @Override
                         public void onAnimationStart(Animation animation){
                             ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                            tentativesMot.add(String.valueOf(text.getText()).toLowerCase());
+                            listMotFinal.add(dbWord.getContenu());
+                            dbWordCount.remove(dbWord);
                         }
 
                         @Override
@@ -111,10 +114,15 @@ public class SoloActivityHard extends Activity {
                     ttobj.speak("Le temps est écoulé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
                 }
                 else if(wordfoud){
-                    ttobj.speak("Le mot est déjà trouvé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
+                    ttobj.speak("Choisi un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
                 }
                 else {
                     ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
+                    tentativesMot.add(String.valueOf(text.getText()).toLowerCase());
+                    listMotFinal.add(dbWord.getContenu());
+                    dbWordCount.remove(dbWord);
+                    countDownTimer.cancel();
+                    wordfoud = true;
                 }
                 // clean de la text box
                 textboxUser.setText("");
@@ -184,11 +192,14 @@ public class SoloActivityHard extends Activity {
         public void onClick(View view) {
             // pour générer le mot random
             buttonEffect(view);
-            List<Mot> dbWordCount = db.getAllMotsByIDEnfant(child.getId());
             int listsize = dbWordCount.size();
             // check si il y a au moins un mot dans la bd
             if(listsize == 0){
-                ttobj.speak("Pas de mots",TextToSpeech.QUEUE_FLUSH,null);
+                ttobj.speak("Bravo tu as fini les mots de la semaine",TextToSpeech.QUEUE_FLUSH,null);
+                Intent intent = new Intent(SoloActivityMotSemaine.this, SoloActivityRecapSemaine.class);
+                intent.putStringArrayListExtra("tentative", tentativesMot);
+                intent.putStringArrayListExtra("listMot", listMotFinal);
+                startActivity(intent);
                 return;
             }
             // si oui :
@@ -216,7 +227,7 @@ public class SoloActivityHard extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solo_hard);
+        setContentView(R.layout.activity_solo_mot_semaine);
 
         arcEnCiel = (ImageView) findViewById(R.id.arcEnCiel);
         arcEnCiel.setVisibility(View.INVISIBLE);
@@ -253,7 +264,9 @@ public class SoloActivityHard extends Activity {
         speechButton = findViewById(R.id.speechButtonHard);
         speechButton.setOnClickListener(clickListener);
 
-
+        dbWordCount = db.getAllMotsFromWeek(child.getId());
+        tentativesMot = new ArrayList<>();
+        listMotFinal = new ArrayList<>();
 
         countdowntext = findViewById(R.id.countown_hard);
         // Create Object Text to Speech

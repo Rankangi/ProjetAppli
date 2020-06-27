@@ -13,12 +13,14 @@
         <activity
             android:name=".activityAdmin.AdminActivity"
             android:label="@string/title_activity_admin"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activitySolo.SoloActivityHard"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activitySolo.SoloActivityHard" />
         <activity android:name=".activitySolo.SoloActivityMedium" />
         <activity android:name=".activitySolo.SoloActivityDifficultySelector" />
+        <activity android:name=".activitySolo.SoloActivityMotSemaine" />
         <activity android:name=".activitySolo.SelectKidSoloActivity" />
         <activity android:name=".activityAdmin.SelectKidAdminActivity" />
+        <activity android:name=".activitySolo.SoloActivityRecapSemaine" />
         <activity android:name=".activityAdmin.AddWordActivity" />
         <activity android:name=".activitySolo.SoloActivityEasy" />
         <activity

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.insacvl.educations.activitySolo.SoloActivityHard">
+    tools:context="fr.insacvl.educations.activitySolo.SoloActivityMotSemaine">
 
   <RelativeLayout
       android:layout_width="match_parent"
@@ -30,6 +30,17 @@
         android:text="30"
         android:textSize="30sp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/getTheWordHard"
+        android:layout_marginTop="25dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#F44336"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="Attention tu n'as qu'une seule tentative par mot !"/>
 
     <EditText
         android:layout_centerVertical="true"
@@ -83,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-           android:textSize="20dp"
+           android:textSize="20sp"
            android:text="0"/>
     </RelativeLayout>
 
@@ -93,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="320dp"
         android:layout_marginTop="50dp"
-        android:text="Difficile" />
+        android:text="Mot de la semaine" />
 
     <ImageView
         android:layout_width="match_parent"

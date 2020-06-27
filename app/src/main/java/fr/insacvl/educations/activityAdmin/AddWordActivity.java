@@ -70,9 +70,12 @@ public class AddWordActivity extends ListActivity {
     }
 
     public void addWord(View view){
-        Editable text = textbox.getText();
-        if (!text.toString().equals("")) {
-            Mot mot = db.addNewMot(text.toString(), child.getId());
+        String text = textbox.getText().toString();
+        if (!text.equals("")) {
+            if(text.charAt(text.length()-1)==' '){
+                text = text.substring(0,text.length()-1);
+            }
+            Mot mot = db.addNewMot(text, child.getId());
             if (mot != null && !mot.getContenu().equals("")) {
                 list.add(mot);
                 adapter.add(mot.getContenu() + " (" + mot.getLevelOfScore() + ")");

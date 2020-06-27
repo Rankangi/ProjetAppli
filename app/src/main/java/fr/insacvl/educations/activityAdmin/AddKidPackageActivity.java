@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -60,9 +61,17 @@ public class AddKidPackageActivity extends Activity {
                     convertView = getLayoutInflater().inflate(R.layout.card_enfant, null, false);
                 }
 
+                List<Long> idEnfantList = new ArrayList<Long>();
+                for (Enfant e:list){
+                    idEnfantList.add(e.getId());
+                }
+                List<Long> idEnfantPackageList = new ArrayList<Long>();
+                for (Enfant e:listPackageEnfant){
+                    idEnfantPackageList.add(e.getId());
+                }
+
                 RelativeLayout rl = convertView.findViewById(R.id.rl);
-                Log.w("DIM", String.valueOf(listPackageEnfant.contains(curentEnfant)));
-                if (!listPackageEnfant.contains(curentEnfant)){
+                if (!idEnfantPackageList.contains(idEnfantList.get(position))){
                     rl.setBackground(ContextCompat.getDrawable(rl.getContext(), R.drawable.home_gradient_gray)); //to kkchose du gris
                 }else{
                     rl.setBackground(ContextCompat.getDrawable(rl.getContext(), R.drawable.home_gradient_maths)); //to kkchose du gris
@@ -112,6 +121,7 @@ public class AddKidPackageActivity extends Activity {
                     db.newPackageForEnfant(selectPackage.getId(), "'" + tv.getText().toString() + "'");
                 }
             }
+            AddKidPackageActivity.this.finish();
         }
     };
 

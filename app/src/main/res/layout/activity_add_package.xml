@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="fr.insacvl.educations.activityAdmin.AddPackageActivity">
+
+    <ImageView
+        style="@style/DarkModeHidden"
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_topbk" />
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            style="@style/viewParent.headerText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="99"
+            android:gravity="center"
+            android:text="Liste des packages"
+            android:textSize="40dp" />
+
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/header_papa" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginHorizontal="10dp"
+        android:id="@+id/addWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/getPackage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="(entrez un nom de liste)"
+            android:inputType="textPersonName"
+            android:singleLine="false" />
+
+        <Button
+            android:id="@+id/addPackage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter la liste"
+            android:onClick="addPackage"/>
+    </LinearLayout>
+
+
+    <ListView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/addWord"
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp"/>
+
+
+</RelativeLayout>

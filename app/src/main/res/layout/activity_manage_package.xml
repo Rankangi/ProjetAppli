@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.insacvl.educations.activitySolo.SelectKidSoloActivity"
-    android:orientation="vertical"
-    android:background="#00000000">
+    tools:context="fr.insacvl.educations.activityAdmin.ManagePackageActivity"
+    android:orientation="vertical">
 
     <ImageView
+        style="@style/DarkModeHidden"
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             style="@style/viewParent.headerText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Espace\nParents"
+            android:text="Package\nManager"
             android:textSize="30dp" />
 
         <ImageView
@@ -62,7 +62,7 @@
                 app:cardPreventCornerOverlap="true">
 
                 <RelativeLayout
-                    android:id="@+id/modifKid"
+                    android:id="@+id/modifKidPackage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/home_gradient_button_green"
@@ -122,7 +122,7 @@
                         android:layout_marginEnd="23dp"
                         android:layout_toStartOf="@id/imageView6"
                         android:gravity="center"
-                        android:text="Ajouter/Modifier une liste de mots"
+                        android:text="Ajouter/Modifier des mots"
                         android:textSize="20sp" />
 
                 </RelativeLayout>

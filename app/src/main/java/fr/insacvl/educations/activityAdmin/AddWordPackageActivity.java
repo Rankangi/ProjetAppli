@@ -3,6 +3,7 @@ package fr.insacvl.educations.activityAdmin;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -23,6 +24,18 @@ public class AddWordPackageActivity extends ListActivity {
     EditText getMot;
     ArrayAdapter<String> adapter;
 
+    private View.OnKeyListener keylistener = new View.OnKeyListener(){
+
+        @Override
+        public boolean onKey(View view, int i, KeyEvent keyEvent) {
+            if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
+                addWord(view);
+                return true;
+            }
+            return false;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +45,7 @@ public class AddWordPackageActivity extends ListActivity {
         selectPackage = (Package) lastIntent.getSerializableExtra("package");
 
         getMot = findViewById(R.id.getMot);
+        getMot.setOnKeyListener(keylistener);
 
         db = new DatabaseHelper(getApplicationContext());
         List<Mot> listeMot = db.getAllMotsByPackage(selectPackage.getId());
@@ -61,5 +75,6 @@ public class AddWordPackageActivity extends ListActivity {
                 adapter.notifyDataSetChanged();
             }
         }
+        getMot.setText("");
     }
 }

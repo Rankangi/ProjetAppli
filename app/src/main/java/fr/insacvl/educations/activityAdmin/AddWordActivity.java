@@ -5,7 +5,6 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,15 +13,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
-import fr.insacvl.educations.modele.Package;
-import fr.insacvl.educations.modele.Syllabes;
 
 public class AddWordActivity extends ListActivity {
 
@@ -38,7 +34,6 @@ public class AddWordActivity extends ListActivity {
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
                 addWord(view);
-                textbox.setText("");
                 return true;
             }
             return false;
@@ -87,6 +82,7 @@ public class AddWordActivity extends ListActivity {
                 adapter.notifyDataSetChanged();
             }
         }
+        textbox.setText("");
     }
 
 

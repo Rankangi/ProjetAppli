@@ -171,6 +171,7 @@ public class SoloActivityMedium extends Activity {
                         color = true;
                     }
                 }
+                wordwritten = false;
                 countdown_finished = true;
             }
         }.start();

@@ -134,7 +134,7 @@
                         android:layout_marginEnd="23dp"
                         android:layout_toStartOf="@id/imageView6"
                         android:gravity="center"
-                        android:text="Ajouter/Modifier une liste de mots"
+                        android:text="Ajouter/Modifier les paquets de mots"
                         android:textSize="20sp" />
 
                 </RelativeLayout>

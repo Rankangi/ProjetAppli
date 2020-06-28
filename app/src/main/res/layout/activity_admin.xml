@@ -25,27 +25,27 @@
 
         <TextView
             android:gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="2"
             style="@style/viewParent.headerText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Espace\nParents"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="131dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="99"
+            android:layout_weight="49"
             android:adjustViewBounds="true"
             android:src="@drawable/header_papa"
             tools:ignore="DuplicateIds" />
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="149dp"
-            android:layout_height="228dp"
-            android:layout_weight="99"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="49"
             android:adjustViewBounds="true"
             android:src="@drawable/header_maman"
             tools:ignore="DuplicateIds" />

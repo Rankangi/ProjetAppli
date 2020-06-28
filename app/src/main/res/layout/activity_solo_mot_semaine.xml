@@ -101,9 +101,11 @@
         android:id="@+id/textView2Hard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="320dp"
+        android:layout_toEndOf="@+id/countown_hard"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="50dp"
-        android:text="Mot de la semaine" />
+        android:textAlignment="center"
+        android:text="Mots de la semaine" />
 
     <ImageView
         android:layout_width="match_parent"

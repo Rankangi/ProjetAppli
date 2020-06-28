@@ -37,6 +37,7 @@ public class SelectKidAdminActivity extends Activity {
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
                 addChild(view);
+                textbox.setText("");
                 return true;
             }
             return false;

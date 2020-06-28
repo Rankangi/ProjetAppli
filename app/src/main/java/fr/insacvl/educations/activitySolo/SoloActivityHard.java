@@ -212,7 +212,6 @@ public class SoloActivityHard extends Activity {
         childscore += addedScore;
         child.setXp(childscore);
         db.updateEnfant(child);
-        Log.i("DIM",""+child.getXp());
         if(circle_fill>=100){
             circle_fill = circle_fill -100;
         }

@@ -38,6 +38,7 @@ import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.RandomScoreWord;
+import fr.insacvl.educations.modele.SpeechRandom;
 import fr.insacvl.educations.modele.Syllabes;
 
 
@@ -120,7 +121,7 @@ public class SoloActivityHard extends Activity {
 
                         @Override
                         public void onAnimationStart(Animation animation){
-                            ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                            SpeechRandom.victoireRdm(ttobj);
                         }
 
                         @Override
@@ -135,13 +136,13 @@ public class SoloActivityHard extends Activity {
                     countDownTimer.cancel();
                 }
                 else if(countdown_finished){
-                    ttobj.speak("Le temps est écoulé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
+                    SpeechRandom.tropTardRdm(ttobj);
                 }
                 else if(wordfoud){
                     ttobj.speak("Le mot est déjà trouvé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
                 }
                 else {
-                    ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
+                    SpeechRandom.erreurRdm(ttobj);
                 }
                 // clean de la text box
                 textboxUser.setText("");

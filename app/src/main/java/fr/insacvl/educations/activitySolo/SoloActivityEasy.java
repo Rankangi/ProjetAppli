@@ -41,6 +41,7 @@ import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.RandomScoreWord;
+import fr.insacvl.educations.modele.SpeechRandom;
 import fr.insacvl.educations.modele.Syllabes;
 
 
@@ -181,7 +182,7 @@ public class SoloActivityEasy extends Activity {
             }
             @Override
             public void onFinish() {
-                ttobj.speak("Trop tard",TextToSpeech.QUEUE_FLUSH,null);
+                SpeechRandom.tropTardRdm(ttobj);
                 wordfoud = true;
                 str.clear();
                 listChar.setAdapter(null);
@@ -323,7 +324,7 @@ public class SoloActivityEasy extends Activity {
 
                         @Override
                         public void onAnimationStart(Animation animation){
-                            ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                            SpeechRandom.victoireRdm(ttobj);
                         }
 
                         @Override
@@ -347,7 +348,7 @@ public class SoloActivityEasy extends Activity {
                 }
                 // sinon c'est con
                 else{
-                    ttobj.speak("Faux",TextToSpeech.QUEUE_FLUSH,null);
+                    SpeechRandom.erreurRdm(ttobj);
                     str.clear();
                     listChar.setAdapter(null);
                     indexHintBox = 0;

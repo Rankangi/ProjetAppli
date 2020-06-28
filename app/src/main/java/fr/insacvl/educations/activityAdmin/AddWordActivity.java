@@ -72,8 +72,6 @@ public class AddWordActivity extends ListActivity {
 
     public void addWord(View view){
         String text = textbox.getText().toString();
-        List<String> test = Syllabes.getSyllabes(text);
-        Log.i("DIM",test.toString());
         if (!text.equals("")) {
             if(text.charAt(text.length()-1)==' '){
                 text = text.substring(0,text.length()-1);

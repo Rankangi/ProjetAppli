@@ -141,7 +141,7 @@
                     <TextView
                         android:id="@+id/textViewSub2Title2"
                         style="@style/viewParent.headerText.HomeCardTitle"
-                        android:text="Espace Parent" />
+                        android:text="Espace Parents" />
 
                     <ImageView
                         android:id="@+id/imageView3"

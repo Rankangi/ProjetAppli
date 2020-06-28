@@ -486,8 +486,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
-
     public List<Mot> getAllMotsFromWeek(long id_enfant) {
 
         List<Mot> mots = new ArrayList<Mot>();

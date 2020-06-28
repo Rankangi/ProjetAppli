@@ -67,7 +67,7 @@ public class SoloActivityHard extends Activity {
     private boolean countdown_finished;
     private CountDownTimer countDownTimer;
     List<String> listeSyllabes;
-
+    TextView text;
 
     Enfant child;
 
@@ -82,9 +82,10 @@ public class SoloActivityHard extends Activity {
         @Override
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if((keyEvent.getAction() == KeyEvent.ACTION_DOWN)&&(i==KeyEvent.KEYCODE_ENTER)){
-                TextView text;
-                text = findViewById(R.id.enteredTextHard);
-                text.setText(textboxUser.getText());
+
+                if(!countdown_finished) {
+                    text.setText(textboxUser.getText());
+                }
                 // on check si le mot entré est le bon
                 if( !wordfoud && !countdown_finished &&dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
@@ -183,6 +184,23 @@ public class SoloActivityHard extends Activity {
                 ttobj.speak("Trop tard",TextToSpeech.QUEUE_FLUSH,null);
                 wordfoud = true;
                 countDownTimer.cancel();
+                listeSyllabes = Syllabes.getSyllabes(dbWord.getContenu());
+                text.setText("");
+                // pour altérner les couleurs
+                Boolean color = true;
+                for(String s:listeSyllabes){
+                    Spannable wordColored = new SpannableString(s);
+                    if(color){
+                        wordColored.setSpan(new ForegroundColorSpan(Color.BLUE),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        text.append(wordColored);
+                        color = false;
+                    }
+                    else{
+                        wordColored.setSpan(new ForegroundColorSpan(Color.RED),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        text.append(wordColored);
+                        color = true;
+                    }
+                }
                 countdown_finished = true;
             }
         }.start();
@@ -224,6 +242,7 @@ public class SoloActivityHard extends Activity {
                 // le mot n'est pas trouvé
                 wordfoud = false;
                 countdown_finished = false;
+                text.setText("");
                 timeLeftMilisec = 31000;
                 startTimer();
             }
@@ -277,7 +296,7 @@ public class SoloActivityHard extends Activity {
         speechButton = findViewById(R.id.speechButtonHard);
         speechButton.setOnClickListener(clickListener);
 
-
+        text = findViewById(R.id.enteredTextHard);
 
         countdowntext = findViewById(R.id.countown_hard);
         // Create Object Text to Speech

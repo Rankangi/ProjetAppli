@@ -185,6 +185,23 @@ public class SoloActivityEasy extends Activity {
                 wordfoud = true;
                 str.clear();
                 listChar.setAdapter(null);
+                listeSyllabes = Syllabes.getSyllabes(dbWord.getContenu());
+                hintBox.setText("");
+                // pour altérner les couleurs
+                Boolean color = true;
+                for(String s:listeSyllabes){
+                    Spannable wordColored = new SpannableString(s);
+                    if(color){
+                        wordColored.setSpan(new ForegroundColorSpan(Color.BLUE),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        hintBox.append(wordColored);
+                        color = false;
+                    }
+                    else{
+                        wordColored.setSpan(new ForegroundColorSpan(Color.RED),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        hintBox.append(wordColored);
+                        color = true;
+                    }
+                }
                 countDownTimer.cancel();
             }
         }.start();

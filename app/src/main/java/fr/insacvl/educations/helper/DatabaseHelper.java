@@ -218,6 +218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
         mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
         mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+        mot.setId_package(c.getLong(c.getColumnIndex(KEY_MOTS_PACKAGE)));
         c.close();
         return mot;
     }
@@ -238,7 +239,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
                 mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
                 mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
-
+                mot.setId_package(c.getLong(c.getColumnIndex(KEY_MOTS_PACKAGE)));
                 mots.add(mot);
             } while (c.moveToNext());
         }
@@ -332,6 +333,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
                 mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
                 mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+                mot.setId_package(c.getLong(c.getColumnIndex(KEY_MOTS_PACKAGE)));
                 mots.add(mot);
             } while (c.moveToNext());
         }
@@ -422,9 +424,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 enfant.setId(c.getLong(c.getColumnIndex(KEY_ENFANTS_ID)));
                 enfant.setNom(c.getString(c.getColumnIndex(KEY_ENFANTS_NOM)));
                 enfant.setXp(c.getInt(c.getColumnIndex(KEY_ENFANTS_XP)));
-                Log.w("DIM", String.valueOf(enfant.getId()));
-                Log.w("DIM", enfant.getNom());
-                Log.w("DIM", String.valueOf(enfant.getXp()));
                 enfants.add(enfant);
             } while (c.moveToNext());
         }
@@ -486,6 +485,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Package getPackage (long id_package){
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_PACKAGE
+                + " WHERE " + KEY_PACKAGE_ID + " = " + id_package;
+        Cursor c = db.rawQuery(selectQuery, null);
+        Package aPackage = new Package();
+        if (c.moveToFirst()){
+            aPackage.setId(c.getLong(c.getColumnIndex(KEY_PACKAGE_ID)));
+            aPackage.setNom(c.getString(c.getColumnIndex(KEY_PACKAGE_NOM)));
+        }
+        c.close();
+        return aPackage;
+    }
 
 
     public List<Mot> getAllMotsFromWeek(long id_enfant) {
@@ -511,8 +523,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     e.printStackTrace();
                 }
                 //On regarde si on est bien dans la même semaine
-                Log.i("DIM", "BDD : " + calendarBDD.get(Calendar.WEEK_OF_YEAR));
-                Log.i("DIM", "AJD : " + calendarOfDay.get(Calendar.WEEK_OF_YEAR));
                 if (calendarBDD.get(Calendar.WEEK_OF_YEAR) == calendarOfDay.get(Calendar.WEEK_OF_YEAR)){
                     Mot mot = new Mot();
                     mot.setId(c.getLong(c.getColumnIndex(KEY_MOTS_ID)));
@@ -520,6 +530,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
                     mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
                     mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+                    mot.setId_package(c.getLong(c.getColumnIndex(KEY_MOTS_PACKAGE)));
                     mots.add(mot);
                 }
             } while (c.moveToNext());

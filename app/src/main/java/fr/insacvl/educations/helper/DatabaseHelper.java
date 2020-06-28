@@ -204,6 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Enfant enfant = new Enfant();
         enfant.setId(c.getLong(c.getColumnIndex(KEY_ENFANTS_ID)));
         enfant.setNom(c.getString(c.getColumnIndex(KEY_ENFANTS_NOM)));
+        enfant.setXp(c.getInt(c.getColumnIndex(KEY_ENFANTS_XP)));
         c.close();
         return enfant;
     }

@@ -120,6 +120,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENFANTSPACKAGES);
     }
 
+    public void updateEnfant(Enfant enfant){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues enfantBDD = new ContentValues();
+        enfantBDD.put(KEY_ENFANTS_NOM, enfant.getNom());
+        enfantBDD.put(KEY_ENFANTS_XP, enfant.getXp());
+        db.update(TABLE_ENFANTS, enfantBDD, KEY_ENFANTS_ID + " = ? ", new String[] { String.valueOf(enfant.getId())});
+    }
+
     //Check database already exist or not
     private boolean checkDataBase(){
 

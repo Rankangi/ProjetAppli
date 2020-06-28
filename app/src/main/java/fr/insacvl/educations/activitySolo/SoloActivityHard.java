@@ -217,6 +217,9 @@ public class SoloActivityHard extends Activity {
     private void scoreUpdate(int addedScore){
         circle_fill += addedScore;
         childscore += addedScore;
+        child.setXp(childscore);
+        db.updateEnfant(child);
+        Log.i("DIM",""+child.getXp());
         if(circle_fill>=100){
             circle_fill = circle_fill -100;
         }
@@ -275,7 +278,7 @@ public class SoloActivityHard extends Activity {
         db = new DatabaseHelper(getApplicationContext());
         // initialize score
         // TODO add child score
-        childscore = 440;
+        childscore = child.getXp();
         if(childscore==0) {
             circle_fill = 0;
         }

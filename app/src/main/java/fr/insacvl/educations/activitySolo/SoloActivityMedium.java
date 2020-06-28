@@ -75,11 +75,13 @@ public class SoloActivityMedium extends Activity {
 
     // Int to becode child score
     // TODO : remplacer par le score de l'enfant dans le constructeur
-    int childscore ;
+    int childscore;
 
     private void scoreUpdate(int addedScore){
         circle_fill += addedScore;
         childscore += addedScore;
+        child.setXp(childscore);
+        db.updateEnfant(child);
         if(circle_fill>=100){
             circle_fill = circle_fill -100;
         }
@@ -315,7 +317,7 @@ public class SoloActivityMedium extends Activity {
         db = new DatabaseHelper(getApplicationContext());
         // initialize score
         // TODO add child score
-        childscore = 440;
+        childscore = child.getXp();
         if(childscore==0) {
             circle_fill = 0;
         }

@@ -293,12 +293,6 @@ public class SoloActivityMedium extends Activity {
         Intent myIntent = getIntent(); // gets the previously created intent
         child = (Enfant) myIntent.getSerializableExtra("child");
 
-        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
-        toast.show();
-
-        InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());
         // initialize score

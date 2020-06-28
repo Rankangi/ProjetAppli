@@ -364,8 +364,6 @@ public class SoloActivityEasy extends Activity {
         Intent myIntent = getIntent(); // gets the previously created intent
         child = (Enfant) myIntent.getSerializableExtra("child");
 
-        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
-        toast.show();
 
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());

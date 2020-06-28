@@ -77,7 +77,7 @@ public class SoloActivityDifficultySelector extends Activity {
         hardButton.setOnClickListener(hardclickListener);
         motSemaineButton.setOnClickListener(motSemaineclickListener);
 
-        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(),"Bonjour " + child.getNom() + " !",Toast. LENGTH_SHORT);
         toast.show();
 
         // Setup DB:

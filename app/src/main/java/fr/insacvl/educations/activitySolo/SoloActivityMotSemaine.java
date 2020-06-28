@@ -179,6 +179,8 @@ public class SoloActivityMotSemaine extends Activity {
     private void scoreUpdate(int addedScore){
         circle_fill += addedScore;
         childscore += addedScore;
+        child.setXp(childscore);
+        db.updateEnfant(child);
         if(circle_fill>=100){
             circle_fill = circle_fill -100;
         }
@@ -243,7 +245,7 @@ public class SoloActivityMotSemaine extends Activity {
 
         // initialize score
         // TODO add child score
-        childscore = 440;
+        childscore = child.getXp();
         if(childscore==0) {
             circle_fill = 0;
         }

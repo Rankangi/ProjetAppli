@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.insacvl.educations">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activityAdmin.AddKidPackageActivity"></activity>
+        <activity android:name=".activityAdmin.ManagePackageActivity" />
+        <activity android:name=".activityAdmin.AddWordPackageActivity" />
+        <activity android:name=".activityAdmin.AddPackageActivity" />
         <activity
             android:name=".activityAdmin.AdminActivity"
             android:label="@string/title_activity_admin"

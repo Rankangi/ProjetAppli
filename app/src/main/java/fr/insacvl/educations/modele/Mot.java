@@ -7,15 +7,17 @@ public class Mot {
     long id_enfant;
     String created_at;
     int score;
+    long id_package;
 
     public Mot() {}
 
-    public Mot(String contenu, int score, long id, long id_enfant, String created_at ){
+    public Mot(String contenu, int score, long id, long id_enfant, String created_at, long id_package){
         this.contenu = contenu;
         this.score = score;
         this.id = id;
         this.id_enfant = id_enfant;
         this.created_at = created_at;
+        this.id_package = id_package;
     }
 
     public String getContenu() { return this.contenu; }
@@ -65,5 +67,17 @@ public class Mot {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public long getId_enfant() {
+        return id_enfant;
+    }
+
+    public long getId_package() {
+        return id_package;
+    }
+
+    public void setId_package(long id_package) {
+        this.id_package = id_package;
     }
 }

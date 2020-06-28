@@ -16,6 +16,7 @@
         app:cardPreventCornerOverlap="true">
 
         <RelativeLayout
+            android:id="@+id/rl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/home_gradient_maths"

@@ -5,7 +5,6 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -110,6 +109,5 @@ public class AddWordActivity extends ListActivity {
         });
 
         builder.show();
-
     }
 }

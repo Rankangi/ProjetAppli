@@ -19,11 +19,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
@@ -309,7 +307,8 @@ public class SoloActivityMedium extends Activity {
         arcEnCiel.setVisibility(View.INVISIBLE);
 
         Intent myIntent = getIntent(); // gets the previously created intent
-        child = (Enfant) myIntent.getSerializableExtra("child");
+        long childId = (long) myIntent.getSerializableExtra("childId");
+        child = db.getEnfant(childId);
 
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());

@@ -25,7 +25,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -380,8 +379,8 @@ public class SoloActivityEasy extends Activity {
         arcEnCiel.setVisibility(View.INVISIBLE);
 
         Intent myIntent = getIntent(); // gets the previously created intent
-        child = (Enfant) myIntent.getSerializableExtra("child");
-
+        long childId = (long) myIntent.getSerializableExtra("childId");
+        child = db.getEnfant(childId);
 
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());

@@ -24,7 +24,7 @@ public class SoloActivityDifficultySelector extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityEasy.class);
-            intent.putExtra("child", child);
+            intent.putExtra("childId", child.getId());
             startActivity(intent);
         }
     };
@@ -34,7 +34,7 @@ public class SoloActivityDifficultySelector extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityMedium.class);
-            intent.putExtra("child", child);
+            intent.putExtra("childId", child.getId());
             startActivity(intent);
         }
     };
@@ -44,7 +44,7 @@ public class SoloActivityDifficultySelector extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityHard.class);
-            intent.putExtra("child", child);
+            intent.putExtra("childId", child.getId());
             startActivity(intent);
         }
     };
@@ -53,7 +53,7 @@ public class SoloActivityDifficultySelector extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityMotSemaine.class);
-            intent.putExtra("child", child);
+            intent.putExtra("childId", child.getId());
             startActivity(intent);
         }
     };
@@ -64,7 +64,8 @@ public class SoloActivityDifficultySelector extends Activity {
         setContentView(R.layout.activity_solo_difficulty_selector);
 
         Intent myIntent = getIntent(); // gets the previously created intent
-        child = (Enfant) myIntent.getSerializableExtra("child");
+        long childId = (long) myIntent.getSerializableExtra("childId");
+        child = db.getEnfant(childId);
 
         // init button
         easyButton = findViewById(R.id.easyDifficultyID);

@@ -12,6 +12,7 @@ Release 1.2:
     - Ajout Mots de la semaine
     - Modification BDD
     - Modification graphique
+    - Modification logo + images
 
     Bug :
     - Accents non prit en comptes en Normal.

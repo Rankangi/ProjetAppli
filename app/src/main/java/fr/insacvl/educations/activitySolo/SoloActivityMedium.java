@@ -331,6 +331,8 @@ public class SoloActivityMedium extends Activity {
         progressBarText = findViewById(R.id.txtProgressIDMedium);
         progressBarText.setText(""+(int)childscore/100);
 
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 
         keyboardButton = findViewById(R.id.keyboardButton);
         keyboardButton.setOnClickListener(keyboardClickListener);
@@ -343,6 +345,7 @@ public class SoloActivityMedium extends Activity {
         // link speechButton to the textbox and the listener
         speechButton = findViewById(R.id.speechButtonMedium);
         speechButton.setOnClickListener(clickListener);
+
 
         countdowntext = findViewById(R.id.countown_medium);
         // Create Object Text to Speech

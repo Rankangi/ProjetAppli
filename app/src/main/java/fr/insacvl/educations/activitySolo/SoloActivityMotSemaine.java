@@ -231,6 +231,9 @@ public class SoloActivityMotSemaine extends Activity {
         arcEnCiel = (ImageView) findViewById(R.id.arcEnCiel);
         arcEnCiel.setVisibility(View.INVISIBLE);
 
+        // Setup DB:
+        db = new DatabaseHelper(getApplicationContext());
+
         Intent myIntent = getIntent(); // gets the previously created intent
         long childId = (long) myIntent.getSerializableExtra("childId");
         child = db.getEnfant(childId);
@@ -238,8 +241,6 @@ public class SoloActivityMotSemaine extends Activity {
         Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
         toast.show();
 
-        // Setup DB:
-        db = new DatabaseHelper(getApplicationContext());
         // initialize score
         // TODO add child score
         childscore = 440;

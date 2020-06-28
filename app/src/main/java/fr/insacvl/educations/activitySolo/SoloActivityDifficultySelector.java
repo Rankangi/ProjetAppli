@@ -63,6 +63,8 @@ public class SoloActivityDifficultySelector extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_difficulty_selector);
 
+        db = new DatabaseHelper(getApplicationContext());
+
         Intent myIntent = getIntent(); // gets the previously created intent
         long childId = (long) myIntent.getSerializableExtra("childId");
         child = db.getEnfant(childId);
@@ -80,9 +82,6 @@ public class SoloActivityDifficultySelector extends Activity {
 
         Toast toast = Toast.makeText(getApplicationContext(),"Bonjour " + child.getNom() + " !",Toast. LENGTH_SHORT);
         toast.show();
-
-        // Setup DB:
-        db = new DatabaseHelper(getApplicationContext());
 
     }
 }

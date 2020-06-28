@@ -50,7 +50,7 @@ public class SelectKidSoloActivity extends Activity {
                 //HashMap<String, String> map = (HashMap<String, String>) listEnfant.getItemAtPosition(position);  // pour récup les données liées au bouton
                 Intent intent = new Intent(SelectKidSoloActivity.this, SoloActivityDifficultySelector.class);
                 Enfant selectedFromList = list.get(position);
-                intent.putExtra("child", selectedFromList);
+                intent.putExtra("childId", selectedFromList.getId());
                 startActivity(intent);
             }
         });

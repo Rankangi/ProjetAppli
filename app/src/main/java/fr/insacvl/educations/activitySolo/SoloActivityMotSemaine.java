@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -232,14 +231,16 @@ public class SoloActivityMotSemaine extends Activity {
         arcEnCiel = (ImageView) findViewById(R.id.arcEnCiel);
         arcEnCiel.setVisibility(View.INVISIBLE);
 
+        // Setup DB:
+        db = new DatabaseHelper(getApplicationContext());
+
         Intent myIntent = getIntent(); // gets the previously created intent
-        child = (Enfant) myIntent.getSerializableExtra("child");
+        long childId = (long) myIntent.getSerializableExtra("childId");
+        child = db.getEnfant(childId);
 
         Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
         toast.show();
 
-        // Setup DB:
-        db = new DatabaseHelper(getApplicationContext());
         // initialize score
         // TODO add child score
         childscore = 440;

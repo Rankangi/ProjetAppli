@@ -14,12 +14,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
+import fr.insacvl.educations.modele.Package;
+import fr.insacvl.educations.modele.Syllabes;
 
 public class AddWordActivity extends ListActivity {
 
@@ -51,7 +54,7 @@ public class AddWordActivity extends ListActivity {
         Intent myIntent = getIntent(); // gets the previously created intent
         child = (Enfant) myIntent.getSerializableExtra("child");
 
-        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(),"Ajoutez ou supprimez des mots",Toast. LENGTH_SHORT);
         toast.show();
 
         db = new DatabaseHelper(getApplicationContext());
@@ -60,8 +63,11 @@ public class AddWordActivity extends ListActivity {
         list = db.getAllMotsByIDEnfant(child.getId());
         List<String> str = new ArrayList<>();
         for (Mot m: list) {
-            str.add(m.getContenu() + " (" + m.getLevelOfScore() + ")");
-            Log.i("DIM", m.getContenu());
+            if (m.getId_package() != 0) {
+                str.add(m.getContenu() + " (" + m.getLevelOfScore() + ")" + " provenant du package : " + db.getPackage(m.getId_package()).getNom());
+            }
+            else
+                str.add(m.getContenu() + " (" + m.getLevelOfScore() + ")");
         }
         adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, str);

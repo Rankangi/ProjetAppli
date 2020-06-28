@@ -12,27 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activityAdmin.AddKidPackageActivity"></activity>
-        <activity android:name=".activityAdmin.ManagePackageActivity" />
-        <activity android:name=".activityAdmin.AddWordPackageActivity" />
-        <activity android:name=".activityAdmin.AddPackageActivity" />
+        <activity android:name=".activityAdmin.AddKidPackageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activityAdmin.ManagePackageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activityAdmin.AddWordPackageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activityAdmin.AddPackageActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".activityAdmin.AdminActivity"
             android:label="@string/title_activity_admin"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activitySolo.SoloActivityHard" />
-        <activity android:name=".activitySolo.SoloActivityMedium" />
-        <activity android:name=".activitySolo.SoloActivityDifficultySelector" />
-        <activity android:name=".activitySolo.SoloActivityMotSemaine" />
-        <activity android:name=".activitySolo.SelectKidSoloActivity" />
-        <activity android:name=".activityAdmin.SelectKidAdminActivity" />
-        <activity android:name=".activitySolo.SoloActivityRecapSemaine" />
-        <activity android:name=".activityAdmin.AddWordActivity" />
-        <activity android:name=".activitySolo.SoloActivityEasy" />
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".activitySolo.SoloActivityHard" android:screenOrientation="portrait"/>
+        <activity android:name=".activitySolo.SoloActivityMedium" android:screenOrientation="portrait"/>
+        <activity android:name=".activitySolo.SoloActivityDifficultySelector" android:screenOrientation="portrait"/>
+        <activity android:name=".activitySolo.SoloActivityMotSemaine" android:screenOrientation="portrait"/>
+        <activity android:name=".activitySolo.SelectKidSoloActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activityAdmin.SelectKidAdminActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activitySolo.SoloActivityRecapSemaine" android:screenOrientation="portrait"/>
+        <activity android:name=".activityAdmin.AddWordActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activitySolo.SoloActivityEasy" android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

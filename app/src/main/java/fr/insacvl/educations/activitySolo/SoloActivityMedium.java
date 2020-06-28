@@ -3,11 +3,15 @@ package fr.insacvl.educations.activitySolo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,11 +19,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +31,8 @@ import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.RandomScoreWord;
+import fr.insacvl.educations.modele.SpeechRandom;
+import fr.insacvl.educations.modele.Syllabes;
 
 
 public class SoloActivityMedium extends Activity {
@@ -65,14 +69,17 @@ public class SoloActivityMedium extends Activity {
     private ImageView arcEnCiel;
 
     Enfant child;
+    List<String> listeSyllabes;
 
     // Int to becode child score
     // TODO : remplacer par le score de l'enfant dans le constructeur
-    int childscore ;
+    int childscore;
 
     private void scoreUpdate(int addedScore){
         circle_fill += addedScore;
         childscore += addedScore;
+        child.setXp(childscore);
+        db.updateEnfant(child);
         if(circle_fill>=100){
             circle_fill = circle_fill -100;
         }
@@ -147,6 +154,23 @@ public class SoloActivityMedium extends Activity {
                 ttobj.speak("Trop tard",TextToSpeech.QUEUE_FLUSH,null);
                 wordfoud = true;
                 countDownTimer.cancel();
+                listeSyllabes = Syllabes.getSyllabes(dbWord.getContenu());
+                hintBox.setText("");
+                // pour altérner les couleurs
+                Boolean color = true;
+                for(String s:listeSyllabes){
+                    Spannable wordColored = new SpannableString(s);
+                    if(color){
+                        wordColored.setSpan(new ForegroundColorSpan(Color.BLUE),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        hintBox.append(wordColored);
+                        color = false;
+                    }
+                    else{
+                        wordColored.setSpan(new ForegroundColorSpan(Color.RED),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        hintBox.append(wordColored);
+                        color = true;
+                    }
+                }
                 countdown_finished = true;
             }
         }.start();
@@ -176,17 +200,32 @@ public class SoloActivityMedium extends Activity {
         else if(keyCode==KeyEvent.KEYCODE_ENTER){
             boolean bonneOrthographe = true;
             // on check si le mot entré est le bon
-            Toast toasteza = Toast.makeText(getApplicationContext(), writtenString, Toast. LENGTH_LONG);
-            toasteza.show();
 
             if( !wordfoud && !countdown_finished && dbWord.getContenu().toLowerCase().equals(String.valueOf(writtenString).toLowerCase())){
                 // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                 wordfoud = true;
                 // on ajoute 10 points
-                scoreUpdate(10);
+                scoreUpdate(20);
                 DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
                 if (dbWord.getScore() <= 3) {
                     dbWord.setScore(dbWord.getScore() + 1);
+                }
+                listeSyllabes = Syllabes.getSyllabes(dbWord.getContenu());
+                hintBox.setText("");
+                // pour altérner les couleurs
+                Boolean color = true;
+                for(String s:listeSyllabes){
+                    Spannable wordColored = new SpannableString(s);
+                    if(color){
+                        wordColored.setSpan(new ForegroundColorSpan(Color.BLUE),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        hintBox.append(wordColored);
+                        color = false;
+                    }
+                    else{
+                        wordColored.setSpan(new ForegroundColorSpan(Color.RED),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        hintBox.append(wordColored);
+                        color = true;
+                    }
                 }
                 databaseHelper.updateMot(dbWord);
                 // on donne la récompense
@@ -195,7 +234,7 @@ public class SoloActivityMedium extends Activity {
 
                     @Override
                     public void onAnimationStart(Animation animation){
-                        ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                        SpeechRandom.victoireRdm(ttobj);
                     }
 
                     @Override
@@ -210,7 +249,7 @@ public class SoloActivityMedium extends Activity {
                 countDownTimer.cancel();
             }
             else if(countdown_finished){
-                ttobj.speak("Le temps est écoulé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
+                SpeechRandom.tropTardRdm(ttobj);
             }
             else if(wordfoud){
                 ttobj.speak("Le mot est déjà trouvé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
@@ -218,15 +257,15 @@ public class SoloActivityMedium extends Activity {
             else{
                 hintBox.setText(hintString);
                 bonneOrthographe = false;
-                ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
+                SpeechRandom.erreurRdm(ttobj);
             }
             // clean de la text box
             wordwritten = false;
             nbLettreSaisie = 0;
             writtenString = "";
-            if(bonneOrthographe) {
+            /*if(bonneOrthographe) {
                 hintBox.setText("");
-            }
+            }*/
         }
         else if(!wordfoud &&keyCode == KeyEvent.KEYCODE_DEL){
             if (nbLettreSaisie >= 2) {
@@ -269,20 +308,16 @@ public class SoloActivityMedium extends Activity {
         arcEnCiel = (ImageView) findViewById(R.id.arcEnCiel);
         arcEnCiel.setVisibility(View.INVISIBLE);
 
-        Intent myIntent = getIntent(); // gets the previously created intent
-        child = (Enfant) myIntent.getSerializableExtra("child");
-
-        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
-        toast.show();
-
-        InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
         // Setup DB:
         db = new DatabaseHelper(getApplicationContext());
+
+        Intent myIntent = getIntent(); // gets the previously created intent
+        long childId = (long) myIntent.getSerializableExtra("childId");
+        child = db.getEnfant(childId);
+
         // initialize score
         // TODO add child score
-        childscore = 440;
+        childscore = child.getXp();
         if(childscore==0) {
             circle_fill = 0;
         }
@@ -296,6 +331,8 @@ public class SoloActivityMedium extends Activity {
         progressBarText = findViewById(R.id.txtProgressIDMedium);
         progressBarText.setText(""+(int)childscore/100);
 
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 
         keyboardButton = findViewById(R.id.keyboardButton);
         keyboardButton.setOnClickListener(keyboardClickListener);
@@ -308,6 +345,7 @@ public class SoloActivityMedium extends Activity {
         // link speechButton to the textbox and the listener
         speechButton = findViewById(R.id.speechButtonMedium);
         speechButton.setOnClickListener(clickListener);
+
 
         countdowntext = findViewById(R.id.countown_medium);
         // Create Object Text to Speech

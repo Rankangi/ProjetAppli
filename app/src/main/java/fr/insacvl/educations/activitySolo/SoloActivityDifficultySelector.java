@@ -24,7 +24,7 @@ public class SoloActivityDifficultySelector extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityEasy.class);
-            intent.putExtra("child", child);
+            intent.putExtra("childId", child.getId());
             startActivity(intent);
         }
     };
@@ -34,7 +34,7 @@ public class SoloActivityDifficultySelector extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityMedium.class);
-            intent.putExtra("child", child);
+            intent.putExtra("childId", child.getId());
             startActivity(intent);
         }
     };
@@ -44,7 +44,7 @@ public class SoloActivityDifficultySelector extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityHard.class);
-            intent.putExtra("child", child);
+            intent.putExtra("childId", child.getId());
             startActivity(intent);
         }
     };
@@ -53,7 +53,7 @@ public class SoloActivityDifficultySelector extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(SoloActivityDifficultySelector.this, SoloActivityMotSemaine.class);
-            intent.putExtra("child", child);
+            intent.putExtra("childId", child.getId());
             startActivity(intent);
         }
     };
@@ -63,8 +63,11 @@ public class SoloActivityDifficultySelector extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solo_difficulty_selector);
 
+        db = new DatabaseHelper(getApplicationContext());
+
         Intent myIntent = getIntent(); // gets the previously created intent
-        child = (Enfant) myIntent.getSerializableExtra("child");
+        long childId = (long) myIntent.getSerializableExtra("childId");
+        child = db.getEnfant(childId);
 
         // init button
         easyButton = findViewById(R.id.easyDifficultyID);
@@ -77,11 +80,8 @@ public class SoloActivityDifficultySelector extends Activity {
         hardButton.setOnClickListener(hardclickListener);
         motSemaineButton.setOnClickListener(motSemaineclickListener);
 
-        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(),"Bonjour " + child.getNom() + " !",Toast. LENGTH_SHORT);
         toast.show();
-
-        // Setup DB:
-        db = new DatabaseHelper(getApplicationContext());
 
     }
 }

@@ -120,6 +120,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENFANTSPACKAGES);
     }
 
+    public void updateEnfant(Enfant enfant){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues enfantBDD = new ContentValues();
+        enfantBDD.put(KEY_ENFANTS_NOM, enfant.getNom());
+        enfantBDD.put(KEY_ENFANTS_XP, enfant.getXp());
+        db.update(TABLE_ENFANTS, enfantBDD, KEY_ENFANTS_ID + " = ? ", new String[] { String.valueOf(enfant.getId())});
+    }
+
     //Check database already exist or not
     private boolean checkDataBase(){
 
@@ -172,14 +180,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void updateMot (Mot mot){
         SQLiteDatabase db = getWritableDatabase();
-        String updateQuery = "UPDATE " + TABLE_MOTS + " SET " +
-                KEY_MOTS_MOT + " = '" + mot.getContenu() + "', " +
-                KEY_MOTS_SCORE + " = " + mot.getScore() + ", " +
-                KEY_MOTS_CREATED_AT + " = '" + mot.getCreated_at() +
-                "' WHERE " + KEY_MOTS_ID + " = " + mot.getId() + " AND " +
-                KEY_MOTS_ENFANT + " = " + mot.getIdEnfant();
-
-        db.execSQL(updateQuery);
+        ContentValues motBDD = new ContentValues();
+        motBDD.put(KEY_MOTS_MOT, mot.getContenu());
+        motBDD.put(KEY_MOTS_CREATED_AT, mot.getCreated_at());
+        motBDD.put(KEY_MOTS_ENFANT, mot.getId_enfant());
+        motBDD.put(KEY_MOTS_SCORE, mot.getScore());
+        motBDD.put(KEY_MOTS_PACKAGE, mot.getId_package());
+        db.update(TABLE_MOTS, motBDD, KEY_MOTS_ID + " = ? AND " + KEY_MOTS_ENFANT + " = ?", new String[] { String.valueOf(mot.getId()), String.valueOf(mot.getIdEnfant())});
     }
 
     public Enfant getEnfant(long enfant_id){
@@ -197,6 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Enfant enfant = new Enfant();
         enfant.setId(c.getLong(c.getColumnIndex(KEY_ENFANTS_ID)));
         enfant.setNom(c.getString(c.getColumnIndex(KEY_ENFANTS_NOM)));
+        enfant.setXp(c.getInt(c.getColumnIndex(KEY_ENFANTS_XP)));
         c.close();
         return enfant;
     }
@@ -219,6 +227,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
         mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
         mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+        mot.setId_package(c.getLong(c.getColumnIndex(KEY_MOTS_PACKAGE)));
         c.close();
         return mot;
     }
@@ -239,7 +248,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
                 mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
                 mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
-
+                mot.setId_package(c.getLong(c.getColumnIndex(KEY_MOTS_PACKAGE)));
                 mots.add(mot);
             } while (c.moveToNext());
         }
@@ -293,6 +302,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[] { String.valueOf(enfant_id) });
         db.delete(TABLE_MOTS , KEY_MOTS_ENFANT + " = ?",
                 new String[] { String.valueOf(enfant_id) });
+        db.delete(TABLE_ENFANTSPACKAGES, KEY_ENFANTSPACKAGES_ENFANT + " = ?",
+                new String[] { String.valueOf(enfant_id) });
     }
 
     public void deleteEverything(){
@@ -333,6 +344,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
                 mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
                 mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+                mot.setId_package(c.getLong(c.getColumnIndex(KEY_MOTS_PACKAGE)));
                 mots.add(mot);
             } while (c.moveToNext());
         }
@@ -423,9 +435,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 enfant.setId(c.getLong(c.getColumnIndex(KEY_ENFANTS_ID)));
                 enfant.setNom(c.getString(c.getColumnIndex(KEY_ENFANTS_NOM)));
                 enfant.setXp(c.getInt(c.getColumnIndex(KEY_ENFANTS_XP)));
-                Log.w("DIM", String.valueOf(enfant.getId()));
-                Log.w("DIM", enfant.getNom());
-                Log.w("DIM", String.valueOf(enfant.getXp()));
                 enfants.add(enfant);
             } while (c.moveToNext());
         }
@@ -480,13 +489,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void newPackageForEnfant(long id_package, String children_name){
         Enfant enfant = getChildrenByName(children_name);
-        addPackageForEnfant(enfant.getId(), id_package);
-        List<Mot> listeMot = getAllMotsByPackage(id_package);
-        for (Mot m:listeMot){
-            addNewMot(m.getContenu(), enfant.getId(), id_package);
+        List<Package> listePackage = getPackageByEnfant(enfant.getId());
+        boolean update = false;
+        for (Package p:listePackage){
+            if (p.getId() == id_package){
+                update = true;
+                break;
+            }
+        }
+        if (update){
+            List<Mot> listeMotEnfant = getAllMotsByIDEnfant(enfant.getId());
+            List<Mot> listeMotPackage = getAllMotsByPackage(id_package);
+            List<Long> listeIdMotEnfant = new ArrayList<>();
+            for (Mot m :listeMotEnfant){
+                listeIdMotEnfant.add(m.getId());
+            }
+            for (Mot m: listeMotPackage){
+                if (!listeIdMotEnfant.contains(m.getId())){
+                    addNewMot(m.getContenu(), enfant.getId(), id_package);
+                }
+            }
+        }else {
+            addPackageForEnfant(enfant.getId(), id_package);
+            List<Mot> listeMot = getAllMotsByPackage(id_package);
+            for (Mot m : listeMot) {
+                addNewMot(m.getContenu(), enfant.getId(), id_package);
+            }
         }
     }
 
+    public Package getPackage (long id_package){
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_PACKAGE
+                + " WHERE " + KEY_PACKAGE_ID + " = " + id_package;
+        Cursor c = db.rawQuery(selectQuery, null);
+        Package aPackage = new Package();
+        if (c.moveToFirst()){
+            aPackage.setId(c.getLong(c.getColumnIndex(KEY_PACKAGE_ID)));
+            aPackage.setNom(c.getString(c.getColumnIndex(KEY_PACKAGE_NOM)));
+        }
+        c.close();
+        return aPackage;
+    }
 
 
     public List<Mot> getAllMotsFromWeek(long id_enfant) {
@@ -512,13 +556,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     e.printStackTrace();
                 }
                 //On regarde si on est bien dans la même semaine
-                if (daysBetween(calendarBDD, calendarOfDay) < 7){
+                if (calendarBDD.get(Calendar.WEEK_OF_YEAR) == calendarOfDay.get(Calendar.WEEK_OF_YEAR)){
                     Mot mot = new Mot();
                     mot.setId(c.getLong(c.getColumnIndex(KEY_MOTS_ID)));
                     mot.setScore(c.getInt(c.getColumnIndex(KEY_MOTS_SCORE)));
                     mot.setContenu(c.getString(c.getColumnIndex(KEY_MOTS_MOT)));
                     mot.setId_enfant(c.getLong(c.getColumnIndex(KEY_MOTS_ENFANT)));
                     mot.setCreated_at(c.getString(c.getColumnIndex(KEY_MOTS_CREATED_AT)));
+                    mot.setId_package(c.getLong(c.getColumnIndex(KEY_MOTS_PACKAGE)));
                     mots.add(mot);
                 }
             } while (c.moveToNext());
@@ -527,17 +572,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return mots;
     }
-
-    private long daysBetween(Calendar startDate, Calendar endDate) {
-        startDate.set(Calendar.HOUR_OF_DAY, 0);
-        endDate.set(Calendar.HOUR_OF_DAY, 24);
-        startDate.set(Calendar.MINUTE, 0);
-        endDate.set(Calendar.MINUTE, 0);
-        startDate.set(Calendar.SECOND, 0);
-        endDate.set(Calendar.SECOND, 0);
-        long millis = endDate.getTimeInMillis() - startDate.getTimeInMillis();
-        return (int)Math.round((double)millis / 86400000);
-    }
-
 }
 

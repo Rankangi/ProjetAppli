@@ -28,6 +28,7 @@ import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.RandomScoreWord;
+import fr.insacvl.educations.modele.SpeechRandom;
 
 
 public class SoloActivityMotSemaine extends Activity {
@@ -92,7 +93,7 @@ public class SoloActivityMotSemaine extends Activity {
 
                         @Override
                         public void onAnimationStart(Animation animation){
-                            ttobj.speak("Bravo",TextToSpeech.QUEUE_FLUSH,null);
+                            SpeechRandom.victoireRdm(ttobj);
                             tentativesMot.add(String.valueOf(text.getText()).toLowerCase());
                             listMotFinal.add(dbWord.getContenu());
                             dbWordCount.remove(dbWord);
@@ -110,13 +111,13 @@ public class SoloActivityMotSemaine extends Activity {
                     countDownTimer.cancel();
                 }
                 else if(countdown_finished){
-                    ttobj.speak("Le temps est écoulé, choisisez un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
+                    SpeechRandom.tropTardRdm(ttobj);
                 }
                 else if(wordfoud){
                     ttobj.speak("Choisi un nouveau mot",TextToSpeech.QUEUE_FLUSH,null);
                 }
                 else {
-                    ttobj.speak("Ce n'est pas la bonne orthographe",TextToSpeech.QUEUE_FLUSH,null);
+                    SpeechRandom.erreurRdm(ttobj);
                     tentativesMot.add(String.valueOf(text.getText()).toLowerCase());
                     listMotFinal.add(dbWord.getContenu());
                     dbWordCount.remove(dbWord);
@@ -240,8 +241,6 @@ public class SoloActivityMotSemaine extends Activity {
         long childId = (long) myIntent.getSerializableExtra("childId");
         child = db.getEnfant(childId);
 
-        Toast toast = Toast.makeText(getApplicationContext(),"Hello " + child.getNom(),Toast. LENGTH_SHORT);
-        toast.show();
 
         // initialize score
         // TODO add child score

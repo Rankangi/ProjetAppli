@@ -512,7 +512,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     e.printStackTrace();
                 }
                 //On regarde si on est bien dans la même semaine
-                if (daysBetween(calendarBDD, calendarOfDay) < 7){
+                Log.i("DIM", "BDD : " + calendarBDD.get(Calendar.WEEK_OF_YEAR));
+                Log.i("DIM", "AJD : " + calendarOfDay.get(Calendar.WEEK_OF_YEAR));
+                if (calendarBDD.get(Calendar.WEEK_OF_YEAR) == calendarOfDay.get(Calendar.WEEK_OF_YEAR)){
                     Mot mot = new Mot();
                     mot.setId(c.getLong(c.getColumnIndex(KEY_MOTS_ID)));
                     mot.setScore(c.getInt(c.getColumnIndex(KEY_MOTS_SCORE)));
@@ -527,17 +529,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return mots;
     }
-
-    private long daysBetween(Calendar startDate, Calendar endDate) {
-        startDate.set(Calendar.HOUR_OF_DAY, 0);
-        endDate.set(Calendar.HOUR_OF_DAY, 24);
-        startDate.set(Calendar.MINUTE, 0);
-        endDate.set(Calendar.MINUTE, 0);
-        startDate.set(Calendar.SECOND, 0);
-        endDate.set(Calendar.SECOND, 0);
-        long millis = endDate.getTimeInMillis() - startDate.getTimeInMillis();
-        return (int)Math.round((double)millis / 86400000);
-    }
-
 }
 

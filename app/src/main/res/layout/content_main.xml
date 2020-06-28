@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="School \nEducation"
+                    android:text="All\nWrite"
                     style="@style/viewParent.headerText"
                     android:layout_gravity="bottom"/>
 

@@ -2,12 +2,16 @@ package fr.insacvl.educations.activitySolo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.support.constraint.ConstraintLayout;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -23,14 +27,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import fr.insacvl.educations.R;
 import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.RandomScoreWord;
+import fr.insacvl.educations.modele.Syllabes;
 
 
 public class SoloActivityHard extends Activity {
@@ -58,6 +66,7 @@ public class SoloActivityHard extends Activity {
     private long timeLeftMilisec = 30000; //30 sec
     private boolean countdown_finished;
     private CountDownTimer countDownTimer;
+    List<String> listeSyllabes;
 
 
     Enfant child;
@@ -80,6 +89,23 @@ public class SoloActivityHard extends Activity {
                 if( !wordfoud && !countdown_finished &&dbWord.getContenu().toLowerCase().equals(String.valueOf(text.getText()).toLowerCase())){
                     // si oui il est trouvé (on aura un nouveau mot avec le speech button)
                     wordfoud = true;
+                    listeSyllabes = Syllabes.getSyllabes(dbWord.getContenu());
+                    text.setText("");
+                    // pour altérner les couleurs
+                    Boolean color = true;
+                    for(String s:listeSyllabes){
+                        Spannable wordColored = new SpannableString(s);
+                        if(color){
+                            wordColored.setSpan(new ForegroundColorSpan(Color.BLUE),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            text.append(wordColored);
+                            color = false;
+                        }
+                        else{
+                            wordColored.setSpan(new ForegroundColorSpan(Color.RED),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            text.append(wordColored);
+                            color = true;
+                        }
+                    }
                     // on ajoute 10 points
                     scoreUpdate(40);
                     DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());

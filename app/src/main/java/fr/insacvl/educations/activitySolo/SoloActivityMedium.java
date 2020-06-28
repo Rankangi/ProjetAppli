@@ -3,11 +3,15 @@ package fr.insacvl.educations.activitySolo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +33,7 @@ import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.RandomScoreWord;
+import fr.insacvl.educations.modele.Syllabes;
 
 
 public class SoloActivityMedium extends Activity {
@@ -65,6 +70,7 @@ public class SoloActivityMedium extends Activity {
     private ImageView arcEnCiel;
 
     Enfant child;
+    List<String> listeSyllabes;
 
     // Int to becode child score
     // TODO : remplacer par le score de l'enfant dans le constructeur
@@ -176,8 +182,6 @@ public class SoloActivityMedium extends Activity {
         else if(keyCode==KeyEvent.KEYCODE_ENTER){
             boolean bonneOrthographe = true;
             // on check si le mot entré est le bon
-            Toast toasteza = Toast.makeText(getApplicationContext(), writtenString, Toast. LENGTH_LONG);
-            toasteza.show();
 
             if( !wordfoud && !countdown_finished && dbWord.getContenu().toLowerCase().equals(String.valueOf(writtenString).toLowerCase())){
                 // si oui il est trouvé (on aura un nouveau mot avec le speech button)
@@ -187,6 +191,23 @@ public class SoloActivityMedium extends Activity {
                 DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
                 if (dbWord.getScore() <= 3) {
                     dbWord.setScore(dbWord.getScore() + 1);
+                }
+                listeSyllabes = Syllabes.getSyllabes(dbWord.getContenu());
+                hintBox.setText("");
+                // pour altérner les couleurs
+                Boolean color = true;
+                for(String s:listeSyllabes){
+                    Spannable wordColored = new SpannableString(s);
+                    if(color){
+                        wordColored.setSpan(new ForegroundColorSpan(Color.BLUE),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        hintBox.append(wordColored);
+                        color = false;
+                    }
+                    else{
+                        wordColored.setSpan(new ForegroundColorSpan(Color.RED),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        hintBox.append(wordColored);
+                        color = true;
+                    }
                 }
                 databaseHelper.updateMot(dbWord);
                 // on donne la récompense
@@ -224,9 +245,9 @@ public class SoloActivityMedium extends Activity {
             wordwritten = false;
             nbLettreSaisie = 0;
             writtenString = "";
-            if(bonneOrthographe) {
+            /*if(bonneOrthographe) {
                 hintBox.setText("");
-            }
+            }*/
         }
         else if(!wordfoud &&keyCode == KeyEvent.KEYCODE_DEL){
             if (nbLettreSaisie >= 2) {

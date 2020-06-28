@@ -2,12 +2,16 @@ package fr.insacvl.educations.activitySolo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -37,6 +41,7 @@ import fr.insacvl.educations.helper.DatabaseHelper;
 import fr.insacvl.educations.modele.Enfant;
 import fr.insacvl.educations.modele.Mot;
 import fr.insacvl.educations.modele.RandomScoreWord;
+import fr.insacvl.educations.modele.Syllabes;
 
 
 public class SoloActivityEasy extends Activity {
@@ -81,6 +86,7 @@ public class SoloActivityEasy extends Activity {
     private HashMap<RelativeLayout, Boolean> letterMap = new HashMap<>();
 
     Enfant child;
+    List<String> listeSyllabes;
 
     // Int to becode child score
     // TODO : remplacer par le score de l'enfant dans le constructeur
@@ -277,6 +283,23 @@ public class SoloActivityEasy extends Activity {
                         dbWord.setScore(dbWord.getScore() + 1);
                     }
                     db.updateMot(dbWord);
+                    listeSyllabes = Syllabes.getSyllabes(dbWord.getContenu());
+                    hintBox.setText("");
+                    // pour altérner les couleurs
+                    Boolean color = true;
+                    for(String s:listeSyllabes){
+                        Spannable wordColored = new SpannableString(s);
+                        if(color){
+                            wordColored.setSpan(new ForegroundColorSpan(Color.BLUE),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            hintBox.append(wordColored);
+                            color = false;
+                        }
+                        else{
+                            wordColored.setSpan(new ForegroundColorSpan(Color.RED),0,wordColored.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            hintBox.append(wordColored);
+                            color = true;
+                        }
+                    }
                     // on donne la récompense
                     Animation animation = AnimationUtils.loadAnimation(SoloActivityEasy.this, R.anim.zoomin);
                     animation.setAnimationListener(new Animation.AnimationListener(){

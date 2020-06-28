@@ -479,10 +479,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void newPackageForEnfant(long id_package, String children_name){
         Enfant enfant = getChildrenByName(children_name);
-        addPackageForEnfant(enfant.getId(), id_package);
-        List<Mot> listeMot = getAllMotsByPackage(id_package);
-        for (Mot m:listeMot){
-            addNewMot(m.getContenu(), enfant.getId(), id_package);
+        List<Package> listePackage = getPackageByEnfant(enfant.getId());
+        boolean update = false;
+        for (Package p:listePackage){
+            if (p.getId() == id_package){
+                update = true;
+                break;
+            }
+        }
+        if (update){
+            List<Mot> listeMotEnfant = getAllMotsByIDEnfant(enfant.getId());
+            List<Mot> listeMotPackage = getAllMotsByPackage(id_package);
+            List<Long> listeIdMotEnfant = new ArrayList<>();
+            for (Mot m :listeMotEnfant){
+                listeIdMotEnfant.add(m.getId());
+            }
+            for (Mot m: listeMotPackage){
+                if (!listeIdMotEnfant.contains(m.getId())){
+                    addNewMot(m.getContenu(), enfant.getId(), id_package);
+                }
+            }
+        }else {
+            addPackageForEnfant(enfant.getId(), id_package);
+            List<Mot> listeMot = getAllMotsByPackage(id_package);
+            for (Mot m : listeMot) {
+                addNewMot(m.getContenu(), enfant.getId(), id_package);
+            }
         }
     }
 

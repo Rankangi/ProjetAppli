@@ -172,14 +172,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void updateMot (Mot mot){
         SQLiteDatabase db = getWritableDatabase();
-        String updateQuery = "UPDATE " + TABLE_MOTS + " SET " +
-                KEY_MOTS_MOT + " = '" + mot.getContenu() + "', " +
-                KEY_MOTS_SCORE + " = " + mot.getScore() + ", " +
-                KEY_MOTS_CREATED_AT + " = '" + mot.getCreated_at() +
-                "' WHERE " + KEY_MOTS_ID + " = " + mot.getId() + " AND " +
-                KEY_MOTS_ENFANT + " = " + mot.getIdEnfant();
-
-        db.execSQL(updateQuery);
+        ContentValues motBDD = new ContentValues();
+        motBDD.put(KEY_MOTS_MOT, mot.getContenu());
+        motBDD.put(KEY_MOTS_CREATED_AT, mot.getCreated_at());
+        motBDD.put(KEY_MOTS_ENFANT, mot.getId_enfant());
+        motBDD.put(KEY_MOTS_SCORE, mot.getScore());
+        motBDD.put(KEY_MOTS_PACKAGE, mot.getId_package());
+        db.update(TABLE_MOTS, motBDD, KEY_MOTS_ID + " = ? AND " + KEY_MOTS_ENFANT + " = ?", new String[] { String.valueOf(mot.getId()), String.valueOf(mot.getIdEnfant())});
     }
 
     public Enfant getEnfant(long enfant_id){

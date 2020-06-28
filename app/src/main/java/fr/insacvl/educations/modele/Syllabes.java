@@ -175,7 +175,7 @@ public class Syllabes {
 
 
     public static boolean isVoyel(Character c) {
-        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'|| c == 'é' ||
+        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y' || c == 'é' ||
                 c == 'à' || c == 'è' || c == 'ù' || c == 'ô' || c == 'â' || c == 'î' || c == 'ï');
     }
     // si group cons d'atttaque en milieu de mot -> début la syllabe suivante

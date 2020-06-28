@@ -23,7 +23,7 @@ public class Syllabes {
         List<Character> charList = new ArrayList<>();
 
         // Gestion de quelques exeptions à la con avec plus de 3 consonnes d'affilé (pas toutes):
-        if(motCopy.equals("flyschs ")){
+        if(motCopy.equals("flyschs")){
             listeSyllabes.add("flys");
             listeSyllabes.add("chs");
             return listeSyllabes;
@@ -175,7 +175,8 @@ public class Syllabes {
 
 
     public static boolean isVoyel(Character c) {
-        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'|| c == 'é' ||
+                c == 'à' || c == 'è' || c == 'ù' || c == 'ô' || c == 'â' || c == 'î' || c == 'ï');
     }
     // si group cons d'atttaque en milieu de mot -> début la syllabe suivante
     // il en manque peut-être
@@ -183,7 +184,7 @@ public class Syllabes {
         String s = ""+c1+c2;
         return(s.equals("bl") || s.equals("cl") || s.equals("fl") || s.equals("gl") || s.equals("pl") || s.equals("br") || s.equals("cr") ||
                 s.equals("dr") || s.equals("fr") || s.equals("gr") || s.equals("kr") || s.equals("pr") || s.equals("tr") || s.equals("vr") ||
-                s.equals("ch") || s.equals("ph") || s.equals("th") || s.equals("gn") || s.equals("cr") );
+                s.equals("ch") || s.equals("ph") || s.equals("th") || s.equals("gn") );
     }
 
     // si groupe cons de début de mot : ensemble

@@ -292,6 +292,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[] { String.valueOf(enfant_id) });
         db.delete(TABLE_MOTS , KEY_MOTS_ENFANT + " = ?",
                 new String[] { String.valueOf(enfant_id) });
+        db.delete(TABLE_ENFANTSPACKAGES, KEY_ENFANTSPACKAGES_ENFANT + " = ?",
+                new String[] { String.valueOf(enfant_id) });
     }
 
     public void deleteEverything(){

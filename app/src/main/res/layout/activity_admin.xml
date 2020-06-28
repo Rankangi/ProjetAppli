@@ -33,12 +33,24 @@
             android:textSize="30dp" />
 
         <ImageView
-            android:layout_weight="99"
             android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="131dp"
+            android:layout_height="match_parent"
+            android:layout_weight="99"
             android:adjustViewBounds="true"
-            android:src="@drawable/header_famille" />
+            android:src="@drawable/header_papa"
+            tools:ignore="DuplicateIds" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="149dp"
+            android:layout_height="228dp"
+            android:layout_weight="99"
+            android:adjustViewBounds="true"
+            android:src="@drawable/header_maman"
+            tools:ignore="DuplicateIds" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -114,7 +126,7 @@
                         android:id="@+id/imageView6"
                         style="@style/homeCardImage"
                         android:maxHeight="90dp"
-                        android:src="@drawable/header_famille" />
+                        android:src="@drawable/header_garcon" />
 
                     <TextView
                         style="@style/viewParent.headerText.HomeCardTitle"

@@ -197,6 +197,12 @@ public class SoloActivityMedium extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
         }
+        else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+
+        }
+        else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP){
+
+        }
         else if(keyCode==KeyEvent.KEYCODE_ENTER){
             boolean bonneOrthographe = true;
             // on check si le mot entré est le bon

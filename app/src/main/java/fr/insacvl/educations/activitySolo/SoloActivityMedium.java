@@ -196,6 +196,20 @@ public class SoloActivityMedium extends Activity {
     }
 
     @Override
+    public boolean onKeyMultiple(int KeyCode,int i, KeyEvent event){
+        if (!wordfoud &&wordsize > nbLettreSaisie/2){
+            String caractereRecupere = event.getCharacters() + "";
+            String text = hintBox.getText().toString();
+            writtenString = writtenString.concat(caractereRecupere);
+            text = text.substring(0, nbLettreSaisie) + caractereRecupere + text.substring(nbLettreSaisie + 1);
+            hintBox.setText(text);
+            nbLettreSaisie++;
+            nbLettreSaisie++;
+        }
+        return false;
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         RelativeLayout layout = findViewById(R.id.layout);
         layout.requestFocus();

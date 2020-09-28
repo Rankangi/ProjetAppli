@@ -16,3 +16,4 @@ Release 1.2:
 
     Bug :
     - Accents non prit en comptes en Normal.
+    - Touche del en medium

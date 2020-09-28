@@ -6,9 +6,12 @@
     tools:context="fr.insacvl.educations.activitySolo.SoloActivityMedium">
 
     <RelativeLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-133dp">
 
@@ -93,14 +96,13 @@
             android:text="Moyen" />
 
         <ImageView
+            android:id="@+id/arcEnCiel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/arc_en_ciel"
-            android:id="@+id/arcEnCiel"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
             android:paddingBottom="300dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"/>
+            android:src="@drawable/arc_en_ciel" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -85,7 +86,8 @@ public class SoloActivityMedium extends Activity {
         }
         progressBarText.setText(""+(int)childscore/100);
         progressBar.setProgress(circle_fill);
-    };
+    }
+
     public static void buttonEffect(View button){
         button.setOnTouchListener(new View.OnTouchListener() {
 
@@ -195,6 +197,8 @@ public class SoloActivityMedium extends Activity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        RelativeLayout layout = findViewById(R.id.layout);
+        layout.requestFocus();
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
         }
@@ -274,6 +278,7 @@ public class SoloActivityMedium extends Activity {
                 hintBox.setText("");
             }*/
         }
+
         else if(!wordfoud &&keyCode == KeyEvent.KEYCODE_DEL){
             if (nbLettreSaisie >= 2) {
                 String text = hintBox.getText().toString();

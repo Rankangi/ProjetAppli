@@ -13,7 +13,3 @@ Release 1.2:
     - Modification BDD
     - Modification graphique
     - Modification logo + images
-
-    Bug :
-    - Accents non prit en comptes en Normal.
-    - Touche del en medium
